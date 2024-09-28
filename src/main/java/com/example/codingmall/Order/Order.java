@@ -11,15 +11,15 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Table(name = "Order")
+@Table(name = "Orders") // order은 mysql 예약어라서 테이블 이블을 orders로 변경
 public class Order {
     @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column (name ="orderId")
-    private Long id;
+    private Long orderId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
-    private User user;
+    private User user;ㅅ
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "couponId")
