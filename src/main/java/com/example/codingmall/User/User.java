@@ -4,6 +4,8 @@ import com.example.codingmall.Order.Order;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.hibernate.mapping.Join;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -12,7 +14,7 @@ import java.util.List;
 public class User {
     @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Long userId; // 회원고유번호
+    private Long id; // 회원고유번호
 
     private String username; // 아이디
 
@@ -30,8 +32,7 @@ public class User {
     private String role;
 
     @OneToMany(mappedBy = "user")
-    private List<Order> orders;
-
+    private List<Order> orders = new ArrayList<>();
 
     private enum Status {
         ACTIVATE,

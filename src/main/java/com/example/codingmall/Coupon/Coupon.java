@@ -13,9 +13,9 @@ import java.util.List;
 @Getter
 @Table(name = "Coupon")
 public class Coupon {
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "coupon_id")
-    private Long couponId;
+    private Long id;
 
     private String couponName; // 쿠폰명
     private CouponStatus couponStatus; // 상태코드
@@ -34,8 +34,8 @@ public class Coupon {
     private LocalDateTime updateTime; //수정일시
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "register_id")
-    private User registerId; // 쿠폰 등록자 아이디
+    @JoinColumn(name = "user_id")
+    private User user; // 쿠폰 등록자 아이디
 
     private enum CouponStatus{
         ACTIVE,
