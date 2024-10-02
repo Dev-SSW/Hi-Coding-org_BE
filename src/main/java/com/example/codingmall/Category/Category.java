@@ -10,10 +10,9 @@ import java.time.LocalDateTime;
 @Getter
 @Table(name =  "Category")
 public class Category {
-
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
-    private Long categoryId; // 카테고리 식별번호
+    private Long id; // 카테고리 식별번호
 
     private BigDecimal category1;
     private BigDecimal category2;

@@ -11,18 +11,16 @@ import java.time.LocalDateTime;
 @Getter
 @Table(name = "Item")
 public class Item {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "item_id")
-    private Long itemId; // 상품고유번호
+    private Long id; // 상품고유번호
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id",nullable = false)
     private Category category;
 
     @Column(nullable = false)
     private String productName; // 상품명
-
 
     @Enumerated(EnumType.STRING)
     private Status status; // 상태코드
@@ -36,7 +34,6 @@ public class Item {
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
     private BigDecimal likes; // 좋아요 수
-
 
     public enum Status{
         AVAILABLE,

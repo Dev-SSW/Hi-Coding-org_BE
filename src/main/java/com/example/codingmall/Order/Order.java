@@ -13,9 +13,9 @@ import java.time.LocalDateTime;
 @Getter
 @Table(name = "Orders") // order은 mysql 예약어라서 테이블 이블을 orders로 변경
 public class Order {
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column (name ="order_id")
-    private Long orderId;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
