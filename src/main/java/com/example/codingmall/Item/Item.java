@@ -13,11 +13,11 @@ import java.time.LocalDateTime;
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ItemId")
-    private Long ItemId; // 상품고유번호
+    @Column(name = "item_id")
+    private Long itemId; // 상품고유번호
 
     @ManyToOne
-    @JoinColumn(name = "categoryId",nullable = false)
+    @JoinColumn(name = "category_id",nullable = false)
     private Category category;
 
     @Column(nullable = false)

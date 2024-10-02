@@ -14,15 +14,15 @@ import java.time.LocalDateTime;
 @Table(name = "Orders") // order은 mysql 예약어라서 테이블 이블을 orders로 변경
 public class Order {
     @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name ="orderId")
+    @Column (name ="order_id")
     private Long orderId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "couponId")
+    @JoinColumn(name = "coupon_id")
     private Coupon coupon;
 
     private LocalDateTime orderDate;
