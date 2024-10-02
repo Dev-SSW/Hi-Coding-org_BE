@@ -9,10 +9,9 @@ import java.util.List;
 @Entity
 @Getter
 @Table(name = "User")
-
 public class User {
     @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userId")
+    @Column(name = "user_id")
     private Long userId; // 회원고유번호
 
     private String username; // 아이디
@@ -29,6 +28,7 @@ public class User {
     private Status status; // 상태(탈퇴회원 여부 파악)
 
     private String role;
+
     @OneToMany(mappedBy = "user")
     private List<Order> orders;
 

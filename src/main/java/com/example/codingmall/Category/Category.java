@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class Category {
 
     @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "categoryId")
+    @Column(name = "category_id")
     private Long categoryId; // 카테고리 식별번호
 
     private BigDecimal category1;

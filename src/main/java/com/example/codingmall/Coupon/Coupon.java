@@ -14,7 +14,7 @@ import java.util.List;
 @Table(name = "Coupon")
 public class Coupon {
     @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "couponId")
+    @Column(name = "coupon_id")
     private Long couponId;
 
     private String couponName; // 쿠폰명
@@ -35,7 +35,8 @@ public class Coupon {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "register_id")
-    private User registerUser; // 쿠폰 등록자 아이디
+    private User registerId; // 쿠폰 등록자 아이디
+
     private enum CouponStatus{
         ACTIVE,
         EXPIRED,
