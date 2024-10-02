@@ -3,19 +3,13 @@ package com.example.codingmall.User;
 import com.example.codingmall.Order.Order;
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.hibernate.mapping.Join;
-<<<<<<< HEAD
-
 import java.util.ArrayList;
-=======
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-
 import java.util.Collection;
 import java.util.Collections;
->>>>>>> main
 import java.util.List;
 import java.util.Map;
 
