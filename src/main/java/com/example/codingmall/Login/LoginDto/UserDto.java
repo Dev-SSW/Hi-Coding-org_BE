@@ -20,21 +20,6 @@ public class UserDto {
     private UserStatus status;   // 상태(탈퇴 회원 여부 파악)
     private Role role;       // 역할
 
-    // User -> UserDto 변환 메서드
-    public static UserDto fromEntity(User user) {
-        return UserDto.builder()
-                .id(user.getId())
-                .username(user.getUsername())
-                .password(user.getPassword())
-                .jumin(user.getJumin())
-                .name(user.getName())
-                .email(user.getEmail())
-                .phoneNumber(user.getPhoneNumber())
-                .status(user.getStatus())
-                .role(user.getRole())
-                .build();
-    }
-
     // UserDto -> User 변환 메서드
     public User toEntity() {
         return User.builder()
