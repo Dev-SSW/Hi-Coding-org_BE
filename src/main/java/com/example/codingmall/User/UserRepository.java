@@ -11,7 +11,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByUsername(String username);
 
     //Optional 없이 가져오기
-    @Query("select m from User m where m.username = :username")
-    User findUsername(@Param("username") String username);
-
+    User findnooptionByUsername(String username);
 }
