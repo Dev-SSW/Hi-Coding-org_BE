@@ -22,5 +22,4 @@ public class CodingmallApplication {
 		System.setProperty("NAVER_CLIENT_SECRET", dotenv.get("NAVER_CLIENT_SECRET"));
 		SpringApplication.run(CodingmallApplication.class, args);
 	}
-
 }
