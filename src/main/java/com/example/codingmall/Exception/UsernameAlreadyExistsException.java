@@ -1,4 +1,4 @@
-package com.example.codingmall.exception;
+package com.example.codingmall.Exception;
 
 public class UsernameAlreadyExistsException extends RuntimeException {
     public UsernameAlreadyExistsException(String message) {
