@@ -1,7 +1,7 @@
 package com.example.codingmall.OrderItem;
 
 import com.example.codingmall.Item.Item;
-import com.example.codingmall.Orders.Order;
+import com.example.codingmall.Order.Order;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -9,9 +9,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Table(name = "order_item")
 public class OrderItem {
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_item_id")
     private Long id;
 

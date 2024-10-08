@@ -1,21 +1,20 @@
 package com.example.codingmall.Delivery;
 
-import com.example.codingmall.Orders.Order;
+import com.example.codingmall.Order.Order;
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Getter@Table(name = "Delivery")
+@Getter
 public class Delivery {
-    @Id@GeneratedValue
+    @Id @GeneratedValue
     @Column(name = "payment_id")
     private Long id;
 
     @JoinColumn(name = "order_id")
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Order order;
 
     private int amount;

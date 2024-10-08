@@ -1,4 +1,4 @@
-package com.example.codingmall.Orders;
+package com.example.codingmall.Order;
 
 import com.example.codingmall.Coupon.Coupon;
 import com.example.codingmall.User.User;
@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Table(name = "Orders") // order은 mysql 예약어라서 테이블 이름을 orders로 변경
-
 public class Order {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column (name ="order_id")
@@ -38,10 +37,5 @@ public class Order {
 
     private boolean isCancelled; // 취소여부
     private boolean isPaid; // 결제여부
-
-    public enum OrderStatus {
-        Pending, Shipped,Delivered,CANCELLED
-    }
-
 }
 

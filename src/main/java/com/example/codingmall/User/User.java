@@ -4,27 +4,23 @@ import com.example.codingmall.Order.Order;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 
 @Entity
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
-@Table(name = "User")
 public class User implements UserDetails, OAuth2User {
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id; // 회원고유번호
+
     private String username; // 아이디
     private String password; // 비밀번호
     @Column(nullable = false, length = 13)
@@ -36,8 +32,10 @@ public class User implements UserDetails, OAuth2User {
     @Enumerated(EnumType.STRING)
     private UserStatus status;   // 상태(탈퇴 회원 여부 파악)
     private Role role;       // 역할
+
     @OneToMany(mappedBy = "user")
     private List<Order> orders = new ArrayList<>();
+
     @Transient
     private Map<String, Object> attributes; //OAuth2 속성
 
