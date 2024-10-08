@@ -18,10 +18,6 @@ public class CustomerSupport {
     @JoinColumn(name = "user_id")
     private User customorUser; // 요청 사용자 id
 
-    @ManyToOne (fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User adminUser; // 문의를 처리한 관리자 Id
-
     @OneToOne
     private Category category;
     private String title;
@@ -30,8 +26,6 @@ public class CustomerSupport {
 
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
-
-
     private enum Status{
         done,undone // 답변완료, 답변 비완료
     }

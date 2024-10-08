@@ -1,6 +1,6 @@
 package com.example.codingmall.Payment;
 
-import com.example.codingmall.Orders.Order;
+import com.example.codingmall.Order.Order;
 import jakarta.persistence.*;
 import lombok.Getter;
 

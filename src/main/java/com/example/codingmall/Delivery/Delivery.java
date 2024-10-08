@@ -1,9 +1,8 @@
 package com.example.codingmall.Delivery;
 
-import com.example.codingmall.Orders.Order;
+import com.example.codingmall.Order.Order;
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 
 import java.time.LocalDateTime;
 

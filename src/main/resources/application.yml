@@ -39,11 +39,12 @@ spring:
             user-name-attribute: response
   jpa:
     hibernate:
-     ddl-auto: create
+     ddl-auto: update
     properties:
       hibernate:
         format_sql: true
         highlight_sql: true
+    database: mysql
 logging.level:
   org.hibernate.SQL: debug
   org.springframework.security: debug

@@ -1,7 +1,7 @@
 package com.example.codingmall.Review;
 
 import com.example.codingmall.Item.Item;
-import com.example.codingmall.Orders.Order;
+import com.example.codingmall.Order.Order;
 import com.example.codingmall.User.User;
 import jakarta.persistence.*;
 import lombok.Getter;

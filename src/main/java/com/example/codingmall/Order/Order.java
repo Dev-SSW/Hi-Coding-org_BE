@@ -1,4 +1,4 @@
-package com.example.codingmall.Orders;
+package com.example.codingmall.Order;
 
 import com.example.codingmall.Coupon.Coupon;
 import com.example.codingmall.User.User;
