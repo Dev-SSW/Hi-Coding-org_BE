@@ -1,5 +1,7 @@
 package com.example.codingmall.Login.Jwt;
 
+import com.example.codingmall.Login.OAuth2.CustomOAuth2UserService;
+import com.example.codingmall.Login.OAuth2.CustomSuccessHandler;
 import com.example.codingmall.User.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +31,8 @@ import java.util.Collections;
 public class SecurityConfig {
     private final UserService userService;
     private final JWTAuthFilter jwtAuthFilter;
+    private final CustomOAuth2UserService customOAuth2UserService;
+    private final CustomSuccessHandler customSuccessHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -61,6 +65,10 @@ public class SecurityConfig {
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()  // Swagger 관련 경로를 인증에서 제외
                         .anyRequest().authenticated())                 // 그 외의 요청은 인증된 사용자만 접근 허용
+                .oauth2Login(oauth -> oauth
+                        .successHandler(customSuccessHandler)
+                        .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
+                                .userService(customOAuth2UserService)))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
