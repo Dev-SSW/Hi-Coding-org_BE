@@ -9,9 +9,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Table(name = "Cart")
 public class Cart {
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cart_id")
     private Long id;
 

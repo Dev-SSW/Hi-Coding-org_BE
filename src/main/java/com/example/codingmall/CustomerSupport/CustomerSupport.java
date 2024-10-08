@@ -9,17 +9,19 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Table(name = "CustomerSupport")
 public class CustomerSupport {
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "customersupport_id")
     private Long id; // 고객지원 요청 고유 식별자 id
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User customorUser; // 요청 사용자 id
+    private User user; // 요청 사용자, 관리자 사용자를 구분하는 것은 여기서 구분하는 것이 아니다.
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
     private Category category;
+
     private String title;
     private String content;
     private Status status;

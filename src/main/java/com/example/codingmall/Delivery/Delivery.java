@@ -7,14 +7,14 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter@Table(name = "Delivery")
+@Getter
 public class Delivery {
-    @Id@GeneratedValue
+    @Id @GeneratedValue
     @Column(name = "payment_id")
     private Long id;
 
     @JoinColumn(name = "order_id")
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Order order;
 
     private int amount;

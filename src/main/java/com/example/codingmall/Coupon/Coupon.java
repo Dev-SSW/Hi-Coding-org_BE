@@ -1,17 +1,14 @@
 package com.example.codingmall.Coupon;
 
-import com.example.codingmall.Order.Order;
 import com.example.codingmall.User.User;
 import jakarta.persistence.*;
 import lombok.Getter;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Getter
-@Table(name = "Coupon")
 public class Coupon {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "coupon_id")

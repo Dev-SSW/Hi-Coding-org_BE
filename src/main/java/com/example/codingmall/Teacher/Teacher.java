@@ -5,9 +5,8 @@ import lombok.Getter;
 
 @Entity
 @Getter
-@Table(name = "Teacher")
 public class Teacher {
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;

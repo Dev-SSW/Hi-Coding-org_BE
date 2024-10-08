@@ -10,9 +10,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Table(name = "Review")
 public class Review {
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_id")
     private Long id;
 
