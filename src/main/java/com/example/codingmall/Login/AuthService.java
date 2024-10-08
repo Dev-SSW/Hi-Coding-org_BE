@@ -10,11 +10,13 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class AuthService {
     private final UserRepository userRepository;
     private final JWTUtils jwtUtils;
@@ -22,6 +24,7 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
 
     /* 회원 가입 */
+    @Transactional
     public JwtResponse signUp(SignupRequest request) {
         try {
             userRepository.findByUsername(request.getUsername())

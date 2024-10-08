@@ -1,21 +1,21 @@
 package com.example.codingmall.Payment;
 
-import com.example.codingmall.Orders.Order;
+import com.example.codingmall.Order.Order;
 import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-@Table(name = "Payment")
 @Entity@Getter
 public class Payment {
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "payment_id")
     private Long id;
 
     @JoinColumn(name = "order_id")
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Order order;
+
     private Status status;
     private enum Status{
         //배송 전, 배송 중, 배송 완료

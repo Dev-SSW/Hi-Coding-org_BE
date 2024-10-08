@@ -2,13 +2,11 @@ package com.example.codingmall.Category;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Table(name =  "Category")
 public class Category {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")

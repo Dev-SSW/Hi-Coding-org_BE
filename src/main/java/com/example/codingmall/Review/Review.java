@@ -1,7 +1,7 @@
 package com.example.codingmall.Review;
 
 import com.example.codingmall.Item.Item;
-import com.example.codingmall.Orders.Order;
+import com.example.codingmall.Order.Order;
 import com.example.codingmall.User.User;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -10,9 +10,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Table(name = "Review")
 public class Review {
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_id")
     private Long id;
 

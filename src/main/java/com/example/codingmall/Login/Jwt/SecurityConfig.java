@@ -56,7 +56,7 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/", "/public/**").permitAll()
+                        .requestMatchers("/public/**").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()  // Swagger 관련 경로를 인증에서 제외
                         .requestMatchers("/user/**").hasRole("USER")   // USER 역할을 가진 사용자만 접근 허용
                         .anyRequest().authenticated())                 // 그 외의 요청은 인증된 사용자만 접근 허용
