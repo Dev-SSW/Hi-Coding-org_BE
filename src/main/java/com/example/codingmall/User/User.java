@@ -44,7 +44,6 @@ public class User implements UserDetails, OAuth2User {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority(role.name()));
     }
-
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -61,8 +60,6 @@ public class User implements UserDetails, OAuth2User {
     public boolean isEnabled() {
         return true;
     }
-    @Override
-    public String getPassword() { return null; }
     // OAuth2User
     @Override
     public Map<String, Object> getAttributes() {
