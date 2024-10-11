@@ -32,7 +32,7 @@ dependencies {
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'						   //JWT Web 토큰
 	implementation 'org.springframework.boot:spring-boot-starter-security'     //Spring Security
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'//OAuth2
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'   //Swagger
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'   //Swagger
 	implementation 'io.github.cdimascio:java-dotenv:5.2.2'					   //.env
 
 	//runtimeOnly
@@ -43,9 +43,6 @@ dependencies {
 	//lombok
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
-
-	// jasypt 추가
-	implementation "com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.3"
 
 	//dev
 	developmentOnly 'org.springframework.boot:spring-boot-devtools' // 서버 재시작 없이 View 파일 (HTML) 변경
