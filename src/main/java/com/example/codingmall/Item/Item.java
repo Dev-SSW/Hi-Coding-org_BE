@@ -2,13 +2,19 @@ package com.example.codingmall.Item;
 
 import com.example.codingmall.Category.Category;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Item {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "item_id")
@@ -22,10 +28,10 @@ public class Item {
     private String productName; // 상품명
 
     @Enumerated(EnumType.STRING)
-    private Status status; // 상태코드
+    private ItemStatus status; // 상태코드
 
-    private BigDecimal stock; // 재고
-    private BigDecimal price; //가격
+    private long stock; // 재고
+    private long  price; //가격
 
     private String intro; //소개글
     private String content; //상품 상세 설명
@@ -34,8 +40,25 @@ public class Item {
     private LocalDateTime updateDate;
     private BigDecimal likes; // 좋아요 수
 
-    public enum Status{
-        AVAILABLE,
-        UNAVAILABLE
+    public void addStock(int quantity){
+        this.stock += quantity;
+    }
+    public void removeStock(int quantity){
+        long restStock = this.stock - quantity;
+        if (restStock <0){
+            throw new NotEnoughStockException("need more stock");
+        }
+        this.stock = restStock;
+    }
+
+    // 상품 수정
+    public void updateItem(ItemDto itemDto){
+        this.category = itemDto.getCategory();
+        this.productName = itemDto.getProductName();
+        this.status = itemDto.getStatus();
+        this.price = itemDto.getPrice();
+        this.intro = itemDto.getIntro();
+        this.content= itemDto.getContent();
+        this.updateDate= LocalDateTime.now();
     }
 }
