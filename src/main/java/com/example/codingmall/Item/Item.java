@@ -36,8 +36,8 @@ public class Item {
     private String intro; //소개글
     private String content; //상품 상세 설명
 
-    private LocalDateTime createDate;
-    private LocalDateTime updateDate;
+    private final LocalDateTime createDate = LocalDateTime.now();
+    private LocalDateTime updateDate = LocalDateTime.now();
     private BigDecimal likes; // 좋아요 수
 
     public void addStock(int quantity){
@@ -51,14 +51,29 @@ public class Item {
         this.stock = restStock;
     }
 
+
     // 상품 수정
-    public void updateItem(ItemDto itemDto){
-        this.category = itemDto.getCategory();
-        this.productName = itemDto.getProductName();
-        this.status = itemDto.getStatus();
-        this.price = itemDto.getPrice();
-        this.intro = itemDto.getIntro();
-        this.content= itemDto.getContent();
-        this.updateDate= LocalDateTime.now();
+    // Item 엔티티의 상품 수정 메서드
+    public void updateItem(ItemDto itemDto) {
+        if (itemDto.getCategory() != null) {
+            this.category = itemDto.getCategory();
+        }
+        if (itemDto.getProductName() != null) {
+            this.productName = itemDto.getProductName();
+        }
+        if (itemDto.getStatus() != null) {
+            this.status = itemDto.getStatus();
+        }
+        if (itemDto.getPrice() >= 0) {
+            this.price = itemDto.getPrice();
+        }
+        if (itemDto.getIntro() != null) {
+            this.intro = itemDto.getIntro();
+        }
+        if (itemDto.getContent() != null) {
+            this.content = itemDto.getContent();
+        }
+        this.updateDate = LocalDateTime.now(); // 수정 시간 업데이트
     }
+
 }

@@ -30,6 +30,7 @@ public class ItemDto {
     private LocalDateTime updateDate;
     private BigDecimal likes;
 
+    @Builder
     public Item toEntity(){
         return Item.builder()
                 .id(this.id)
