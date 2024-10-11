@@ -34,17 +34,24 @@ public class ItemService {
     public Item saveItem(Item item){ // 저장
         return itemRepository.save(item);
     }
+
     @Transactional
     public void deleteItemById(Long id){ // 삭제
         Item item = findItemById(id);
         itemRepository.delete(item);
+    }
+    // 상품수정
+    @Transactional
+    public void updateItem(Long id, ItemDto itemDto){
+        Item item = findItemById(id);
+        item.updateItem(itemDto);
     }
 
     // 상품 등록
     @Transactional
     public Item saveItem(ItemDto itemDto){
         categoryRepository.findById(itemDto.getCategory().getId())
-                .orElseThrow(() -> new IllegalStateException("Invalid category ID"));
+                .orElseThrow(() -> new IllegalStateException("Invalid category ID")); // category개발 후 findCategoryById 로 바꾸기
 
         Item item = findItemById(itemDto.getId());
         Item saveitem = itemDto.toEntity();
