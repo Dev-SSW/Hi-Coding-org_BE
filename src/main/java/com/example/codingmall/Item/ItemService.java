@@ -15,24 +15,19 @@ public class ItemService {
     private final ItemRepository itemRepository;
     private final CategoryRepository categoryRepository;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Item findItemById(Long id){
         return itemRepository.findById(id)
                 .orElseThrow(() ->new IllegalStateException("Invalid Item ID"));
     }
-    @Transactional
+    @Transactional(readOnly = true)
     public Item findItemByProductName(String productName){
         return itemRepository.findByProductName(productName)
                 .orElseThrow(() -> new IllegalStateException("There is no such productName"));
     }
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Item> findAllItems(){
         return itemRepository.findAll();
-    }
-
-    @Transactional
-    public Item saveItem(Item item){ // 저장
-        return itemRepository.save(item);
     }
 
     @Transactional
@@ -53,8 +48,15 @@ public class ItemService {
         categoryRepository.findById(itemDto.getCategory().getId())
                 .orElseThrow(() -> new IllegalStateException("Invalid category ID")); // category개발 후 findCategoryById 로 바꾸기
 
-        Item item = findItemById(itemDto.getId());
         Item saveitem = itemDto.toEntity();
         return itemRepository.save(saveitem);
+    }
+
+    // 좋아요 기능
+    @Transactional
+    public void addLikeToItem(Long itemId){
+        Item item = findItemById(itemId);
+        item.addLike();
+        itemRepository.save(item);
     }
 }

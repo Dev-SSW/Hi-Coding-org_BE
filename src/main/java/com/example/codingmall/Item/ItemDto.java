@@ -41,7 +41,6 @@ public class ItemDto {
                 .price(this.price)
                 .intro(this.intro)
                 .content(this.content)
-                .createDate(this.createDate)
                 .updateDate(this.updateDate)
                 .build();
     }
