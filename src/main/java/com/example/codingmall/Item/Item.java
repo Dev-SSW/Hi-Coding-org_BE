@@ -38,7 +38,7 @@ public class Item {
 
     private final LocalDateTime createDate = LocalDateTime.now();
     private LocalDateTime updateDate = LocalDateTime.now();
-    private BigDecimal likes; // 좋아요 수
+    private int likes; // 좋아요 수
 
     public void addStock(int quantity){
         this.stock += quantity;
@@ -51,7 +51,14 @@ public class Item {
         this.stock = restStock;
     }
 
-
+    // 좋아요 수 추가
+    public void addLike(){
+        this.likes += 1;
+    }
+    //좋아요 해제
+    public void minusLike(){
+        this.likes -=1;
+    }
     // 상품 수정
     // Item 엔티티의 상품 수정 메서드
     public void updateItem(ItemDto itemDto) {
