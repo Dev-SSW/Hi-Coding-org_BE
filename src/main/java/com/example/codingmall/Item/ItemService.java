@@ -1,5 +1,6 @@
 package com.example.codingmall.Item;
 
+import com.example.codingmall.Category.CategoryDto;
 import com.example.codingmall.Category.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -7,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -14,6 +16,11 @@ import java.util.Optional;
 public class ItemService {
     private final ItemRepository itemRepository;
     private final CategoryRepository categoryRepository;
+
+    public List<CategoryDto> getCategoryList(){
+        List<CategoryDto> categoryList = categoryRepository.findAll().stream().map(CategoryDto::of).collect(Collectors.toList());
+        return categoryList;
+    }
 
     @Transactional(readOnly = true)
     public Item findItemById(Long id){
@@ -45,9 +52,7 @@ public class ItemService {
     // 상품 등록
     @Transactional
     public Item saveItem(ItemDto itemDto){
-        categoryRepository.findById(itemDto.getCategory().getId())
-                .orElseThrow(() -> new IllegalStateException("Invalid category ID")); // category개발 후 findCategoryById 로 바꾸기
-
+        categoryRepository.findCategoryById(itemDto.getCategory().getId());
         Item saveitem = itemDto.toEntity();
         return itemRepository.save(saveitem);
     }

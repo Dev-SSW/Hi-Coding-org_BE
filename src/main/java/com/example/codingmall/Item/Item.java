@@ -21,7 +21,7 @@ public class Item {
     private Long id; // 상품고유번호
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id",nullable = false)
+    @JoinColumn(name = "category_id",nullable = true)
     private Category category;
 
     @Column(nullable = false)
