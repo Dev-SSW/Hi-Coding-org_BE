@@ -5,11 +5,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @RestController
-@RequestMapping("/items")
+@RequestMapping("public/items")
 @RequiredArgsConstructor
 public class ItemController {
     private final ItemService itemService;
 
+    // 카테고리 조회
+    @GetMapping("/Categories")
+    public ResponseEntity<?> getCategoryList(){
+        return ResponseEntity.ok(itemService.getCategoryList());
+    }
     // 특정 상품 조회
     @GetMapping("{id}")
     public ResponseEntity<Item>getItemById(@PathVariable Long id){

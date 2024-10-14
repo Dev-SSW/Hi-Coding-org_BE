@@ -34,14 +34,14 @@ public class ItemDto {
     public Item toEntity(){
         return Item.builder()
                 .id(this.id)
-                .category(this.category)
+                .category(category)
                 .productName(this.productName)
                 .status(this.status)
                 .stock(this.stock)
                 .price(this.price)
                 .intro(this.intro)
                 .content(this.content)
-                .updateDate(this.updateDate)
+                .updateDate(LocalDateTime.now())
                 .build();
     }
 }
