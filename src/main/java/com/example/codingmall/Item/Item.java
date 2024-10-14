@@ -2,13 +2,19 @@ package com.example.codingmall.Item;
 
 import com.example.codingmall.Category.Category;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Item {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "item_id")
@@ -22,20 +28,59 @@ public class Item {
     private String productName; // 상품명
 
     @Enumerated(EnumType.STRING)
-    private Status status; // 상태코드
+    private ItemStatus status; // 상태코드
 
-    private BigDecimal stock; // 재고
-    private BigDecimal price; //가격
+    private long stock; // 재고
+    private long  price; //가격
 
     private String intro; //소개글
     private String content; //상품 상세 설명
 
-    private LocalDateTime createDate;
-    private LocalDateTime updateDate;
-    private BigDecimal likes; // 좋아요 수
+    private final LocalDateTime createDate = LocalDateTime.now();
+    private LocalDateTime updateDate = LocalDateTime.now();
+    private int likes; // 좋아요 수
 
-    public enum Status{
-        AVAILABLE,
-        UNAVAILABLE
+    public void addStock(int quantity){
+        this.stock += quantity;
     }
+    public void removeStock(int quantity){
+        long restStock = this.stock - quantity;
+        if (restStock <0){
+            throw new NotEnoughStockException("need more stock");
+        }
+        this.stock = restStock;
+    }
+
+    // 좋아요 수 추가
+    public void addLike(){
+        this.likes += 1;
+    }
+    //좋아요 해제
+    public void minusLike(){
+        this.likes -=1;
+    }
+    // 상품 수정
+    // Item 엔티티의 상품 수정 메서드
+    public void updateItem(ItemDto itemDto) {
+        if (itemDto.getCategory() != null) {
+            this.category = itemDto.getCategory();
+        }
+        if (itemDto.getProductName() != null) {
+            this.productName = itemDto.getProductName();
+        }
+        if (itemDto.getStatus() != null) {
+            this.status = itemDto.getStatus();
+        }
+        if (itemDto.getPrice() >= 0) {
+            this.price = itemDto.getPrice();
+        }
+        if (itemDto.getIntro() != null) {
+            this.intro = itemDto.getIntro();
+        }
+        if (itemDto.getContent() != null) {
+            this.content = itemDto.getContent();
+        }
+        this.updateDate = LocalDateTime.now(); // 수정 시간 업데이트
+    }
+
 }

@@ -19,6 +19,7 @@ public class CustomerSupport {
     private User user; // 요청 사용자, 관리자 사용자를 구분하는 것은 여기서 구분하는 것이 아니다.
 
     @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
     private Category category;
 
     private String title;
@@ -27,8 +28,6 @@ public class CustomerSupport {
 
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
-
-
     private enum Status{
         done,undone // 답변완료, 답변 비완료
     }

@@ -44,6 +44,7 @@ spring:
       hibernate:
         format_sql: true
         highlight_sql: true
+    database: mysql
 logging.level:
   org.hibernate.SQL: debug
   org.springframework.security: debug
