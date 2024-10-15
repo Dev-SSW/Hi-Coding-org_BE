@@ -11,7 +11,7 @@ public class ItemController {
     private final ItemService itemService;
 
     // 카테고리 조회
-    @GetMapping("/Categories")
+    @GetMapping("/categories")
     public ResponseEntity<?> getCategoryList(){
         return ResponseEntity.ok(itemService.getCategoryList());
     }
