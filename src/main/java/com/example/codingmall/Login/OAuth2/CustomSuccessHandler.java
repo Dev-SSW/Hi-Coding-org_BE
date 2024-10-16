@@ -45,14 +45,9 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         response.addCookie(refreshTokenCookie);
 
         // 로그인 성공 후 리다이렉트할 URL 결정
-        String targetUrl = determineTargetUrl(request, response);
+        //String targetUrl = determineTargetUrl(request, response);
 
         // 리다이렉트 처리
-        getRedirectStrategy().sendRedirect(request, response, targetUrl);
-    }
-
-    @Override
-    protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response) {
-        return "/";  // 기본적으로 홈 페이지로 리다이렉트
+        //getRedirectStrategy().sendRedirect(request, response, targetUrl);
     }
 }
