@@ -31,7 +31,6 @@ public class CategoryDataInitializer {
 
                 categoryService.saveCategory(board);
                 categoryService.saveCategory(books);
-
                 categoryService.saveCategory(aduino);
                 categoryService.saveCategory(rasberrypi);
                 categoryService.saveCategory(low);
