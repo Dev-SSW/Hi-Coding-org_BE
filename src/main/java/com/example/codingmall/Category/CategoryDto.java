@@ -1,30 +1,32 @@
 package com.example.codingmall.Category;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.List;
 
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
 public class CategoryDto {
     private Long id;
     private String name;
-    private List<CategoryDto> children;
-    //컨트롤러에 전해주기 위한 category -> categoryDto 변환 클래스
-    public static CategoryDto of(Category category){
-        return new CategoryDto(
-                category.getId(),
-                category.getName(),
-                category.getChildren().stream().map(CategoryDto::of).collect(Collectors.toList())
-        );
+    private Long parentId;
 
+    private List<CategoryDto> subCategories;
+
+    public CategoryDto(Long id, String name,Long parentId ) {
+        this.id = id;
+        this.name = name;
+        this.parentId = parentId;
     }
-    public Category toEntity(){
-        return new Category(this.name,null,LocalDateTime.now());
+    public void setSubCategories(List<CategoryDto> subCategories) {
+        this.subCategories = subCategories;
     }
 }
