@@ -13,12 +13,11 @@ import static java.util.stream.Collectors.groupingBy;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 public class CategoryService {
     private final CategoryRepository categoryRepository;
 
     // DTO로 변환하여 직렬화
-    @Transactional(readOnly = true)
     public CategoryDto findCategoryById(Long id) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new IllegalStateException("Invalid category ID"));
@@ -37,8 +36,8 @@ public class CategoryService {
 
         return rootCategoryDto;
     }
-
-    private void addSubCategories(CategoryDto parent, Map<Long, List<CategoryDto>> groupByParentId) {
+    @Transactional
+    public void addSubCategories(CategoryDto parent, Map<Long, List<CategoryDto>> groupByParentId) {
         // 1. parent의 키로, subcategories를 찾는다.
         List<CategoryDto> subCategories = groupByParentId.get(parent.getId());
 
@@ -53,6 +52,7 @@ public class CategoryService {
                 .forEach(s ->
                         addSubCategories(s, groupByParentId));
     }
+    @Transactional
     public CategoryDto createCategory (CategoryDto categoryDto){
         Category category = new Category(categoryDto.getName(), categoryDto.getParentId());
         Category savedCategory  = categoryRepository.save(category);
