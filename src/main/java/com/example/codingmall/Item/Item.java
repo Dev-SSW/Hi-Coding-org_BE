@@ -30,21 +30,21 @@ public class Item {
     @Enumerated(EnumType.STRING)
     private ItemStatus status; // 상태코드
 
-    private long stock; // 재고
-    private long  price; //가격
+    private int stock; // 재고
+    private int  price; //가격
 
     private String intro; //소개글
     private String content; //상품 상세 설명
 
     private final LocalDateTime createDate = LocalDateTime.now();
-    private LocalDateTime updateDate = LocalDateTime.now();
+    private LocalDateTime updateDate;
     private int likes; // 좋아요 수
 
     public void addStock(int quantity){
         this.stock += quantity;
     }
     public void removeStock(int quantity){
-        long restStock = this.stock - quantity;
+        int restStock = this.stock - quantity;
         if (restStock <0){
             throw new NotEnoughStockException("need more stock");
         }

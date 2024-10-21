@@ -20,8 +20,8 @@ public class ItemDto {
     private String productName;
     private ItemStatus status;
 
-    private long  stock;
-    private long price;
+    private int  stock;
+    private int price;
 
     private String intro;
     private String content;

@@ -27,8 +27,6 @@ public class CategoryController {
     public ResponseEntity<CategoryDto> getCategoryTree() {
         CategoryDto rootCategory = categoryService.createCategoryRoot();
         return ResponseEntity.ok(rootCategory);
-
-
     }
     @PostMapping("/create")
     public ResponseEntity<CategoryDto> createCategory(@RequestBody CategoryDto categoryDto){
