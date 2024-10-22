@@ -1,7 +1,12 @@
 package com.example.codingmall.Category;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,30 +15,16 @@ import java.util.ArrayList;
 import java.util.List;
 @Entity
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // 역직렬화를 위한 JsonIgnore
 public class Category {
-
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "category_id")
-    private Long id; // 카테고리 식별번호
-
+    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
+    private Long parentId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent")
-    private Category parent;
-
-    @OneToMany(mappedBy = "parent")
-    private List<Category> children = new ArrayList<>();
-
-    private LocalDateTime createDate = LocalDateTime.now();
-    private LocalDateTime updateDate;
-
-
-    public Category(String name, Category parent, LocalDateTime updateDate) {
+    public Category(String name,Long parentId){
         this.name = name;
-        this.parent = parent;
-        this.updateDate = updateDate;
+        this.parentId = parentId;
     }
 }
