@@ -1,14 +1,8 @@
 package com.example.codingmall.Category;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("public/category")
@@ -16,18 +10,19 @@ import java.util.stream.Collectors;
 public class CategoryController {
     private final CategoryService categoryService;
 
-   @GetMapping("/{id}")
-    public ResponseEntity<CategoryDto> getCategoryById(@PathVariable Long id){
-       CategoryDto category = categoryService.findCategoryById(id);
+    /* ID로 카테고리 찾기 */
+    @GetMapping("/{categoryId}")
+    public ResponseEntity<CategoryDto> getCategoryById(@PathVariable("categoryId") Long categoryId){
+       CategoryDto category = categoryService.findCategoryById(categoryId);
        return ResponseEntity.ok(category);
-   }
-
-    // Create the root category structure
+    }
+    /* 카테고리 트리 조회 */
     @GetMapping("/tree")
     public ResponseEntity<CategoryDto> getCategoryTree() {
         CategoryDto rootCategory = categoryService.createCategoryRoot();
         return ResponseEntity.ok(rootCategory);
     }
+    /* 카테고리 생성 */
     @PostMapping("/create")
     public ResponseEntity<CategoryDto> createCategory(@RequestBody CategoryDto categoryDto){
         CategoryDto category = categoryService.createCategory(categoryDto);

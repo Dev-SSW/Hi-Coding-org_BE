@@ -29,6 +29,7 @@ public class CartService {
                 .orElseThrow(() -> new IllegalStateException("Invalid user Id"));
         Item item = itemRepository.findById(itemId)
                 .orElseThrow(() -> new IllegalStateException("Invalid Item id"));
+
         Cart cart = cartRepository.findByUser(user).orElse(new Cart(user));
         CartItem cartItem = new CartItem(item, count);
         cart.addItem(cartItem);
@@ -36,7 +37,6 @@ public class CartService {
         cartRepository.save(cart);
         return new CartDto(cart);
     }
-    @Transactional
     public CartDto getCartToUser(Long userId){
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalStateException("Invalid user Id"));
