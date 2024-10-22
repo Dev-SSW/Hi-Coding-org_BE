@@ -1,15 +1,10 @@
 package com.example.codingmall.Category;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -19,13 +14,14 @@ public class CategoryDto {
     private String name;
     private Long parentId;
 
-    private List<CategoryDto> subCategories;
+    private List<CategoryDto> subCategories = new ArrayList<>();  // 트리 응답에만 사용
 
-    public CategoryDto(Long id, String name,Long parentId ) {
+    public CategoryDto(Long id, String name, Long parentId) {
         this.id = id;
         this.name = name;
         this.parentId = parentId;
     }
+
     public void setSubCategories(List<CategoryDto> subCategories) {
         this.subCategories = subCategories;
     }
