@@ -1,10 +1,10 @@
 package com.example.codingmall.Login;
 
+import com.example.codingmall.Exception.UsernameAlreadyExistsException;
 import com.example.codingmall.Login.Jwt.JWTUtils;
 import com.example.codingmall.Login.LoginDto.*;
 import com.example.codingmall.User.User;
 import com.example.codingmall.User.UserRepository;
-import com.example.codingmall.Exception.UsernameAlreadyExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
