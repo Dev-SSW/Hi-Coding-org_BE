@@ -1,5 +1,6 @@
 package com.example.codingmall.Order;
 
 public enum OrderStatus {
-    Pending, Shipped, Delivered, CANCELLED
+    // 주문됨, 취소됨
+    ORDER, CANCEL
 }
