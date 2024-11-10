@@ -1,4 +1,4 @@
-package com.example.codingmall.Login.Jwt;
+package com.example.codingmall.User.Login.Jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
