@@ -3,12 +3,15 @@ package com.example.codingmall.OrderItem;
 import com.example.codingmall.Item.Item;
 import com.example.codingmall.Order.Order;
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 public class OrderItem {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_item_id")
@@ -16,23 +19,26 @@ public class OrderItem {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
-    private Item item; // 주문 상품
+    private Item item;  // 주문 상품
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
-    private Order order; // 주문번호
+    private Order order; // 주문 번호
 
-    private int itemCount; // 주문상품 갯수
-    private int totalPrice; // 총 가격
+    private int itemCount;          // 주문 상품 갯수
+    private int orderPrice;         // 주문 상품 가격
 
-    private LocalDateTime registerDate; // 등록일시
-    private LocalDateTime updateDate; // 수정일시
+    //private LocalDateTime registerDate; // 등록일시
+    //private LocalDateTime updateDate;   // 수정일시
 
-    private Status status; // 주문상품 상태
+    /* 연관 관계 편의 메서드 */
+    public void setItem(Item item) { this.item = item; }
+    public void setOrderPrice(int orderPrice) { this.orderPrice = orderPrice; }
+    public void setOrder(Order order) { this.order = order; }
 
-    private enum Status{
-        // 취소, 결제 대기중(무통장), 고객 주문 , 결제 완료, 발송 확인, 배송 중, 배송 완료, 구매확정
-        cancelled,payment_standby,ordered,payment_complete,delivering,delivered, fixed
-    }
+    /* 비즈니스 로직 */
+    public void cancel() { getItem().addStock(itemCount); }
 
+    /* 조회 로직 */
+    public int getTotalPrice() { return getOrderPrice() * getItemCount(); }
 }
