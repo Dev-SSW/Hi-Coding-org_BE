@@ -1,7 +1,5 @@
 package com.example.codingmall.Order;
 
-import com.example.codingmall.User.Login.LoginDto.JwtResponse;
-import com.example.codingmall.User.Login.LoginDto.SignupRequest;
 import com.example.codingmall.User.User;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +18,7 @@ public class OrderController {
 
     @PostMapping("/create")
     @Operation(summary = "주문 생성")
-    public ResponseEntity<CreateOrderResponse> create(@AuthenticationPrincipal User user, @RequestBody OrderDto orderDto){
-        return ResponseEntity.ok(orderService.createOrder(user, orderDto));
+    public ResponseEntity<Long> create(@AuthenticationPrincipal User user, @RequestBody OrderRequest orderRequest){
+        return ResponseEntity.ok(orderService.createOrder(user, orderRequest));
     }
 }

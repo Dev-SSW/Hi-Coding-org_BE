@@ -31,10 +31,20 @@ public class OrderItem {
     //private LocalDateTime registerDate; // 등록일시
     //private LocalDateTime updateDate;   // 수정일시
 
+    /* 생성 메서드 (정적 팩토리)*/
+    public static OrderItem createOrderItem(Item item, int itemCount) {
+        int Price = item.getPrice();  // 상품 가격
+        return OrderItem.builder()
+                .item(item)
+                .itemCount(itemCount)
+                .orderPrice(Price)
+                .build();
+    }
+
     /* 연관 관계 편의 메서드 */
-    public void setItem(Item item) { this.item = item; }
-    public void setOrderPrice(int orderPrice) { this.orderPrice = orderPrice; }
-    public void setOrder(Order order) { this.order = order; }
+    public void setOrder(Order order) {
+        this.order = order;
+    }
 
     /* 비즈니스 로직 */
     public void cancel() { getItem().addStock(itemCount); }

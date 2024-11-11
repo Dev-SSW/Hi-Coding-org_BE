@@ -3,13 +3,11 @@ package com.example.codingmall.Order;
 import com.example.codingmall.Item.Item;
 import com.example.codingmall.Item.ItemRepository;
 import com.example.codingmall.OrderItem.OrderItem;
-import com.example.codingmall.OrderItem.OrderItemDto;
 import com.example.codingmall.User.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,40 +18,29 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final ItemRepository itemRepository;
 
-    /* 주문 */
+    /* 개별 바로 주문 */
     @Transactional
-    public CreateOrderResponse createOrder(User user, OrderDto orderDto) {
-        List<OrderItem> orderItems = orderDto.getOrderItems().stream()
-                .map(orderItemDto -> {
-                    Item item = itemRepository.findById(orderItemDto.getItemId())
-                            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Item ID 입니다."));
-                    OrderItem orderItem = orderItemDto.toEntity();
-                    orderItem.setItem(item);
-                    orderItem.setOrderPrice(item.getPrice());
-                    return orderItem;
+    public Long createOrder(User user, OrderRequest orderRequest) {
+        List<OrderItem> orderItems = orderRequest.getOrderItems().stream()
+                .map(orderItemRequest -> {
+                    Item item = itemRepository.findById(orderItemRequest.getItemId())
+                            .orElseThrow(() -> new IllegalArgumentException("상품이 존재하지 않습니다."));
+                    item.removeStock(orderItemRequest.getItemCount());
+                    return OrderItem.createOrderItem(item, orderItemRequest.getItemCount());  // null은 orderId가 없으므로 임시로 처리
                 })
                 .collect(Collectors.toList());
+        // Order 객체를 생성 (totalAmount는 createOrder에서 자동으로 계산됨)
+        Order order = Order.createOrder(user, orderRequest, orderItems);
 
-        Order order = orderDto.toEntity();
-        order.setUser(user);
+        // Order의 OrderItem을 연결
         for (OrderItem orderItem : orderItems) {
-            order.addOrderItem(orderItem);  //주문에 주문 상품들을 주입
+            orderItem.setOrder(order);  // 각 OrderItem에 해당하는 Order를 연결
         }
-        order.getTotalPrice();
 
-        //orderItems.forEach(order::addOrderItem);
+        // 주문 저장
         orderRepository.save(order);
-        return CreateOrderResponse.builder()
-                .username(user.getUsername())
-                .receiverName(order.getReceiverName())
-                .receiverPhone(order.getReceiverPhone())
-                .deliveryAddress(order.getDeliveryAddress())
-                .orderNote(order.getOrderNote())
-                .totalAmount(order.getTotalAmount())
-                .orderDate(order.getOrderDate())
-                .orderStatus(order.getOrderStatus())
-                .isCancelled(order.isCancelled())
-                .isPaid(order.isPaid())
-                .build();
+        return order.getId();
     }
+
+    /* 장바구니 상품들 주문 */
 }
