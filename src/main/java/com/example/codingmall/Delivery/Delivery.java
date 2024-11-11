@@ -1,6 +1,7 @@
 package com.example.codingmall.Delivery;
 
 import com.example.codingmall.Order.Order;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -13,8 +14,7 @@ public class Delivery {
     @Column(name = "payment_id")
     private Long id;
 
-    @JoinColumn(name = "order_id")
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "delivery", fetch = FetchType.LAZY)
     private Order order;
 
     private int amount;

@@ -1,10 +1,8 @@
-package com.example.codingmall.Login.Jwt;
+package com.example.codingmall.User.Login.Jwt;
 
-import com.example.codingmall.Login.OAuth2.CustomOAuth2UserService;
-import com.example.codingmall.Login.OAuth2.CustomSuccessHandler;
+import com.example.codingmall.User.Login.OAuth2.CustomOAuth2UserService;
+import com.example.codingmall.User.Login.OAuth2.CustomSuccessHandler;
 import com.example.codingmall.User.UserService;
-import jakarta.servlet.DispatcherType;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,12 +19,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-
-import java.util.Arrays;
-import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity

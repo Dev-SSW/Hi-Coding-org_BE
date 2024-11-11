@@ -1,4 +1,4 @@
-package com.example.codingmall.Login.LoginDto;
+package com.example.codingmall.User.Login.LoginDto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
