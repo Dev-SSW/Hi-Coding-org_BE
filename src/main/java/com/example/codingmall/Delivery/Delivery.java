@@ -2,12 +2,16 @@ package com.example.codingmall.Delivery;
 
 import com.example.codingmall.Order.Order;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Delivery {
     @Id @GeneratedValue
     @Column(name = "payment_id")
@@ -23,12 +27,24 @@ public class Delivery {
     private LocalDateTime paymentDate; //결제일
     private String cardCompany;
 
-    private paymentMethod paymentMethod; // 결제 방법
+    private PaymentMethod paymentMethod; // 결제 방법
 
-    private enum paymentMethod {
-        // 나중에는 아임포트 api 사용하기
-        // 무통장 입금, 카드 , 간편결제
-        bankbook,card,simple
+    public void updateStatus(boolean status){
+        this.status = status;
+    }
+    public void setPaymentDate(LocalDateTime localDateTime){
+        this.paymentDate = localDateTime;
     }
 
+    @Builder
+    public Delivery(Order order, int amount, boolean status,
+                    LocalDateTime paymentDate, String cardCompany,
+                    PaymentMethod paymentMethod) {
+        this.order = order;
+        this.amount = amount;
+        this.status = status;
+        this.paymentDate = paymentDate;
+        this.cardCompany = cardCompany;
+        this.paymentMethod = paymentMethod;
+    }
 }
