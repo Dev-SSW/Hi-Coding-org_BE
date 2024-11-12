@@ -7,7 +7,6 @@ import com.example.codingmall.User.User;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,12 +52,26 @@ public class Order {
     private boolean isCancelled;    //취소 여부
     private boolean isPaid;         //결제 여부
 
-    /* 연관 관계 편의 메서드 */
-    public void addOrderItem(OrderItem orderItem) {
-        orderItems.add(orderItem);
-        orderItem.setOrder(this);  // `order` 설정
+    /* 생성 메서드 (정적 팩토리)*/
+    public static Order createOrder(User user, OrderRequest orderRequest, List<OrderItem> orderItems) {
+        // Order 객체를 생성하면서 필드 초기화
+        int totalAmount = orderItems.stream()
+                .mapToInt(OrderItem::getTotalPrice)  // 각 OrderItem의 총 금액을 합산
+                .sum();
+        return Order.builder()
+                .user(user)
+                .orderDate(LocalDateTime.now())
+                .orderStatus(OrderStatus.ORDER)
+                .receiverName(orderRequest.getReceiverName())
+                .receiverPhone(orderRequest.getReceiverPhone())
+                .deliveryAddress(orderRequest.getDeliveryAddress())
+                .orderNote(orderRequest.getOrderNote())
+                .totalAmount(totalAmount)
+                .orderItems(orderItems)
+                .isCancelled(false)
+                .isPaid(false)
+                .build();
     }
-    public void setUser(User user) { this.user = user; }
 
     /* 비즈니스 로직 */
     public void cancel() {
@@ -67,15 +80,6 @@ public class Order {
         for (OrderItem orderItem : orderItems) {
             orderItem.cancel();
         }
-    }
-
-    /* 조회 로직 */
-    public int getTotalPrice() {
-        this.totalAmount = 0;
-        for (OrderItem orderItem : orderItems) {
-            this.totalAmount += orderItem.getTotalPrice();
-        }
-        return this.totalAmount;
     }
 }
 

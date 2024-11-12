@@ -12,13 +12,13 @@ public class CartItemController {
     private final CartItemService cartItemService;
 
     @PutMapping("/update/{cartItemId}")
-    public ResponseEntity<CartItemDto> updateCartItem(@PathVariable Long cartItemId, @RequestParam int count){
+    public ResponseEntity<CartItemDto> updateCartItem(@PathVariable(name = "cartItemId") Long cartItemId, @RequestParam(name = "count") int count){
         CartItemDto cartItemDto = cartItemService.updateCartItemCount(cartItemId, count);
         return ResponseEntity.ok(cartItemDto);
     }
 
     @DeleteMapping("/remove/{cartItemId}")
-    public ResponseEntity<Void> removeCartItem(@PathVariable Long cartItemId){
+    public ResponseEntity<Void> removeCartItem(@PathVariable(name = "cartItemId") Long cartItemId){
         cartItemService.removeCartItem(cartItemId);
         return ResponseEntity.noContent().build();
     }

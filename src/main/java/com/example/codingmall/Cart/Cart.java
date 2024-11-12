@@ -28,6 +28,9 @@ public class Cart {
 
     private int count; // 상품 수량
     private int price; // 상품 가격
+    // --> price : CartItem의 합산 가격을 넣을 필요가 있어보입니다.
+    // --> count : 전체 물품의 개수를 넣으면 될 것 같습니다. (이건 없어도 될 수도?)
+
     private LocalDateTime registerDate;// 등록일시
     private LocalDateTime updateDate; //수정일시
 

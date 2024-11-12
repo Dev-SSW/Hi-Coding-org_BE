@@ -12,13 +12,15 @@ public class CartController {
     private final CartService cartService;
 
     @PostMapping("/add")
-    public ResponseEntity<CartDto> addItemToCart(@RequestParam Long userId, @RequestParam Long itemId, @RequestParam int count){
+    public ResponseEntity<CartDto> addItemToCart(@RequestParam(name = "userId") Long userId,
+                                                 @RequestParam(name = "itemId") Long itemId,
+                                                 @RequestParam(name = "count") int count){
         CartDto cartDto = cartService.addItemToCart(userId, itemId, count);
         return ResponseEntity.ok(cartDto);
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<CartDto> getCart(@PathVariable Long userId){
+    public ResponseEntity<CartDto> getCart(@PathVariable(name = "userId") Long userId){
         CartDto cartDto = cartService.getCartToUser(userId);
         return ResponseEntity.ok(cartDto);
     }

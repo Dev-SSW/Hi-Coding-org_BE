@@ -37,5 +37,6 @@ public class CartItem {
 
     public void updateCount(int newCount) {
         this.count = newCount;
+        this.price = this.item.getPrice() * newCount;
     }
 }
