@@ -68,4 +68,10 @@ public class OrderService {
         return order.getId();
     }
 
+    /* 주문 취소 */
+    @Transactional
+    public void cancelOrder(Long orderId) {
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new IllegalArgumentException("주문을 찾지 못했습니다."));
+        order.cancel();
+    }
 }
