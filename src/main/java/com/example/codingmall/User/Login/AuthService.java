@@ -1,7 +1,5 @@
 package com.example.codingmall.User.Login;
 
-
-import com.example.codingmall.Exception.UsernameAlreadyExistsException;
 import com.example.codingmall.User.Login.Jwt.JWTUtils;
 import com.example.codingmall.User.Login.LoginDto.*;
 import com.example.codingmall.User.User;
@@ -28,7 +26,7 @@ public class AuthService {
     public JwtResponse signUp(SignupRequest request) {
         try {
             userRepository.findByUsername(request.getUsername())
-                    .ifPresent(u -> {throw new UsernameAlreadyExistsException("이미 존재하는 아이디입니다.");
+                    .ifPresent(u -> {throw new IllegalStateException("이미 존재하는 아이디입니다.");
                     });
             UserDto userDto = UserDto.builder()
                     .username(request.getUsername())
