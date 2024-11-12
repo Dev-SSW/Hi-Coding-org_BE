@@ -1,5 +1,6 @@
 package com.example.codingmall.User.Login;
 
+
 import com.example.codingmall.Exception.UsernameAlreadyExistsException;
 import com.example.codingmall.User.Login.Jwt.JWTUtils;
 import com.example.codingmall.User.Login.LoginDto.*;
@@ -11,7 +12,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.HashMap;
 
 @Service

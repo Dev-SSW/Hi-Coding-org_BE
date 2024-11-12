@@ -35,6 +35,7 @@ public class Order {
     @JoinColumn(name = "coupon_id")
     private Coupon coupon;
 
+    @Builder.Default // 오류 해결 위한 추가 부분(List 필드에 초깃값을 설정했지만, @Builder에서 무시함 --> 이 내용을 해결)
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
