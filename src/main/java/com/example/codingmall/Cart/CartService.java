@@ -30,7 +30,10 @@ public class CartService {
         Item item = itemRepository.findById(itemId)
                 .orElseThrow(() -> new IllegalStateException("Invalid Item id"));
 
-        Cart cart = cartRepository.findByUser(user).orElse(new Cart(user));
+        Cart cart = cartRepository.findByUser(user).orElse(null);
+        if (cart == null) {
+            cart = new Cart(user);
+        }
         CartItem cartItem = new CartItem(item, count);
         cart.addItem(cartItem);
 
