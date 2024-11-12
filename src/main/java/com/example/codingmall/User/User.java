@@ -1,5 +1,6 @@
 package com.example.codingmall.User;
 
+import com.example.codingmall.Cart.Cart;
 import com.example.codingmall.Order.Order;
 import jakarta.persistence.*;
 import lombok.*;
@@ -35,6 +36,9 @@ public class User implements UserDetails, OAuth2User {
 
     @OneToMany(mappedBy = "user")
     private List<Order> orders = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Cart> carts = new ArrayList<>();
 
     @Transient
     private Map<String, Object> attributes; //OAuth2 속성
