@@ -1,5 +1,7 @@
 package com.example.codingmall.Order;
 
+import com.example.codingmall.Cart.Cart;
+import com.example.codingmall.Cart.CartRepository;
 import com.example.codingmall.Item.Item;
 import com.example.codingmall.Item.ItemRepository;
 import com.example.codingmall.OrderItem.OrderItem;
@@ -17,6 +19,7 @@ import java.util.stream.Collectors;
 public class OrderService {
     private final OrderRepository orderRepository;
     private final ItemRepository itemRepository;
+    private final CartRepository cartRepository;
 
     /* 개별 바로 주문 */
     @Transactional
@@ -24,7 +27,7 @@ public class OrderService {
         List<OrderItem> orderItems = orderRequest.getOrderItems().stream()
                 .map(orderItemRequest -> {
                     Item item = itemRepository.findById(orderItemRequest.getItemId())
-                            .orElseThrow(() -> new IllegalArgumentException("상품이 존재하지 않습니다."));
+                            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 상품입니다."));
                     item.removeStock(orderItemRequest.getItemCount());
                     return OrderItem.createOrderItem(item, orderItemRequest.getItemCount());  // null은 orderId가 없으므로 임시로 처리
                 })
@@ -43,4 +46,26 @@ public class OrderService {
     }
 
     /* 장바구니 상품들 주문 */
+    @Transactional
+    public Long createOrderFromCart(User user, OrderRequest orderRequest) {
+        Cart cart = cartRepository.findByUser(user).orElseThrow(() -> new IllegalStateException("유저의 장바구니를 찾지 못 했습니다."));
+        List<OrderItem> orderItems = cart.getItems().stream() //Cart 안의 CartItem을 순환
+                .map(cartItem -> {
+                    Item item = cartItem.getItem();
+                    item.removeStock(cartItem.getCount());
+                    return OrderItem.createOrderItem(item, cartItem.getCount());
+                })
+                .collect(Collectors.toList());
+        Order order = Order.createOrder(user, orderRequest, orderItems);
+
+        // Order의 OrderItem을 연결
+        for (OrderItem orderItem : orderItems) {
+            orderItem.setOrder(order);  // 각 OrderItem에 해당하는 Order를 연결
+        }
+
+        orderRepository.save(order);
+        cartRepository.delete(cart); // 주문 후 장바구니 비우기
+        return order.getId();
+    }
+
 }
