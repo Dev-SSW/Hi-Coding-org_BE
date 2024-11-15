@@ -7,6 +7,7 @@ import com.example.codingmall.Item.Item;
 import com.example.codingmall.Item.ItemRepository;
 import com.example.codingmall.User.User;
 import com.example.codingmall.User.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,27 +25,23 @@ public class CartService {
 
 
     @Transactional
-    public CartDto addItemToCart(Long userId, Long itemId,int count){
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalStateException("Invalid user Id"));
-        Item item = itemRepository.findById(itemId)
-                .orElseThrow(() -> new IllegalStateException("Invalid Item id"));
+    public CartDto addItemToCart(User user, AddCartItemRequest request){
 
-        Cart cart = cartRepository.findByUser(user).orElse(null);
-        if (cart == null) {
-            cart = new Cart(user);
-        }
-        CartItem cartItem = new CartItem(item, count);
+        Item item = itemRepository.findById(request.getItemId())
+                .orElseThrow(() -> new EntityNotFoundException("찾을 수 없는 아이템 아이디입니다." + request.getItemId()));
+        Cart cart = cartRepository.findByUser(user).orElse(new Cart(user));
+
+        CartItem cartItem = new CartItem(item, request.getCount());
         cart.addItem(cartItem);
 
         cartRepository.save(cart);
         return new CartDto(cart);
     }
-    public CartDto getCartToUser(Long userId){
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalStateException("Invalid user Id"));
+    public CartDto getCartToUser(User user){
+        userRepository.findByUsername(user.getUsername())
+                .orElseThrow(() -> new IllegalStateException("이러한 아이디를 찾지 못했습니다.: " + user.getUsername()));
         Cart cart = cartRepository.findByUser(user)
-                .orElseThrow(() -> new IllegalStateException("Cart not found for user"));
+                .orElseThrow(() -> new IllegalStateException("이러한 유저에 담겨있는 카트를 찾지 못했습니다."));
 
         return new CartDto(cart);
     }

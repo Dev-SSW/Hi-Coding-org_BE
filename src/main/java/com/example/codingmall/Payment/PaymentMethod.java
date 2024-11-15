@@ -1,4 +1,4 @@
-package com.example.codingmall.Delivery;
+package com.example.codingmall.Payment;
 
 public enum PaymentMethod {
     // 나중에는 아임포트 api 사용하기

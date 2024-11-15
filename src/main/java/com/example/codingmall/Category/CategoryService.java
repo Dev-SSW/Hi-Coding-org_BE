@@ -1,10 +1,13 @@
 package com.example.codingmall.Category;
 
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static org.hibernate.Hibernate.map;
 
 @Service
 @RequiredArgsConstructor
@@ -12,50 +15,38 @@ import java.util.stream.Collectors;
 public class CategoryService {
     private final CategoryRepository categoryRepository;
 
-    /* ID로 카테고리 찾기 */
-    public CategoryDto findCategoryById(Long id) {
-        Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new IllegalStateException("Invalid category ID"));
-        return new CategoryDto(category.getId(), category.getName(), category.getParentId());
-    }
-
-    /* 트리 구조 생성 */
     @Transactional
-    public CategoryDto createCategoryRoot() {
-        List<Category> allCategories = categoryRepository.findAll();
-
-        // 부모 ID로 그룹화
-        Map<Long, List<CategoryDto>> groupedByParentId = allCategories.stream()
-                .map(category -> new CategoryDto(
-                        category.getId(),
-                        category.getName(),
-                        category.getParentId()))
-                .collect(Collectors.groupingBy(dto -> dto.getParentId() != null ? dto.getParentId() : 0L));
-
-        // 루트 노드를 생성 (ID가 0L인 노드)
-        CategoryDto rootCategory = new CategoryDto(0L, "ROOT", null);
-        addSubCategories(rootCategory, groupedByParentId);
-        return rootCategory;
-    }
-
-    /* 하위 카테고리를 재귀적으로 추가 */
-    private void addSubCategories(CategoryDto parent, Map<Long, List<CategoryDto>> groupByParentId) {
-        List<CategoryDto> subCategories = groupByParentId.get(parent.getId());
-
-        if (subCategories != null) {
-            parent.setSubCategories(subCategories);
-            for (CategoryDto subCategory : subCategories) {
-                addSubCategories(subCategory, groupByParentId);
-            }
+    @PostConstruct
+    public void createDefaultCategory(){
+        if(!categoryRepository.existsById(0L)){
+            categoryRepository.save(Category.defaultBuilder().build());
         }
     }
 
-    /* 카테고리 생성 */
-    @Transactional
-    public CategoryDto createCategory(CategoryDto categoryDto) {
-        Category category = new Category(categoryDto.getName(), categoryDto.getParentId());
-        Category savedCategory = categoryRepository.save(category);
+    // 카테고리 생성
+   @Transactional
+    public CategoryDto createCategory(CategoryDto categoryDto){
+       Category category = categoryDto.toEntity();
+       Category savedCategory = categoryRepository.save(category);
+       return CategoryDto.from(savedCategory);
+   }
 
-        return new CategoryDto(savedCategory.getId(), savedCategory.getName(), savedCategory.getParentId());
+   // 카테고리 id로 조회
+    public CategoryDto getCategoryById(Long id){
+        Category category = categoryRepository.findById(id)
+                .orElseThrow( () -> new IllegalStateException("카테고리가 이 id를 찾지 못했습니다." +  id));
+        return CategoryDto.from(category);
+    }
+
+    public List<CategoryDto> getAllCategories(){
+        List<Category> categoryList = categoryRepository.findAll();
+        return categoryList.stream()
+                .map(CategoryDto::from)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void deleteCategory(Long id){
+       categoryRepository.deleteById(id);
     }
 }

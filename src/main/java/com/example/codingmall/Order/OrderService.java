@@ -28,7 +28,7 @@ public class OrderService {
                 .map(orderItemRequest -> {
                     Item item = itemRepository.findById(orderItemRequest.getItemId())
                             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 상품입니다."));
-                    item.removeStock(orderItemRequest.getItemCount());
+                    //item.removeStock(orderItemRequest.getItemCount()); --> 일단 테스트를 위해 잠시만 꺼놓음.
                     return OrderItem.createOrderItem(item, orderItemRequest.getItemCount());  // null은 orderId가 없으므로 임시로 처리
                 })
                 .collect(Collectors.toList());
@@ -52,7 +52,7 @@ public class OrderService {
         List<OrderItem> orderItems = cart.getItems().stream() //Cart 안의 CartItem을 순환
                 .map(cartItem -> {
                     Item item = cartItem.getItem();
-                    item.removeStock(cartItem.getCount());
+                   // item.removeStock(cartItem.getCount()); --> 테스트를 위해 잠시 꺼놓음.
                     return OrderItem.createOrderItem(item, cartItem.getCount());
                 })
                 .collect(Collectors.toList());
