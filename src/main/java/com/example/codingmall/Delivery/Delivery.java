@@ -1,4 +1,4 @@
-package com.example.codingmall.Delivery1;
+package com.example.codingmall.Delivery;
 
 import com.example.codingmall.Order.Order;
 import jakarta.persistence.*;
@@ -7,7 +7,7 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 
 @Entity@Getter
-public class Delivery1 {
+public class Delivery {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "payment_id")
     private Long id;
