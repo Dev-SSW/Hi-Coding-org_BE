@@ -1,6 +1,7 @@
 package com.example.codingmall.Item;
 
 import com.example.codingmall.Category.Category;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+//@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class Item {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "item_id")
@@ -46,16 +48,16 @@ public class Item {
     public void removeStock(int quantity){
         int restStock = this.stock - quantity;
         if (restStock <0){
-            throw new NotEnoughStockException("need more stock");
+            throw new NotEnoughStockException("주문하려는 상품이 가지고 있는 상품보다 더 많습니다.");
         }
         this.stock = restStock;
     }
 
-    // 좋아요 수 추가
+    // 좋아요 +1
     public void addLike(){
         this.likes += 1;
     }
-    //좋아요 해제
+    //좋아요 -1
     public void minusLike(){
         this.likes -=1;
     }
@@ -80,7 +82,13 @@ public class Item {
         if (itemDto.getContent() != null) {
             this.content = itemDto.getContent();
         }
+        if(itemDto.getStock() >=0){
+            this.stock = itemDto.getStock();
+        }
         this.updateDate = LocalDateTime.now(); // 수정 시간 업데이트
+    }
+    public void setCategory(Category category){
+        this.category = category;
     }
 
 }

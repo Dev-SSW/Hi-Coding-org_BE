@@ -1,7 +1,7 @@
 package com.example.codingmall.Order;
 
 import com.example.codingmall.Coupon.Coupon;
-import com.example.codingmall.Delivery.Delivery;
+import com.example.codingmall.Payment.Payment;
 import com.example.codingmall.OrderItem.OrderItem;
 import com.example.codingmall.User.User;
 import jakarta.persistence.*;
@@ -28,12 +28,13 @@ public class Order {
 
     @OneToOne(fetch = FetchType.LAZY, cascade =  CascadeType.ALL)           //엔티티에 관련된 모든 엔티티를 함께 영속화 시킨다 (Delivery)
     @JoinColumn(name = "delivery_id")               //Delivery의 PK의 주인은 Order이다
-    private Delivery delivery;
+    private Payment payment;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "coupon_id")
     private Coupon coupon;
 
+    @Builder.Default // 오류 해결 위한 추가 부분(List 필드에 초깃값을 설정했지만, @Builder에서 무시함 --> 이 내용을 해결)
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
