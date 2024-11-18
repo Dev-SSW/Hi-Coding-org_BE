@@ -21,8 +21,8 @@ public class OrderController {
 
     @PostMapping("/create/fromCart")
     @Operation(summary = "장바구니로부터 주문 생성")
-    public ResponseEntity<Long> createFromCart(@AuthenticationPrincipal User user, @RequestBody OrderRequest orderRequest) {
-        return ResponseEntity.ok(orderService.createOrderFromCart(user, orderRequest));
+    public ResponseEntity<Long> createFromCart(@AuthenticationPrincipal User user, @RequestBody OrderCartRequest orderCartRequest) {
+        return ResponseEntity.ok(orderService.createOrderFromCart(user, orderCartRequest));
     }
 
     @PostMapping("/cancel")

@@ -47,7 +47,7 @@ public class OrderService {
 
     /* 장바구니 상품들 주문 */
     @Transactional
-    public Long createOrderFromCart(User user, OrderRequest orderRequest) {
+    public Long createOrderFromCart(User user, OrderCartRequest orderCartRequest) {
         Cart cart = cartRepository.findByUser(user).orElseThrow(() -> new IllegalStateException("유저의 장바구니를 찾지 못 했습니다."));
         List<OrderItem> orderItems = cart.getItems().stream() //Cart 안의 CartItem을 순환
                 .map(cartItem -> {
@@ -56,7 +56,13 @@ public class OrderService {
                     return OrderItem.createOrderItem(item, cartItem.getCount());
                 })
                 .collect(Collectors.toList());
-        Order order = Order.createOrder(user, orderRequest, orderItems);
+        OrderRequest orderRequest1 = OrderRequest.builder()
+                .receiverName(orderCartRequest.getReceiverName())
+                .receiverPhone(orderCartRequest.getReceiverPhone())
+                .deliveryAddress(orderCartRequest.getDeliveryAddress())
+                .orderNote(orderCartRequest.getOrderNote())
+                .build();
+        Order order = Order.createOrder(user, orderRequest1, orderItems);
 
         // Order의 OrderItem을 연결
         for (OrderItem orderItem : orderItems) {
