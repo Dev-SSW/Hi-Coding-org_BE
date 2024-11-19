@@ -6,6 +6,7 @@ import com.example.codingmall.Item.Item;
 import com.example.codingmall.Item.ItemRepository;
 import com.example.codingmall.OrderItem.OrderItem;
 import com.example.codingmall.User.User;
+import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
