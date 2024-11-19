@@ -5,6 +5,7 @@ import com.example.codingmall.User.Login.LoginDto.JwtResponse;
 import com.example.codingmall.User.Login.LoginDto.SigninRequest;
 import com.example.codingmall.User.Login.LoginDto.SignupRequest;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

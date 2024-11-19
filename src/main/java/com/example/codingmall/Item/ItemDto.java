@@ -23,7 +23,7 @@ public class ItemDto {
     private String productName;
     private ItemStatus status;
 
-    private int  stock;
+    private int stock;
     private int price;
 
     private String intro;
