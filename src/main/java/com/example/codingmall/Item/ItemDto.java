@@ -27,7 +27,7 @@ public class ItemDto {
     private int price;
 
     private String intro;
-    private String content;
+    private byte[] content;
 
     private LocalDateTime createDate;
     private LocalDateTime updateDate;

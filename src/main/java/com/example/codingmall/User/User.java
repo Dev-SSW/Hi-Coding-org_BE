@@ -34,7 +34,7 @@ public class User implements UserDetails, OAuth2User {
     private Role role;       // 역할
 
     @Builder.Default // 리스트 초깃값 설정을 위한 어노테이션(warnings 해결)
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Order> orders = new ArrayList<>();
 
     @Transient
