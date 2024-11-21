@@ -13,8 +13,7 @@ public class CartItemService {
     private final CartItemReposiroty cartItemRepository;
 
     public CartItem findCartItemById(Long id){
-        CartItem cartItem = cartItemRepository.findById(id)
-                .orElseThrow(() -> new IllegalStateException("Invalid CartItem Id"));
+        CartItem cartItem = cartItemRepository.findCartItemById(id);
         return cartItem;
     }
     @Transactional

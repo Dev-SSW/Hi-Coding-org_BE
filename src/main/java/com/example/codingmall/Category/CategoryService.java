@@ -33,8 +33,7 @@ public class CategoryService {
 
    // 카테고리 id로 조회
     public CategoryDto getCategoryById(Long id){
-        Category category = categoryRepository.findById(id)
-                .orElseThrow( () -> new IllegalStateException("카테고리가 이 id를 찾지 못했습니다." +  id));
+        Category category = categoryRepository.findCategoryById(id);
         return CategoryDto.from(category);
     }
 
