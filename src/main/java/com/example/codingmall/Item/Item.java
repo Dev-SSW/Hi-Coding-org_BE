@@ -36,7 +36,8 @@ public class Item {
     private int  price; //가격
 
     private String intro; //소개글
-    private String content; //상품 상세 설명
+    @Lob
+    private byte[] content; // 제품 상세 설명 이미지
 
     private final LocalDateTime createDate = LocalDateTime.now();
     private LocalDateTime updateDate;

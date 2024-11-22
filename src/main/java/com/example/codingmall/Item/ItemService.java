@@ -20,15 +20,13 @@ public class ItemService {
 
 
     public ItemDto findItemById(Long id) {
-        Item item = itemRepository.findById(id)
-                .orElseThrow(() -> new IllegalStateException("적절하지 않은 제품 ID 입니다. " + id));
+        Item item = itemRepository.findItemById(id);
         Hibernate.initialize(item.getCategory());
         return ItemDto.from(item);
     }
 
     public ItemDto findItemByProductName(String productName) {
-        Item item = itemRepository.findByProductName(productName)
-                .orElseThrow(() -> new IllegalStateException("그러한 제품 이름이 없습니다. " + productName));
+        Item item = itemRepository.findItemByProductName(productName);
         return ItemDto.from(item);
     }
 
@@ -48,12 +46,9 @@ public class ItemService {
     // 상품수정
     @Transactional
     public void updateItem(ItemDto itemDto) {
-        Item item = itemRepository.findById(itemDto.getId())
-                .orElseThrow(() -> new IllegalStateException("해당 ID의 제품이 없습니다.: " + itemDto.getId()));
-
+        Item item = itemRepository.findItemById(itemDto.getId());
         if (itemDto.getCategory() !=null && itemDto.getCategory().getId() != null){
-            Category category = categoryRepository.findById(itemDto.getCategory().getId())
-                    .orElseThrow(() -> new IllegalStateException("존재하지 않는 카테고리 입니다. 카테고리 ID : " + itemDto.getCategory().getId()));
+            Category category = categoryRepository.findCategoryById(itemDto.getCategory().getId());
             item.setCategory(category);
         }
         item.updateItem(itemDto);
@@ -63,8 +58,7 @@ public class ItemService {
     // 상품 등록
     @Transactional
     public Item saveItem(ItemDto itemDto) {
-        Category category = categoryRepository.findCategoryById(itemDto.getCategory().getId())
-                .orElseThrow(() -> new IllegalStateException("존재하지 않는 카테고리 입니다." + itemDto.getCategory().getId()));
+        Category category = categoryRepository.findCategoryById(itemDto.getCategory().getId());
         Item saveitem = itemDto.toEntity();
         saveitem.setCategory(category);
         return itemRepository.save(saveitem);

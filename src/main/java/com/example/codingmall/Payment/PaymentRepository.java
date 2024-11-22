@@ -15,6 +15,10 @@ public interface PaymentRepository extends JpaRepository<Payment,Long> {
 // 결제 상태별 배송 목록 찾기
     List<Payment> findByStatus(PaymentStatus status);
 
+    default Payment findPaymentById(Long id){
+        return findById(id).orElseThrow(()-> new IllegalStateException("그러한 결제 정보가 없습니다." + id));
+    }
+
     @Query("SELECT p FROM Payment p JOIN FETCH p.order where p.id = :id")
     Payment findByIdWithiOrder(@Param("id") Long id);
 
