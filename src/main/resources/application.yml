@@ -39,7 +39,7 @@ spring:
             user-name-attribute: response
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true

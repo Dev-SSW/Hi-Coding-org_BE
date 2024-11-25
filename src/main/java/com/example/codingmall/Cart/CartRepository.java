@@ -9,4 +9,7 @@ import java.util.Optional;
 @Repository
 public interface CartRepository extends JpaRepository<Cart,Long> {
     Optional<Cart> findByUser (User user);
+    default Cart findCartByUser(User user) {
+        return findByUser(user).orElseThrow(() -> new IllegalStateException("유저의 장바구니를 찾지 못했습니다. userId : " + user.getId()));
+    }
 }

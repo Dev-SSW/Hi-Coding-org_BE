@@ -27,8 +27,7 @@ public class CartService {
     @Transactional
     public CartDto addItemToCart(User user, AddCartItemRequest request){
 
-        Item item = itemRepository.findById(request.getItemId())
-                .orElseThrow(() -> new EntityNotFoundException("찾을 수 없는 아이템 아이디입니다." + request.getItemId()));
+        Item item = itemRepository.findItemById(request.getItemId());
         Cart cart = cartRepository.findByUser(user).orElse(new Cart(user));
 
         CartItem cartItem = new CartItem(item, request.getCount());
@@ -38,10 +37,8 @@ public class CartService {
         return new CartDto(cart);
     }
     public CartDto getCartToUser(User user){
-        userRepository.findByUsername(user.getUsername())
-                .orElseThrow(() -> new IllegalStateException("이러한 아이디를 찾지 못했습니다.: " + user.getUsername()));
-        Cart cart = cartRepository.findByUser(user)
-                .orElseThrow(() -> new IllegalStateException("이러한 유저에 담겨있는 카트를 찾지 못했습니다."));
+        userRepository.findUserByUsername(user.getUsername());
+        Cart cart = cartRepository.findCartByUser(user);
 
         return new CartDto(cart);
     }

@@ -25,9 +25,7 @@ public class AuthService {
     @Transactional
     public JwtResponse signUp(SignupRequest request) {
         try {
-            userRepository.findByUsername(request.getUsername())
-                    .ifPresent(u -> {throw new IllegalStateException("이미 존재하는 아이디입니다.");
-                    });
+            userRepository.findUserByUsername(request.getUsername());
             UserDto userDto = UserDto.builder()
                     .username(request.getUsername())
                     .password(passwordEncoder.encode(request.getPassword()))
@@ -67,8 +65,7 @@ public class AuthService {
                     new UsernamePasswordAuthenticationToken(signinRequest.getUsername(), signinRequest.getPassword())
             );
             // 사용자 정보 조회
-            User user = userRepository.findByUsername(signinRequest.getUsername())
-                    .orElseThrow(() -> new Exception("사용자를 찾을 수 없습니다."));
+            User user = userRepository.findUserByUsername(signinRequest.getUsername());
 
             // JWT 생성
             var jwt = jwtUtils.generateToken(user);
@@ -93,8 +90,7 @@ public class AuthService {
     public JwtResponse refreshToken(JwtRequest refreshTokenRequest) {
         try {
             String ourName = jwtUtils.extractUsername(refreshTokenRequest.getToken());
-            User users = userRepository.findByUsername(ourName)
-                    .orElseThrow(() -> new Exception("사용자를 찾을 수 없습니다."));
+            User users = userRepository.findUserByUsername(ourName);
 
             if (jwtUtils.isTokenValid(refreshTokenRequest.getToken(), users)) {
                 var jwt = jwtUtils.generateToken(users);
@@ -123,8 +119,7 @@ public class AuthService {
     public JwtResponse validateToken(JwtRequest validateTokenRequest) {;
         try {
             String ourName = jwtUtils.extractUsername(validateTokenRequest.getToken());
-            User user = userRepository.findByUsername(ourName)
-                    .orElseThrow(() -> new Exception("사용자를 찾을 수 없습니다."));
+            User user = userRepository.findUserByUsername(ourName);
 
             // 토큰 유효성 검사
             if (jwtUtils.isTokenValid(validateTokenRequest.getToken(), user)) {

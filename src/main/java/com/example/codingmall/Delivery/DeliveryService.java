@@ -19,8 +19,7 @@ public class DeliveryService {
 
     @Transactional
     public DeliveryResponseDto createDelivery (DeliveryDto deliveryDto){
-        Order order = orderRepository.findById(deliveryDto.getOrderId())
-                .orElseThrow(() -> new IllegalStateException("그러한 주문 번호를 찾을 수 없습니다."));
+        Order order = orderRepository.findOrderById(deliveryDto.getOrderId());
         Delivery delivery = Delivery.createDelivery(order, deliveryDto);
         deliveryRepository.save(delivery);
 
