@@ -10,10 +10,10 @@ import java.util.Optional;
 @Repository
 public interface ItemRepository extends JpaRepository<Item,Long> {
     @EntityGraph(attributePaths = {"category"})
-    Optional<Item> findByProductName( String productName);
+    Optional<Item> findItem_ByProductName(String productName);
     // 상품 이름으로 검색
     default Item findItemByProductName(String productName){
-        return findByProductName(productName).orElseThrow(()-> new IllegalStateException("그러한 제품 이름이 없습니다." + productName));
+        return findItem_ByProductName(productName).orElseThrow(()->new IllegalStateException("그러한 제품 이름이 없습니다.: " +productName));
     }
     @EntityGraph(attributePaths = {"category"})
     default Item findItemById(Long itemId){
