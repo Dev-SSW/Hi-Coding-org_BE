@@ -18,8 +18,7 @@ public class PaymentService {
     // 결제 정보 생성
     @Transactional
     public Long createPayment(PaymentDto paymentDto){
-        Order order = orderRepository.findById(paymentDto.getOrderId())
-                .orElseThrow(() -> new IllegalStateException("그러한 주문 번호가 없습니다. 주문번호 : " + paymentDto.getOrderId()));
+        Order order = orderRepository.findOrderById(paymentDto.getOrderId());
         Payment payment = Payment.builder()
                 .order(order)
                 .amount(paymentDto.getAmount())
