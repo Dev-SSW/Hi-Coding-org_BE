@@ -25,7 +25,9 @@ public class AuthService {
     @Transactional
     public JwtResponse signUp(SignupRequest request) {
         try {
-            userRepository.findUserByUsername(request.getUsername());
+            userRepository.findByUsername(request.getUsername())
+                    .ifPresent(u -> {throw new IllegalStateException("이미 존재하는 아이디입니다.");
+                    });
             UserDto userDto = UserDto.builder()
                     .username(request.getUsername())
                     .password(passwordEncoder.encode(request.getPassword()))

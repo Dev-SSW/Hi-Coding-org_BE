@@ -1,5 +1,6 @@
-package com.example.codingmall.User.Login.Jwt;
+package com.example.codingmall.Config;
 
+import com.example.codingmall.User.Login.Jwt.JWTAuthFilter;
 import com.example.codingmall.User.Login.OAuth2.CustomOAuth2UserService;
 import com.example.codingmall.User.Login.OAuth2.CustomSuccessHandler;
 import com.example.codingmall.User.UserService;
