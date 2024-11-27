@@ -44,6 +44,10 @@ public class User implements UserDetails, OAuth2User {
     @Transient
     private Map<String, Object> attributes; //OAuth2 속성
 
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     //UserDetails
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
