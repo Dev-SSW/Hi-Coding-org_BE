@@ -31,12 +31,9 @@ public class AuthService {
             UserDto userDto = UserDto.builder()
                     .username(request.getUsername())
                     .password(passwordEncoder.encode(request.getPassword()))
-                    .jumin(request.getJumin())
+                    .birth(request.getBirth())
                     .name(request.getName())
-                    .email(request.getEmail())
                     .phoneNumber(request.getPhoneNumber())
-                    .status(request.getStatus())
-                    .role(request.getRole())
                     .build();
             User userEntity = userDto.toEntity();
             User saveUser = userRepository.save(userEntity);

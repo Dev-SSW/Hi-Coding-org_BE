@@ -7,6 +7,7 @@ import com.example.codingmall.User.Login.OAuth2dto.OAuth2Response;
 import com.example.codingmall.User.Role;
 import com.example.codingmall.User.User;
 import com.example.codingmall.User.UserRepository;
+import com.example.codingmall.User.UserStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -56,7 +57,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                     .username(username)
                     .name(oAuth2Response.getName())
                     .email(oAuth2Response.getEmail())
-                    .role(Role.ROLE_USER)
+                    //.birth()
+                    //.phoneNumber()
                     .build();
             User userEntity = userDto.toEntity();
             userRepository.save(userEntity);
@@ -69,7 +71,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                     .username(username)
                     .name(existData.getName())
                     .email(existData.getEmail())
-                    .role(existData.getRole())
+                    //.birth()
+                    //.phoneNumber()
                     .build();
 
             User userEntity = userDto.toEntity();

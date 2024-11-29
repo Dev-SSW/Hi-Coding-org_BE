@@ -24,8 +24,8 @@ public class User implements UserDetails, OAuth2User {
 
     private String username; // 아이디
     private String password; // 비밀번호
-    @Column(nullable = false, length = 13)
-    private int jumin;       // 주민등록번호
+    @Column(nullable = false, length = 8)
+    private int birth;       //  생년월일
     @Column(nullable = false)
     private String name;     // 사용자 이름
     private String email;    // 이메일
@@ -43,6 +43,10 @@ public class User implements UserDetails, OAuth2User {
 
     @Transient
     private Map<String, Object> attributes; //OAuth2 속성
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
     //UserDetails
     @Override

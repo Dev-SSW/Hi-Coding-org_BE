@@ -56,7 +56,7 @@ public class SecurityConfig {
                         ).permitAll()
                         .requestMatchers("/public/**", "/error").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN") // ADMIN 역할을 가진 사용자만 접근 허용
-                        .requestMatchers("/user/**").hasRole("USER") // USER 역할을 가진 사용자만 접근 허용
+                        .requestMatchers("/user/**").hasAnyRole("USER", "SOCIAL") // USER 역할을 가진 사용자만 접근 허용
                         .anyRequest().authenticated())
                 .oauth2Login(oauth -> oauth
                         .successHandler(customSuccessHandler)
