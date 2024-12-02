@@ -15,13 +15,13 @@ import static org.hibernate.Hibernate.map;
 public class CategoryService {
     private final CategoryRepository categoryRepository;
 
-    @Transactional
-    @PostConstruct
-    public void createDefaultCategory(){
-        if(!categoryRepository.existsById(0L)){
-            categoryRepository.save(Category.defaultBuilder().build());
-        }
-    }
+//    @Transactional
+//    @PostConstruct
+//    public void createDefaultCategory(){
+//        if(!categoryRepository.existsById(0L)){
+//            categoryRepository.save(Category.defaultBuilder().build());
+//        }
+//    }
 
     // 카테고리 생성
    @Transactional

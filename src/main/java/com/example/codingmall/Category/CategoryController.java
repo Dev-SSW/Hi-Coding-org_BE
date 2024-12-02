@@ -18,10 +18,10 @@ import java.util.stream.Collectors;
 public class CategoryController {
     private final CategoryService categoryService;
 
-    @PostConstruct
-    public void initDefaultCategory(){
-        categoryService.createDefaultCategory();
-    }
+//    @PostConstruct
+//    public void initDefaultCategory(){
+//        categoryService.createDefaultCategory();
+//    }
     @Operation(summary = "카테고리 생성",description = "새로운 카테고리를 생성합니다.")
     @PostMapping
     public ResponseEntity<CategoryDto> createCategory(@RequestBody CategoryDto categoryDto){
