@@ -15,8 +15,7 @@ public class CartController {
 
     @PostMapping("/add")
     public ResponseEntity<CartDto> addItemToCart(@AuthenticationPrincipal User user,
-                                                 @RequestBody AddCartItemRequest request,
-                                                 @RequestParam(name = "count") int count){
+                                                 @RequestBody AddCartItemRequest request){
         CartDto cartDto = cartService.addItemToCart(user,request);
         return ResponseEntity.ok(cartDto);
     }
