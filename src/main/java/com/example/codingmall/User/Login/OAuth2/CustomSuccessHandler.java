@@ -44,5 +44,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         // 사용자에게 응답
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().write("로그인 성공");
+
+        response.sendRedirect("http://localhost:3000/home");
     }
 }
