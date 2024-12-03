@@ -9,12 +9,15 @@ import com.example.codingmall.User.User;
 import com.example.codingmall.User.UserRepository;
 import com.example.codingmall.User.UserStatus;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -50,9 +53,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         //System.out.println("만들어진 사용자 명은 : " + username);
 
         //회원 정보가 이미 테이블에 존재하는지 확인 (중복 계정)
-        User existData = userRepository.findUserByUsername(username);
+        Optional<User> existData = userRepository.findByUsername(username); //Optional로 일단 가져오기
+
         UserDto userDto;
-        if(existData == null) {
+        if(existData.isEmpty()) { //새로 만들기
             userDto = UserDto.builder()
                     .username(username)
                     .name(oAuth2Response.getName())
@@ -61,23 +65,15 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                     //.phoneNumber()
                     .build();
             User userEntity = userDto.toEntity();
+            userEntity.setRole(Role.ROLE_SOCIAL);
             userRepository.save(userEntity);
             System.out.println("새로운 유저가 가입했습니다. 유저 이름은 : " + userEntity.getUsername());
             return userEntity;
         }
-        else {
-            //회원정보가 존재한다면 조회된 데이터로 반환
-            userDto = UserDto.builder()
-                    .username(username)
-                    .name(existData.getName())
-                    .email(existData.getEmail())
-                    //.birth()
-                    //.phoneNumber()
-                    .build();
-
-            User userEntity = userDto.toEntity();
-            System.out.println("기존 유저를 찾았습니다. 유저 이름은 : " + userEntity.getUsername());
-            return userEntity;
+        else {                   //기존 유저 가져오기
+            User users = existData.orElseThrow(() -> new UsernameNotFoundException("이미 있는 계정이므로 USER 정보를 가져옵니다.")); //USER로 가져오기
+            System.out.println("기존 유저를 찾았습니다. 유저 이름은 : " + users.getUsername());
+            return users;
         }
     }
 }
