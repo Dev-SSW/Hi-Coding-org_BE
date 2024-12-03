@@ -34,20 +34,7 @@ public class SwaggerConfig {
                         new Components().addSecuritySchemes("bearerAuth",
                         new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT")));
     }
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")  //모든 경로에 CORS 허용
-                        .allowedOriginPatterns("https://*.ngrok-free.app", "http://localhost:3000","https://*.ngrok.app") // ngrok 도메인 허용, 리액트 도메인 허용
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
-                        .allowedHeaders("*")
-                        .maxAge(3600) // preflight 캐시 시간 설정
-                        .allowCredentials(true);
-            }
-        };
-    }
+
     private String getNgrokUrl() {
         try {
             RestTemplate restTemplate = new RestTemplate();
