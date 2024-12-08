@@ -20,11 +20,24 @@ import java.io.IOException;
 public class JWTAuthFilter extends OncePerRequestFilter {
     private final JWTUtils jwtUtils;
     private final UserService userService;
+
+    @Override /* /public/** 으로 시작하는 URL이지만 어나니머스 요청, 즉 체인 필터를 거치고 있으므로, 명시적으로 public으로 시작하는 URL이 필터를 거치지 않도록 만들어야 합니다 */
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        // "/public/**" 경로에서는 필터를 실행하지 않음
+        String path = request.getRequestURI();
+        System.out.println("NotFilter Path 확인 : " + path);
+        return  path.startsWith("/error") || path.startsWith("/public") ||
+                path.startsWith("/swagger-ui") || path.startsWith("/v3/api-docs") ||
+                path.startsWith("/v3/api-docs.yaml") || path.equals("/v3/api-docs/swagger-config") ||
+                path.startsWith("/category") || path.startsWith("/signin");
+    }
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        System.out.println("JWTAuthFilter 동작");
         final String authHeader = request.getHeader("Authorization");
         if (authHeader == null || authHeader.isBlank()) {
-            System.out.println("권한이 필요없으므로 넘어갑니다");
+            System.out.println("Authorization 헤더 없음. 필터 통과");
             filterChain.doFilter(request, response);
             return;
         }
