@@ -8,6 +8,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -20,6 +21,9 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private final JWTUtils jwtUtils;
     //http://localhost:8080/oauth2/authorization/google
     //http://localhost:8080/oauth2/authorization/naver
+    @Value("${spring.frontend.url}")
+    private String frontendUrl;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
@@ -43,8 +47,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         // 사용자에게 응답
         response.setStatus(HttpServletResponse.SC_OK);
-        response.getWriter().write("로그인 성공");
-
-        response.sendRedirect("http://localhost:3000/home");
+        //response.getWriter().write("로그인 성공"); //브라우저는 한 번에 하나의 응답만 처리할 수 있기 때문
+        response.sendRedirect("frontendUrl");
     }
 }

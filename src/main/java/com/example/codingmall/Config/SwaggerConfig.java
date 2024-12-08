@@ -26,8 +26,8 @@ public class SwaggerConfig {
                         .version("1.0.0")
                         .description("<h3>Swagger test</h3>"))
                 .servers(List.of(
-                        new Server().url(ngrokUrl).description("ngrok 환경"),
-                        new Server().url("http://localhost:8080").description("로컬 환경")
+                        new Server().url(ngrokUrl).description("ngrok 환경")
+                        //new Server().url("http://localhost:8080").description("로컬 환경")
                 ))
                 .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
                 .components(
