@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 @Component
 @RequiredArgsConstructor
@@ -21,15 +22,13 @@ public class JWTAuthFilter extends OncePerRequestFilter {
     private final JWTUtils jwtUtils;
     private final UserService userService;
 
-    @Override /* /public/** 으로 시작하는 URL이지만 어나니머스 요청, 즉 체인 필터를 거치고 있으므로, 명시적으로 public으로 시작하는 URL이 필터를 거치지 않도록 만들어야 합니다 */
+    // public/** 으로 시작하는 URL이지만 어나니머스 요청, 즉 체인 필터를 거치고 있으므로, 명시적으로 public으로 시작하는 URL이 필터를 거치지 않도록 만들어야 합니다
+    @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        // "/public/**" 경로에서는 필터를 실행하지 않음
+        System.out.println("ShouldNotFilter 동작");
+        String[] excludePath = {"/public", "/error", "/swagger-ui", "/v3/api-docs", "/v3/api-docs.yaml", "/v3/api-docs/swagger-config" };
         String path = request.getRequestURI();
-        System.out.println("NotFilter Path 확인 : " + path);
-        return  path.startsWith("/error") || path.startsWith("/public") ||
-                path.startsWith("/swagger-ui") || path.startsWith("/v3/api-docs") ||
-                path.startsWith("/v3/api-docs.yaml") || path.equals("/v3/api-docs/swagger-config") ||
-                path.startsWith("/category") || path.startsWith("/signin");
+        return  Arrays.stream(excludePath).anyMatch(path::startsWith);
     }
 
     @Override
