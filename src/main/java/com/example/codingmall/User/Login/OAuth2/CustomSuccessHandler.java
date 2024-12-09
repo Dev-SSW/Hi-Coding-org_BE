@@ -48,6 +48,6 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         // 사용자에게 응답
         response.setStatus(HttpServletResponse.SC_OK);
         //response.getWriter().write("로그인 성공"); //브라우저는 한 번에 하나의 응답만 처리할 수 있기 때문
-        response.sendRedirect("frontendUrl");
+        response.sendRedirect(frontendUrl);
     }
 }

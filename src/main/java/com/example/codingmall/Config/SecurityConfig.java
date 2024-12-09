@@ -56,12 +56,11 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()  //OPTIONS 요청(Preflight)에 대한 명시적인 허용
                         .requestMatchers(
                                 "/public/**",
-                                "/error",
+                                "/error/",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
                                 "/v3/api-docs.yaml"
                         ).permitAll()
-                        .requestMatchers("/favicon.ico").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN") // ADMIN 역할을 가진 사용자만 접근 허용
                         .requestMatchers("/user/**").hasAnyRole("USER", "SOCIAL") // USER 역할을 가진 사용자만 접근 허용
                         .anyRequest().authenticated())
@@ -105,8 +104,10 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(List.of("https://*.ngrok-free.app"/*, "http://localhost:3000"*/)); // ngrok 도메인 허용, 리액트 도메인 허용
-                                                                                                                  // *:와일드 카드 URL을 사용하려면 OriginPatterns를 사용해야 합니다.
+//      configuration.setAllowedOriginPatterns(List.of("https://*.ngrok-free.app", "http://localhost:3000", "https://localhost:3000", "http://localhost:*", "https://localhost:*"));
+        configuration.setAllowedOriginPatterns(List.of("*"));
+        // *:와일드 카드 URL을 사용하려면 OriginPatterns를 사용해야 합니다.
+        // configuration.addAllowedOrigin("*");
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
