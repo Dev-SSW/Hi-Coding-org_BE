@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+
 @Component
 @RequiredArgsConstructor
 public class Admin {
@@ -18,7 +20,7 @@ public class Admin {
             UserDto userDto = UserDto.builder()
                     .username("admin")
                     .password(passwordEncoder.encode("1234"))
-                    .birth(20001010)
+                    .birth(LocalDate.parse("2024-01-01"))
                     .name("관리자")
                     .phoneNumber("000-0000-0000")
                     .build();

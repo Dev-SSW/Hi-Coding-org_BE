@@ -5,6 +5,8 @@ import com.example.codingmall.User.User;
 import com.example.codingmall.User.UserStatus;
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -13,7 +15,7 @@ public class UserDto {
     private Long id;           // 회원고유번호
     private String username;   // 아이디
     private String password;   // 비밀번호
-    private int birth;         // 주민등록번호
+    private LocalDate birth;         // 주민등록번호
     private String name;       // 사용자 이름
     private String phoneNumber;// 휴대폰 번호
     private String email;      // 이메일
