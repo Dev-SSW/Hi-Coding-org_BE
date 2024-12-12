@@ -5,6 +5,7 @@ import com.example.codingmall.Order.Order;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.*;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -24,8 +25,8 @@ public class User implements UserDetails, OAuth2User {
 
     private String username; // 아이디
     private String password; // 비밀번호
-    @Column(nullable = false, length = 8)
-    private int birth;       //  생년월일
+    @Column(nullable = false,name = "birth",columnDefinition = "DATE")
+    private LocalDate birth;       //  생년월일
     @Column(nullable = false)
     private String name;     // 사용자 이름
     private String email;    // 이메일

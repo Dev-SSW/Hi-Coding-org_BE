@@ -27,7 +27,7 @@ public class ItemDto {
     private int price;
 
     private String intro;
-    private byte[] content;
+    private String content; // 제품 상세 설명 이미지
 
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
@@ -42,7 +42,7 @@ public class ItemDto {
                 .stock(this.stock)
                 .price(this.price)
                 .intro(this.intro)
-                .content(this.content)
+                .content(this.content != null ? this.content.getBytes() : null)
                 .likes(this.likes)
                 .updateDate(LocalDateTime.now())
                 .build();
@@ -57,7 +57,7 @@ public class ItemDto {
                 .stock(item.getStock())
                 .price(item.getPrice())
                 .intro(item.getIntro())
-                .content(item.getContent())
+                .content(item.getContent() != null ? new String(item.getContent()) : null)
                 .likes(item.getLikes())
                 .createDate(item.getCreateDate())
                 .updateDate(LocalDateTime.now())

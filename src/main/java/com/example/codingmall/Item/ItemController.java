@@ -42,8 +42,16 @@ public class ItemController {
     @Operation(summary = "새로운 상품 등록",description = "새로운 상품을 등록합니다.")
     // 새로운 상품 등록
     public ResponseEntity<Item> createItem(@RequestBody ItemDto itemDto){
-        Item createdItem = itemService.saveItem(itemDto);
-        return ResponseEntity.ok(createdItem);
+        // 디버깅용
+        System.out.println("Received ItemDto: " + itemDto);
+        try {
+            Item createdItem = itemService.saveItem(itemDto);
+            return ResponseEntity.ok(createdItem);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     // 기존 상품 수정.
