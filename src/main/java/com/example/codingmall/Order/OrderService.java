@@ -54,7 +54,7 @@ public class OrderService {
         List<OrderItem> orderItems = cart.getItems().stream() //Cart 안의 CartItem을 순환
                 .map(cartItem -> {
                     Item item = cartItem.getItem();
-                   // item.removeStock(cartItem.getCount()); --> 테스트를 위해 잠시 꺼놓음.
+                    item.removeStock(cartItem.getCount());
                     return OrderItem.createOrderItem(item, cartItem.getCount());
                 })
                 .collect(Collectors.toList());
