@@ -1,5 +1,7 @@
 package com.example.codingmall.Item;
 
+import com.example.codingmall.Exception.ProductIdNotFoundException;
+import com.example.codingmall.Exception.ProductNameNotFoundException;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -13,11 +15,11 @@ public interface ItemRepository extends JpaRepository<Item,Long> {
     Optional<Item> findItem_ByProductName(String productName);
     // 상품 이름으로 검색
     default Item findItemByProductName(String productName){
-        return findItem_ByProductName(productName).orElseThrow(()->new IllegalStateException("그러한 제품 이름이 없습니다.: " +productName));
+        return findItem_ByProductName(productName).orElseThrow(()->new ProductNameNotFoundException("그러한 제품 이름이 없습니다.: " +productName));
     }
     @EntityGraph(attributePaths = {"category"})
     default Item findItemById(Long itemId){
-        return findById(itemId).orElseThrow(()->new IllegalStateException("이러한 제품 아이디가 없습니다 : " +itemId));
+        return findById(itemId).orElseThrow(()->new ProductIdNotFoundException("그러한 제품 아이디가 없습니다 : " +itemId));
     }
     @EntityGraph(attributePaths = {"category"})
     List<Item> findAll();

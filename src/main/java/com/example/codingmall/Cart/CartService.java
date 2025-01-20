@@ -1,18 +1,14 @@
 package com.example.codingmall.Cart;
 
 import com.example.codingmall.CartItem.CartItem;
-import com.example.codingmall.CartItem.CartItemDto;
-import com.example.codingmall.CartItem.CartItemReposiroty;
+import com.example.codingmall.CartItem.CartItemRepository;
 import com.example.codingmall.Item.Item;
 import com.example.codingmall.Item.ItemRepository;
 import com.example.codingmall.User.User;
 import com.example.codingmall.User.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +16,7 @@ import java.util.Optional;
 public class CartService {
     private final CartRepository cartRepository;
     private final ItemRepository itemRepository;
-    private final CartItemReposiroty cartItemReposiroty;
+    private final CartItemRepository cartItemRepository;
     private final UserRepository userRepository;
 
 

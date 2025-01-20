@@ -2,6 +2,7 @@ package com.example.codingmall.Coupon;
 
 import com.example.codingmall.CouponPublish.CouponPublish;
 import com.example.codingmall.CouponPublish.CouponPublishRepository;
+import com.example.codingmall.Exception.CouponRemainZeroException;
 import com.example.codingmall.User.User;
 import com.example.codingmall.User.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +34,7 @@ public class CouponService {
         Coupon coupon = couponRepository.findCouponById(couponId);
         // 쿠폰 잔여량 확인
         if (coupon.getRemain().compareTo(BigDecimal.ZERO) <= 0) {
-            throw new RuntimeException("쿠폰이 다 떨어졌습니다.");
+            throw new CouponRemainZeroException("쿠폰이 다 떨어졌습니다.");
         }
         CouponPublish couponPublish = CouponPublish.couponPublishToUser(user , coupon);
         couponPublishRepository.save(couponPublish);

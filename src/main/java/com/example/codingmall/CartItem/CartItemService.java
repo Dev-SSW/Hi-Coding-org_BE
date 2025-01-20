@@ -4,13 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.function.Supplier;
-
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class CartItemService {
-    private final CartItemReposiroty cartItemRepository;
+    private final CartItemRepository cartItemRepository;
 
     public CartItem findCartItemById(Long id){
         CartItem cartItem = cartItemRepository.findCartItemById(id);

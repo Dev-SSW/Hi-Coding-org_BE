@@ -39,7 +39,7 @@ public class DeliveryService {
     @Transactional
     public void cancelDelivery(Long deliveryId){
         Delivery delivery = deliveryRepository.findByDeliveryId(deliveryId);
-        delivery.CancelDelivery();
+        delivery.cancelDelivery();
     }
     public DeliveryResponseDto getDelivery(Long deliveryId){
         Delivery delivery = deliveryRepository.findByDeliveryId(deliveryId);

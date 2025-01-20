@@ -1,6 +1,7 @@
 package com.example.codingmall.Item;
 
 import com.example.codingmall.Category.Category;
+import com.example.codingmall.Exception.ItemNotEnoughException;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -47,7 +48,7 @@ public class Item {
     public void removeStock(int quantity){
         int restStock = this.stock - quantity;
         if (restStock <0) {
-            throw new IllegalStateException("주문하려는 상품이 가지고 있는 상품보다 더 많습니다.");
+            throw new ItemNotEnoughException("주문하려는 상품이 가지고 있는 상품보다 더 많습니다.");
         }
         this.stock = restStock;
     }
