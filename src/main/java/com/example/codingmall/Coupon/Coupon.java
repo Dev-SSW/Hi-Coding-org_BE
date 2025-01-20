@@ -1,5 +1,6 @@
 package com.example.codingmall.Coupon;
 
+import com.example.codingmall.Exception.CouponRemainZeroException;
 import com.example.codingmall.User.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -60,7 +61,7 @@ public class Coupon {
             this.remain = this.remain.subtract(BigDecimal.ONE);
         }
         else  {
-            throw new IllegalStateException("쿠폰 잔여량이 없습니다");
+            throw new CouponRemainZeroException("쿠폰 잔여량이 없습니다");
         }
     }
 }

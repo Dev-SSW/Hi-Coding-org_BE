@@ -1,5 +1,6 @@
 package com.example.codingmall.Delivery;
 
+import com.example.codingmall.Exception.DeliveryNotCancelException;
 import com.example.codingmall.Order.Order;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -36,9 +37,9 @@ public class Delivery {
         this.status = DeliveryStatus.Complete;
     }
 
-    public void CancelDelivery(){
+    public void cancelDelivery(){
         if (this.status == DeliveryStatus.OnTheWay){
-            throw new IllegalStateException("배송 중인 주문은 취소할 수 없습니다.");
+            throw new DeliveryNotCancelException("배송 중인 주문은 취소할 수 없습니다. 현재 상태 : " + this.status);
         }
         this.status = DeliveryStatus.Cancelled;
     }

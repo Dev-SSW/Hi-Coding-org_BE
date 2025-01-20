@@ -4,6 +4,7 @@ import com.example.codingmall.Coupon.Coupon;
 import com.example.codingmall.Coupon.CouponRequest;
 import com.example.codingmall.Coupon.CouponStatus;
 import com.example.codingmall.User.User;
+import com.nimbusds.oauth2.sdk.util.singleuse.AlreadyUsedException;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -45,13 +46,13 @@ public class CouponPublish {
     }
 
     /* 쿠폰 사용 */
-    public void useCoupon() {
+    public void useCoupon() throws AlreadyUsedException {
         if (this.publishStatus == CouponPublishStatus.available) {
             this.publishStatus  = CouponPublishStatus.unavailable; // 쿠폰 사용 시 사용 불가능으로 수정
             this.useDate = LocalDateTime.now();                //사용 일시
         }
         else {
-            throw new IllegalStateException("이미 사용된 쿠폰입니다.");
+            throw new AlreadyUsedException("이미 사용한 쿠폰입니다.");
         }
     }
 }
