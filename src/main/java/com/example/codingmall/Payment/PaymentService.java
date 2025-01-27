@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -39,7 +40,7 @@ public class PaymentService {
         payment.setPaymentDate(LocalDateTime.now());
     }
     public Payment getPayment(Long paymentId) {
-        return paymentRepository.findByIdWithiOrder(paymentId);
+        return paymentRepository.findByIdWithOrder(paymentId);
     }
     public List<Payment> getPaymentsByStatus(PaymentStatus status){
         return paymentRepository.findByStatus(status);
@@ -49,6 +50,12 @@ public class PaymentService {
     public void refundPayment (Long paymentId){
         Payment payment = paymentRepository.findPaymentById(paymentId);
         payment.updateStatus(PaymentStatus.REFUNDED);
+    }
+    public List<PaymentListDto> getPaymentList(){
+        List<Payment> payments = paymentRepository.findAll();
+        return payments.stream()
+                .map(PaymentListDto::new)
+                .collect(Collectors.toList());
     }
 }
 

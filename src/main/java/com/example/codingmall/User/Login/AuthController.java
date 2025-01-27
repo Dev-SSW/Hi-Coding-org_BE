@@ -1,17 +1,13 @@
 package com.example.codingmall.User.Login;
 
-import com.example.codingmall.User.Login.LoginDto.JwtRequest;
-import com.example.codingmall.User.Login.LoginDto.JwtResponse;
-import com.example.codingmall.User.Login.LoginDto.SigninRequest;
-import com.example.codingmall.User.Login.LoginDto.SignupRequest;
+import com.example.codingmall.User.Login.LoginDto.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,5 +34,12 @@ public class AuthController {
     @Operation(summary = "토큰 유효성 검사")
     public ResponseEntity<JwtResponse> validateToken(@RequestBody JwtRequest validateTokenRequest){
         return ResponseEntity.ok(authService.validateToken(validateTokenRequest));
+    }
+    @GetMapping("/info")
+    @Operation(summary = "회원 정보 가져오기" , description = "마이페이지를 위한 회원 정보를 가져옵니다.")
+    public ResponseEntity<UserInfo> getUserInfo (@AuthenticationPrincipal UserDetails userDetails){
+        UserInfo userInfo = authService.getUserInfo(userDetails.getUsername());
+        return ResponseEntity.status(userInfo.getStatusCode()).body(userInfo);
+
     }
 }

@@ -1,6 +1,7 @@
 package com.example.codingmall.Order;
 
 import com.example.codingmall.Coupon.Coupon;
+import com.example.codingmall.Delivery.Delivery;
 import com.example.codingmall.Payment.Payment;
 import com.example.codingmall.OrderItem.OrderItem;
 import com.example.codingmall.User.User;
@@ -28,7 +29,7 @@ public class Order {
 
     @OneToOne(fetch = FetchType.LAZY, cascade =  CascadeType.ALL)           //엔티티에 관련된 모든 엔티티를 함께 영속화 시킨다 (Delivery)
     @JoinColumn(name = "delivery_id")               //Delivery의 PK의 주인은 Order이다
-    private Payment payment;
+    private Delivery delivery;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "coupon_id")
