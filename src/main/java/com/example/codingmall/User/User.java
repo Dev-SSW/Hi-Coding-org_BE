@@ -39,7 +39,7 @@ public class User implements UserDetails, OAuth2User {
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Order> orders = new ArrayList<>();
 
-    @Builder.Default // 리스트 초깃값 설정을 위한 어노테이션(warnings 해결)
+    @Builder.Default
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Cart> carts = new ArrayList<>();
 
