@@ -47,4 +47,9 @@ public class PaymentController {
         paymentService.refundPayment(paymentId);
         return ResponseEntity.ok().build();
     }
+    @Operation(summary = "결제 리스트 조회" , description = "사용자가 결제한 항목을 리스트 형식으로 조회합니다.")
+    @GetMapping
+    public List<PaymentListDto> getPayments(){
+        return paymentService.getPaymentList();
+    }
 }

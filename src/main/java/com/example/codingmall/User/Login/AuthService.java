@@ -1,5 +1,6 @@
 package com.example.codingmall.User.Login;
 
+import com.example.codingmall.Exception.UsernameAlreadyExistsException;
 import com.example.codingmall.User.Login.Jwt.JWTUtils;
 import com.example.codingmall.User.Login.LoginDto.*;
 import com.example.codingmall.User.User;
@@ -26,7 +27,7 @@ public class AuthService {
     public JwtResponse signUp(SignupRequest request) {
         try {
             userRepository.findByUsername(request.getUsername())
-                    .ifPresent(u -> {throw new IllegalStateException("이미 존재하는 아이디입니다.");
+                    .ifPresent(u -> {throw new UsernameAlreadyExistsException("이미 존재하는 아이디입니다.");
                     });
             UserDto userDto = UserDto.builder()
                     .username(request.getUsername())
@@ -136,6 +137,30 @@ public class AuthService {
             return JwtResponse.builder()
                     .statusCode(500)
                     .error(e.getMessage())
+                    .build();
+        }
+    }
+    @Transactional(readOnly = true)
+    public UserInfo getUserInfo(String username){
+        try{
+            User user = userRepository.findUserByUsername(username);
+
+            UserDto userDto = UserDto.builder()
+                    .username(user.getUsername())
+                    .birth(user.getBirth())
+                    .name(user.getName())
+                    .phoneNumber(user.getPhoneNumber())
+                    .build();
+            return UserInfo.builder()
+                    .statusCode(200)
+                    .message("회원 정보 불러오기 성공")
+                    .userInfo(userDto)
+                    .build();
+
+        }catch (Exception e){
+            return UserInfo.builder()
+                    .statusCode(500)
+                    .message(e.getMessage())
                     .build();
         }
     }
