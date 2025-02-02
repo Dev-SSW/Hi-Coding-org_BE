@@ -104,8 +104,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-      configuration.setAllowedOriginPatterns(List.of("*")); //"https://*.ngrok-free.app" , "http://localhost:*"
-//        configuration.setAllowedOriginPatterns(List.of("*"));
+        configuration.setAllowedOriginPatterns(List.of("http://leoan.p-e.kr", "https://leoan.p-e.kr", "http://localhost:3000", "https://localhost:3000"));
         // *:와일드 카드 URL을 사용하려면 OriginPatterns를 사용해야 합니다.
         // configuration.addAllowedOrigin("*");
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
