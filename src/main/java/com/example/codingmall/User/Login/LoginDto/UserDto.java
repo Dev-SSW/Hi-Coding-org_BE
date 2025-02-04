@@ -20,6 +20,7 @@ public class UserDto {
     private String phoneNumber;// 휴대폰 번호
     private String email;      // 이메일
 
+
     // UserDto -> User 변환 메서드
     public User toEntity() {
         return User.builder()

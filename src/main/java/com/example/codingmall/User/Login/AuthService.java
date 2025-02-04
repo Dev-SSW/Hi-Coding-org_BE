@@ -5,9 +5,12 @@ import com.example.codingmall.User.Login.Jwt.JWTUtils;
 import com.example.codingmall.User.Login.LoginDto.*;
 import com.example.codingmall.User.User;
 import com.example.codingmall.User.UserRepository;
+import com.nimbusds.jose.proc.SecurityContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,11 +64,14 @@ public class AuthService {
     public JwtResponse signIn(SigninRequest signinRequest) {
         try {
             // 사용자 인증
-            authenticationManager.authenticate(
+            Authentication authenticate = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(signinRequest.getUsername(), signinRequest.getPassword())
             );
             // 사용자 정보 조회
             User user = userRepository.findUserByUsername(signinRequest.getUsername());
+
+            //인증이 성공하면 SecurityContetext까지 저장
+            SecurityContextHolder.getContext().setAuthentication(authenticate);
 
             // JWT 생성
             var jwt = jwtUtils.generateToken(user);
