@@ -27,13 +27,15 @@ public class SwaggerConfig {
                         .description("<h3>Swagger test</h3>"))
                 .servers(List.of(
                         //new Server().url(ngrokUrl).description("ngrok 환경")
-                        new Server().url("http://13.209.84.154:8080").description("배포 환경")
+                        new Server().url("http://13.209.84.154:8080").description("메인 서버"),
+                        new Server().url("http://13.209.98.175:8080").description("백업 서버")
                 ))
                 .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
                 .components(
                         new Components().addSecuritySchemes("bearerAuth",
                         new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT")));
     }
+
 
 /*    private String getNgrokUrl() {
         try {
