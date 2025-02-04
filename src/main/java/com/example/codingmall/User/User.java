@@ -50,6 +50,16 @@ public class User implements UserDetails, OAuth2User {
         this.role = role;
     }
 
+    @Builder // 비밀번호 변경
+    public User (Long id, String username, String password){
+        this.id = id;
+        this.username = username;
+        this.password = password;
+    }
+    public User changePassword(String encodedPassword){
+        this.password = encodedPassword;
+        return this;
+    }
     //UserDetails
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
