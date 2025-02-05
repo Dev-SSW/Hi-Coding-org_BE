@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -33,13 +34,23 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
+
 public class SecurityConfig {
     private final UserService userService;
     private final JWTAuthFilter jwtAuthFilter;
     private final CustomOAuth2UserService customOAuth2UserService;
     private final CustomSuccessHandler customSuccessHandler;
 
+    // 순환 참조를 막기 위한 지연 로딩
+    public SecurityConfig (@Lazy UserService userService,
+                           @Lazy JWTAuthFilter jwtAuthFilter,
+                           @Lazy CustomOAuth2UserService customOAuth2UserService,
+                           @Lazy CustomSuccessHandler customSuccessHandler){
+        this.userService = userService;
+        this.jwtAuthFilter = jwtAuthFilter;
+        this.customOAuth2UserService = customOAuth2UserService;
+        this.customSuccessHandler = customSuccessHandler;
+    }
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -104,7 +115,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(List.of("http://leoan.p-e.kr", "https://leoan.p-e.kr", "http://localhost:3000", "https://localhost:3000"));
+        configuration.setAllowedOriginPatterns(List.of("http://leoan.p-e.kr", "https://leoan.p-e.kr","http://localhost:8081","http://localhost:8081", "http://localhost:3000", "https://localhost:3000"));
         // *:와일드 카드 URL을 사용하려면 OriginPatterns를 사용해야 합니다.
         // configuration.addAllowedOrigin("*");
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
