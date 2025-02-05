@@ -43,7 +43,7 @@ public class AuthController {
         return ResponseEntity.ok(authService.validateToken(validateTokenRequest));
     }
     @GetMapping("user/info")
-    @PreAuthorize("isAuthenticated()") // 인증된 사용자만 호출 가능
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_SOCIAL','ROLE_ADMIN')") // 인증된 사용자만 호출 가능
     @Operation(summary = "회원 정보 가져오기" , description = "마이페이지를 위한 회원 정보를 가져옵니다.")
     public ResponseEntity<UserInfo> getUserInfo (Authentication authentication){
         if (authentication == null){
@@ -71,7 +71,7 @@ public class AuthController {
         }
     }
     @PutMapping("user/changePassword")
-    @PreAuthorize("isAuthenticated()") // 인증된 사용자만 호출 가능
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_SOCIAL','ROLE_ADMIN')") // 인증된 사용자만 호출 가능
     @Operation(summary = "비밀번호 변경하기", description = "현재 사용자의 비밀번호와 입력한 비밀번호가 맞는지 비교한 후, 비밀번호를 변경합니다.")
     public ResponseEntity<String> changePassword(@RequestBody PasswordChangeRequest request,
                                                Authentication authentication){
