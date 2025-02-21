@@ -4,7 +4,10 @@ import com.example.codingmall.User.Login.LoginDto.*;
 import com.example.codingmall.User.User;
 import com.example.codingmall.User.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -43,43 +46,18 @@ public class AuthController {
         return ResponseEntity.ok(authService.validateToken(validateTokenRequest));
     }
     @GetMapping("user/info")
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_SOCIAL','ROLE_ADMIN')") // 인증된 사용자만 호출 가능
+    @PreAuthorize("hasAnyRole('USER','SOCIAL','ADMIN')") // 인증된 사용자만 호출 가능
     @Operation(summary = "회원 정보 가져오기" , description = "마이페이지를 위한 회원 정보를 가져옵니다.")
-    public ResponseEntity<UserInfo> getUserInfo (Authentication authentication){
-        if (authentication == null){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(UserInfo.builder()
-                            .statusCode(HttpStatus.UNAUTHORIZED.value())
-                            .error("로그인이 필요합니다.")
-                            .build());
-        }
-        String username = authentication.getName();
-        try{
-            UserDto userDto = userService.getUserInfo(username);
-            return ResponseEntity.ok(UserInfo.builder()
-                    .statusCode(HttpStatus.OK.value())
-                    .message("회원 정보 조회 성공")
-                    .userInfo(userDto)
-                    .build());
-        } catch (Exception e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(UserInfo.builder()
-                            .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                            .error("내부 서버 에러")
-                            .message("회원 정보 조회 중 오류가 발생했습니다.")
-                            .build());
-        }
+    public ResponseEntity<UserInfo> getUserInfo (@AuthenticationPrincipal UserDetails userDetails){
+        UserInfo userInfo = userService.getUserInfo(userDetails);
+        return ResponseEntity.status(userInfo.getStatusCode()).body(userInfo);
     }
     @PutMapping("user/changePassword")
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_SOCIAL','ROLE_ADMIN')") // 인증된 사용자만 호출 가능
     @Operation(summary = "비밀번호 변경하기", description = "현재 사용자의 비밀번호와 입력한 비밀번호가 맞는지 비교한 후, 비밀번호를 변경합니다.")
-    public ResponseEntity<String> changePassword(@RequestBody PasswordChangeRequest request,
-                                               Authentication authentication){
-        if (authentication == null){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
-        }
-        String username = authentication.getName();
-        userService.changePassword(request,username);
-        return ResponseEntity.ok("비밀번호 변경이 완료되었습니다.");
+    public ResponseEntity<ResponseDto> changePassword(@RequestBody PasswordChangeRequest request,
+                                               @AuthenticationPrincipal UserDetails userDetails){
+        ResponseDto dto = userService.changePassword(request, userDetails);
+        return ResponseEntity.status(dto.getStatusCode()).body(dto);
     }
 }

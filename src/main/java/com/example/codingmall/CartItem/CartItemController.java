@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/public/cartitem")
+@RequestMapping("cartitem")
 @RequiredArgsConstructor
 @Tag(name = "CarItem" , description = "장바구니의 특정물품 갯수를 변경 / 삭제하는 api")
 public class CartItemController {

@@ -1,5 +1,6 @@
 package com.example.codingmall.Payment;
 
+import com.example.codingmall.Order.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -10,23 +11,24 @@ import java.util.List;
 
 @Tag(name = "payment", description = "결제 관리 Api")
 @RestController
-@RequestMapping("public/payments")
+@RequestMapping("payments")
 @RequiredArgsConstructor
 public class PaymentController {
     private final PaymentService paymentService;
+    private final OrderService orderService;
 
     @Operation(summary = "결제 정보 생성",description = "결제 정보를 생성합니다.")
-    @PostMapping
-    public ResponseEntity<Long> createPayment(@RequestBody PaymentDto paymentDto){
-        Long paymentId = paymentService.createPayment(paymentDto);
-        return ResponseEntity.ok(paymentId);
+    @PostMapping("/{orderId}/create")
+    public ResponseEntity<Payment> createPayment(@PathVariable Long orderId){
+        Payment payment = paymentService.createPayment(orderId);
+        return ResponseEntity.ok(payment);
     }
 
     @Operation(summary = "결제 처리",description = "결제 상태를 대기중 -> 결제 완료로 변경합니다.")
     @PostMapping("/{paymentId}/process")
-    public ResponseEntity<Void> processPayment(@PathVariable Long paymentId){
-        paymentService.processPayment(paymentId);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Payment> processPayment(@PathVariable Long paymentId){
+        Payment payment = paymentService.processPayment(paymentId);
+        return ResponseEntity.ok(payment);
     }
 
     @Operation(summary = "결제 정보 가져오기" , description = "특정 결제 정보를 가져옵니다.")

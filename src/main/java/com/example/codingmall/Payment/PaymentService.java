@@ -1,5 +1,6 @@
 package com.example.codingmall.Payment;
 
+import com.example.codingmall.Exception.PaymentAlreadyHasException;
 import com.example.codingmall.Order.Order;
 import com.example.codingmall.Order.OrderRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,26 +19,30 @@ public class PaymentService {
     private final OrderRepository orderRepository;
     // 결제 정보 생성
     @Transactional
-    public Long createPayment(PaymentDto paymentDto){
-        Order order = orderRepository.findOrderById(paymentDto.getOrderId());
+    public Payment createPayment(Long orderId){
+        Order order = orderRepository.findOrderById(orderId);
+
+        if (order.getPayment() != null){
+            throw new PaymentAlreadyHasException("orderId" + orderId + "hasAlreadyHasPaymentException");
+        }
         Payment payment = Payment.builder()
                 .order(order)
-                .amount(paymentDto.getAmount())
+                .amount(order.getTotalAmount())
                 .status(PaymentStatus.PENDING)
                 .paymentDate(LocalDateTime.now())
-                .cardCompany(paymentDto.getCardCompany())
-                .paymentMethod(paymentDto.getPaymentMethod())
+                .cardCompany("DEFAULTE")
+                .paymentMethod(PaymentMethod.card)
                 .build();
-
-        payment.setOrder(order);
-        return paymentRepository.save(payment).getId();
+        paymentRepository.save(payment);
+        return payment;
     }
     // 결제 정보 처리
     @Transactional
-    public void processPayment(Long paymentId){
+    public Payment processPayment(Long paymentId){
         Payment payment = paymentRepository.findPaymentById(paymentId);
         payment.updateStatus(PaymentStatus.COMPLETED);
         payment.setPaymentDate(LocalDateTime.now());
+        return payment;
     }
     public Payment getPayment(Long paymentId) {
         return paymentRepository.findByIdWithOrder(paymentId);
