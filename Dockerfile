@@ -1,12 +1,11 @@
-# JDK17 이미지 사용
+# 베이스 이미지
 FROM openjdk:17-jdk
 
-VOLUME /tmp
+# 작업 디렉토리 설정
+WORKDIR /app
 
-# JAR_FILE 변수에 값을 저장
-ARG JAR_FILE=./build/libs/*.jar
-# 변수에 저장된 것을 컨테이너 실행시 이름을 app.jar파일로 변경하여 컨테이너에 저장
-COPY ${JAR_FILE} app.jar
+# 애플리케이션 JAR 파일 복사
+COPY ./build/libs/*.jar app.jar
 
-# 빌드된 이미지가 run될 때 실행할 명령어
-ENTRYPOINT ["java","-jar","app.jar"]
+# 실행 명령어
+CMD ["java", "-jar", "app.jar"]
