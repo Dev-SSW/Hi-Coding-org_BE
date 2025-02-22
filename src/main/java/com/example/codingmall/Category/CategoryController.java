@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 @Tag(name = "Category",description = "카테고리를 관리하는 Api")
 @RestController
-@RequestMapping("public/category")
+//@RequestMapping("public/category")
 @RequiredArgsConstructor
 public class CategoryController {
     private final CategoryService categoryService;
@@ -23,27 +23,27 @@ public class CategoryController {
 //        categoryService.createDefaultCategory();
 //    }
     @Operation(summary = "카테고리 생성",description = "새로운 카테고리를 생성합니다.")
-    @PostMapping
+    @PostMapping("category/make")
     public ResponseEntity<CategoryDto> createCategory(@RequestBody CategoryDto categoryDto){
         CategoryDto createdCategory = categoryService.createCategory(categoryDto);
         return ResponseEntity.ok(createdCategory);
     }
     @Operation(summary = "카테고리 정보 조회",description = "카테고리 정보를 조회합니다.")
-    @GetMapping("/{id}")
+    @GetMapping("category/info/{id}")
     public ResponseEntity<CategoryDto> getCategory(@PathVariable Long id){
         CategoryDto category = categoryService.getCategoryById(id);
         return ResponseEntity.ok(category);
     }
 
     @Operation(summary = "모든 카테고리 조회",description = "현재 모든 카터고리를 조회합니다.")
-    @GetMapping
+    @GetMapping("public/SearchCategory")
     public ResponseEntity<List<CategoryDto>> getAllCategories(){
         List<CategoryDto> allCategories = categoryService.getAllCategories();
         return ResponseEntity.ok(allCategories);
     }
 
     @Operation(summary = "특정 카테고리 삭제",description = "특정 카터고리를 삭제합니다.")
-    @DeleteMapping
+    @DeleteMapping("category/DeleteCategory/{id}")
     public ResponseEntity<CategoryDto> deleteCategories(@PathVariable Long id){
         categoryService.deleteCategory(id);
         return ResponseEntity.noContent().build();
