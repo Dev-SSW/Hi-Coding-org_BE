@@ -18,33 +18,26 @@ public class CouponController {
     private final CouponPublishService couponPublishService;
 
     /* 쿠폰 만들기 */
-    @PostMapping("/public/coupon/create")
+    @PostMapping("/admin/coupon/create")
     @Operation(summary = "새로운 쿠폰 만들기")
-    public ResponseEntity<String> couponCreate(@AuthenticationPrincipal User user, @RequestBody CouponRequest couponRequest) {
-        couponService.couponCreate(user, couponRequest);
+    public ResponseEntity<String> couponCreate(@RequestBody CouponRequest couponRequest) {
+        couponService.couponCreate(couponRequest);
         return ResponseEntity.ok("쿠폰이 생성되었습니다.");
     }
 
     /* 특정 유저에게 쿠폰 발급 */
-    @PostMapping("/user/coupon/publish")
+    @PostMapping("/admin/coupon/publish")
     @Operation(summary = "특정 유저에게 쿠폰 발급")
-    public ResponseEntity<String> couponPublish(@AuthenticationPrincipal User user, @RequestParam("couponId") Long couponId) {
-        couponService.couponPublish(user, couponId);
-        return ResponseEntity.ok("쿠폰이 발급되었습니다.");
+    public ResponseEntity<String> couponPublish(@RequestParam(name = "couponId") Long couponId, @RequestParam(name = "userId") Long userId) {
+        couponService.couponPublish(couponId, userId);
+        return ResponseEntity.ok("유저에게 쿠폰이 발급되었습니다.");
     }
 
     /* 생일 쿠폰 수동 발급 (테스트) */
-    @GetMapping("/public/coupon/birthday")
-    @Operation(summary = "생일 쿠폰 수동 발급 (테스트)")
-    public ResponseEntity<String> publishBirthCouponAuto() {
+    @GetMapping("/admin/coupon/birthday")
+    @Operation(summary = "생일 쿠폰 발급 수동으로 요청")
+    public ResponseEntity<String> publishBirthCoupon() {
         couponService.publishBirthCouponAuto();
         return ResponseEntity.ok("생일 쿠폰이 발급되었습니다.");
     }
-
-/*    @GetMapping("/user/coupons/couponsList")
-    @Operation(summary = "유저가 보유한 쿠폰 조회")
-    public ResponseEntity<List<CouponPublish>> getUserCoupons(@AuthenticationPrincipal User user) {
-        return ResponseEntity.ok(couponPublishService.getCouponPublish(user));
-    }
-*/
 }

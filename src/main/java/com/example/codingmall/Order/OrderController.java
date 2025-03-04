@@ -29,7 +29,7 @@ public class OrderController {
         return ResponseEntity.ok(orderService.createOrderFromCart(user, orderCartRequest, couponPublishId));
     }
 
-    @PostMapping("/public/order/cancel")
+    @PostMapping("/user/order/cancel")
     @Operation(summary = "주문 취소")
     public ResponseEntity<Void> cancelOrder(@RequestParam("orderId") Long orderId) {
         orderService.cancelOrder(orderId);

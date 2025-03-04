@@ -3,6 +3,7 @@ package com.example.codingmall.Coupon;
 import com.example.codingmall.CouponPublish.CouponPublish;
 import com.example.codingmall.CouponPublish.CouponPublishRepository;
 import com.example.codingmall.Exception.CouponRemainZeroException;
+import com.example.codingmall.Exception.UserNotFoundException;
 import com.example.codingmall.User.User;
 import com.example.codingmall.User.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,14 +24,15 @@ public class CouponService {
 
     /* 쿠폰 만들기 */
     @Transactional
-    public void couponCreate(User user, CouponRequest couponRequest) {
-        Coupon coupon = Coupon.createCoupon(user, couponRequest);
+    public void couponCreate(CouponRequest couponRequest) {
+        Coupon coupon = Coupon.createCoupon(couponRequest);
         couponRepository.save(coupon);
     }
 
     /* 특정 유저에게 쿠폰 발급 */
     @Transactional
-    public void couponPublish(User user, Long couponId) {
+    public void couponPublish(Long couponId, Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("그러한 유저가 존재하지 않습니다." + userId));
         Coupon coupon = couponRepository.findCouponById(couponId);
         // 쿠폰 잔여량 확인
         if (coupon.getRemain().compareTo(BigDecimal.ZERO) <= 0) {

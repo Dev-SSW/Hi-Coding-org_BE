@@ -25,12 +25,12 @@ public class AuthController {
     private final AuthService authService;
     private final UserService userService;
 
-    @PostMapping("public/signup")
+    @PostMapping("/public/signup")
     @Operation(summary = "회원가입")
     public ResponseEntity<JwtResponse> signUp(@RequestBody SignupRequest signUpRequest){
         return ResponseEntity.ok(authService.signUp(signUpRequest));
     }
-    @PostMapping("public/signin")
+    @PostMapping("/public/signin")
     @Operation(summary = "로그인")
     public ResponseEntity<JwtResponse> signIn(@RequestBody SigninRequest signInRequest){
         return ResponseEntity.ok(authService.signIn(signInRequest));
@@ -40,24 +40,23 @@ public class AuthController {
     public ResponseEntity<JwtResponse> refreshToken(@RequestBody JwtRequest refreshTokenRequest){
         return ResponseEntity.ok(authService.refreshToken(refreshTokenRequest));
     }
-    @PostMapping("public/validate")
+    @PostMapping("/public/validate")
     @Operation(summary = "토큰 유효성 검사")
     public ResponseEntity<JwtResponse> validateToken(@RequestBody JwtRequest validateTokenRequest){
         return ResponseEntity.ok(authService.validateToken(validateTokenRequest));
     }
-    @GetMapping("user/info")
-    @PreAuthorize("hasAnyRole('USER','SOCIAL','ADMIN')") // 인증된 사용자만 호출 가능
+    @GetMapping("/user/info")
+    //@PreAuthorize("hasAnyRole('USER','SOCIAL','ADMIN')") // 인증된 사용자만 호출 가능
     @Operation(summary = "회원 정보 가져오기" , description = "마이페이지를 위한 회원 정보를 가져옵니다.")
-    public ResponseEntity<UserInfo> getUserInfo (@AuthenticationPrincipal UserDetails userDetails){
-        UserInfo userInfo = userService.getUserInfo(userDetails);
+    public ResponseEntity<UserInfo> getUserInfo (@AuthenticationPrincipal User user){
+        UserInfo userInfo = userService.getUserInfo(user);
         return ResponseEntity.status(userInfo.getStatusCode()).body(userInfo);
     }
-    @PutMapping("user/changePassword")
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_SOCIAL','ROLE_ADMIN')") // 인증된 사용자만 호출 가능
+    @PutMapping("/user/changePassword")
+    //@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_SOCIAL','ROLE_ADMIN')") // 인증된 사용자만 호출 가능
     @Operation(summary = "비밀번호 변경하기", description = "현재 사용자의 비밀번호와 입력한 비밀번호가 맞는지 비교한 후, 비밀번호를 변경합니다.")
-    public ResponseEntity<ResponseDto> changePassword(@RequestBody PasswordChangeRequest request,
-                                               @AuthenticationPrincipal UserDetails userDetails){
-        ResponseDto dto = userService.changePassword(request, userDetails);
+    public ResponseEntity<ResponseDto> changePassword(@RequestBody PasswordChangeRequest request, @AuthenticationPrincipal User user){
+        ResponseDto dto = userService.changePassword(request, user);
         return ResponseEntity.status(dto.getStatusCode()).body(dto);
     }
 }

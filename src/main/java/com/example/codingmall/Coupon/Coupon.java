@@ -39,7 +39,7 @@ public class Coupon {
     private User user; // 쿠폰 등록자 아이디
 
     /* 생성 메서드 (정적 팩토리) */
-    public static Coupon createCoupon(User user, CouponRequest couponRequest) {
+    public static Coupon createCoupon(CouponRequest couponRequest) {
         return Coupon.builder()
                 .couponName(couponRequest.getCouponName())
                 .discountAmount(couponRequest.getDiscountAmount())
