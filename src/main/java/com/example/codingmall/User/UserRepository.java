@@ -13,11 +13,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
     //ID로 User 찾기
     Optional<User> findByUsername(String username);
 
-    List<User> findByRole(Role role);
-
     default User findUserByUsername(String username) {
         return findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("username에 일치하는 User가 존재하지 않습니다 : " + username));
     }
+
+    List<User> findByRole(Role role);
 
     /* 오늘 생일인 유저 찾기 */
     @Query("SELECT u FROM User u WHERE FUNCTION('MONTH', u.birth) = FUNCTION('MONTH', CURRENT_DATE) AND FUNCTION('DAY', u.birth) = FUNCTION('DAY', CURRENT_DATE)")

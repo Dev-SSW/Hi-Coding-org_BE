@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-//@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class Item {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "item_id")
@@ -32,7 +31,7 @@ public class Item {
     private ItemStatus status; // 상태코드
 
     private int stock; // 재고
-    private int  price; //가격
+    private int price; // 가격
 
     private String intro; //소개글
     @Lob

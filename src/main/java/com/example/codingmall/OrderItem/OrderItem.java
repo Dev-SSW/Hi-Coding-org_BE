@@ -28,9 +28,6 @@ public class OrderItem {
     private int itemCount;          // 주문 상품 갯수
     private int orderPrice;         // 주문 상품 가격
 
-    //private LocalDateTime registerDate; // 등록일시
-    //private LocalDateTime updateDate;   // 수정일시
-
     /* 생성 메서드 (정적 팩토리)*/
     public static OrderItem createOrderItem(Item item, int itemCount) {
         int Price = item.getPrice();  // 상품 가격

@@ -59,11 +59,7 @@ public class Order {
     private boolean isPaid;         //결제 여부
 
     /* 생성 메서드 (정적 팩토리)*/
-    public static Order createOrder(User user, OrderRequest orderRequest, List<OrderItem> orderItems) {
-        // Order 객체를 생성하면서 필드 초기화
-        int totalAmount = orderItems.stream()
-                .mapToInt(OrderItem::getTotalPrice)  // 각 OrderItem의 총 금액을 합산
-                .sum();
+    public static Order createOrder(User user, OrderRequest orderRequest, List<OrderItem> orderItems, int totalAmount) {
         return Order.builder()
                 .user(user)
                 .orderDate(LocalDateTime.now())

@@ -146,6 +146,7 @@ public class AuthService {
                     .build();
         }
     }
+    /*
     @Transactional(readOnly = true)
     public UserInfo getUserInfo(String username){
         try{
@@ -170,4 +171,5 @@ public class AuthService {
                     .build();
         }
     }
+    */
 }

@@ -27,20 +27,21 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     @Override
-    public User loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findUserByUsername(username);
         return user;
     }
+
     @Transactional
-    public ResponseDto changePassword(PasswordChangeRequest request, UserDetails userDetails){
+    public ResponseDto changePassword(PasswordChangeRequest request, User user){
        try{
-           User user = userRepository.findUserByUsername(userDetails.getUsername());
+           //User user = userRepository.findUserByUsername(userDetails.getUsername());
 
            if(user == null){
                return ResponseDto.builder()
                        .statusCode(HttpStatus.NOT_FOUND.value())
                        .error(String.valueOf(new UsernameNotFoundException("사용자를 찾을 수 없습니다.")))
-                       .message("존재하지 않는 사용하입니다.")
+                       .message("존재하지 않는 사용자입니다.")
                        .build();
            }
            //현재 비밀번호 확인
@@ -78,8 +79,8 @@ public class UserService implements UserDetailsService {
        }
     }
 
-    public UserInfo getUserInfo(UserDetails userDetails) {
-        if (userDetails == null){
+    public UserInfo getUserInfo(User user) {
+        if (user == null){
             return UserInfo.builder()
                     .statusCode(HttpStatus.UNAUTHORIZED.value())
                     .error("로그인이 필요한 서비스입니다.")
@@ -87,8 +88,8 @@ public class UserService implements UserDetailsService {
                     .build();
         }
         try{
-            String username = userDetails.getUsername();
-            User user = userRepository.findUserByUsername(username);
+            String username = user.getUsername();
+            //User user = userRepository.findUserByUsername(username);
 
             if (user == null){
                 return UserInfo.builder()
