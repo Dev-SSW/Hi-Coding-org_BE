@@ -54,4 +54,9 @@ public class CouponService {
             }
         }
     }
+
+    public List<Coupon> getAllCoupon() {
+        List<Coupon> couponList = couponRepository.findAll();
+        return couponList;
+    }
 }
