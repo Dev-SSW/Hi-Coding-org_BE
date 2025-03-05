@@ -10,6 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -39,5 +40,22 @@ public class CouponController {
     public ResponseEntity<String> publishBirthCoupon() {
         couponService.publishBirthCouponAuto();
         return ResponseEntity.ok("생일 쿠폰이 발급되었습니다.");
+    }
+
+    /* 유저가 소유한 모든 쿠폰 확인 */
+    @GetMapping("/user/coupon/search")
+    @Operation(summary = "유저가 소유한 모든 쿠폰 확인")
+    public ResponseEntity<List<CouponResponse>> getAllCouponFromUser(@AuthenticationPrincipal User user) {
+        List<CouponResponse> couponResponses = couponPublishService.getCouponPublish(user).stream()
+                .map(CouponResponse::from)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(couponResponses);
+    }
+
+    /* 만들어진 모든 쿠폰 확인 */
+    @GetMapping("/admin/coupon/searchAll")
+    @Operation(summary = "만들어진 모든 쿠폰 확인")
+    public ResponseEntity<List<Coupon>> getAllCoupon() {
+        return ResponseEntity.ok(couponService.getAllCoupon());
     }
 }

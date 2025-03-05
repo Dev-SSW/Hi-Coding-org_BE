@@ -19,7 +19,7 @@ public class OrderController {
 
     @PostMapping("/user/order/create")
     @Operation(summary = "주문 생성")
-    public ResponseEntity<Long> create(@AuthenticationPrincipal User user, @RequestBody OrderRequest orderRequest, @RequestParam(value = "couponId", required = false) Long couponPublishId){
+    public ResponseEntity<Long> create(@AuthenticationPrincipal User user, @RequestBody OrderRequest orderRequest, @RequestParam(value = "couponPublishId", required = false) Long couponPublishId){
         return ResponseEntity.ok(orderService.createOrder(user, orderRequest, couponPublishId));
     }
 
