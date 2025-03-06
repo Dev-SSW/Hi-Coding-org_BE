@@ -35,6 +35,7 @@ public class User implements UserDetails, OAuth2User {
     private UserStatus status;   // 상태(탈퇴 회원 여부 파악)
     private Role role;       // 역할
 
+
     @Builder.Default // 리스트 초깃값 설정을 위한 어노테이션(warnings 해결)
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Order> orders = new ArrayList<>();
