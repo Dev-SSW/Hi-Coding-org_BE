@@ -21,7 +21,7 @@ public class ItemController {
     }
 
     //특정 상품 상품명으로 조회
-    @Operation(summary = "특정 상품 상품 이름별로 조회", description = "특정 상품을 상품 이름별로 조회합니다.")
+    @Operation(summary = "특정 상품 이름별로 조회", description = "특정 상품을 상품 이름별로 조회합니다.")
     @GetMapping("/public/item/searchName")
     public ResponseEntity<ItemDto> getItemByProductName(@RequestParam(name = "productName") String productName){
         ItemDto itemDto = itemService.findItemByProductName(productName);

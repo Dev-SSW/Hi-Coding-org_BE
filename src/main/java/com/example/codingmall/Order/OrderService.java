@@ -39,7 +39,7 @@ public class OrderService {
     public Long createOrder(User user, OrderRequest orderRequest, Long couponPublishId) {
         List<OrderItem> orderItems = orderRequest.getOrderItems().stream()
                 .map(orderItemRequest -> {
-                    Item item = itemRepository.findItemById(orderItemRequest.getItemId());
+                    Item item = itemRepository.findItemByItemId(orderItemRequest.getItemId());
                     item.removeStock(orderItemRequest.getItemCount());
                     return OrderItem.createOrderItem(item, orderItemRequest.getItemCount());
                 })
@@ -152,7 +152,7 @@ public class OrderService {
         // 3. OrderItemRequest -> OrderItemResponse 변환
         List<OrderItemResponse> orderItemResponses = orderItems.stream()
                 .map(orderItemRequest -> {
-                    Item item = itemRepository.findItemById(orderItemRequest.getItemId()); // 아이템 조회
+                    Item item = itemRepository.findItemByItemId(orderItemRequest.getItemId()); // 아이템 조회
                     return OrderItemResponse.builder()
                             .itemId(item.getId())
                             .itemName(item.getProductName())

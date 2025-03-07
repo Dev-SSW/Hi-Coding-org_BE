@@ -64,7 +64,7 @@ public class Item {
     // Item 엔티티의 상품 수정 메서드
     public void updateItem(ItemDto itemDto) {
         if (itemDto.getCategory() != null) {
-            this.category = itemDto.getCategory();
+            this.category = itemDto.getCategory().toEntity();
         }
         if (itemDto.getProductName() != null) {
             this.productName = itemDto.getProductName();
