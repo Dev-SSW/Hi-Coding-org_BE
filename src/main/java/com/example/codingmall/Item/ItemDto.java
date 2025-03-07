@@ -1,6 +1,7 @@
 package com.example.codingmall.Item;
 
 import com.example.codingmall.Category.Category;
+import com.example.codingmall.Category.CategoryDto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +20,7 @@ import java.time.LocalDateTime;
 //@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class ItemDto {
     private Long id;
-    private Category category;
+    private CategoryDto category;
     private String productName;
     private ItemStatus status;
 
@@ -36,7 +37,9 @@ public class ItemDto {
     public Item toEntity(){
         return Item.builder()
                 .id(this.id)
-                .category(category)
+                .category(category != null ?
+                        Category.builder().categoryId(category.getId())
+                                .name(category.getName()).build() : null)
                 .productName(this.productName)
                 .status(this.status)
                 .stock(this.stock)
@@ -49,9 +52,11 @@ public class ItemDto {
     }
     // 엔티티로부터 DTO변환
     public static ItemDto from(Item item){
+        CategoryDto categoryDto
+                = (item.getCategory() != null) ? CategoryDto.from(item.getCategory()) : null;
         return ItemDto.builder()
                 .id(item.getId())
-                .category(item.getCategory())
+                .category(categoryDto)
                 .productName(item.getProductName())
                 .status(item.getStatus())
                 .stock(item.getStock())

@@ -20,7 +20,7 @@ public class ItemService {
 
 
     public ItemDto findItemById(Long id) {
-        Item item = itemRepository.findItemById(id);
+        Item item = itemRepository.findItemByItemId(id);
         Hibernate.initialize(item.getCategory());
         return ItemDto.from(item);
     }
@@ -32,7 +32,7 @@ public class ItemService {
 
     public List<ItemDto> findAllItems() {
         List<Item> items = itemRepository.findAll();
-        items.forEach(item -> Hibernate.initialize(item.getCategory())); // --> LAZY로 로딩된 필드를 직렬화 중 누락하지 않도록 설정.
+        //items.forEach(item -> Hibernate.initialize(item.getCategory())); // --> LAZY로 로딩된 필드를 직렬화 중 누락하지 않도록 설정.
         return items.stream()
                 .map(ItemDto::from)
                 .toList();
@@ -46,7 +46,7 @@ public class ItemService {
     // 상품수정
     @Transactional
     public void updateItem(ItemDto itemDto) {
-        Item item = itemRepository.findItemById(itemDto.getId());
+        Item item = itemRepository.findItemByItemId(itemDto.getId());
         if (itemDto.getCategory() !=null && itemDto.getCategory().getId() != null){
             Category category = categoryRepository.findCategoryById(itemDto.getCategory().getId());
             item.setCategory(category);

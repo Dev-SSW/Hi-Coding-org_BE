@@ -23,7 +23,7 @@ public class CartService {
     @Transactional
     public CartDto addItemToCart(User user, AddCartItemRequest request){
 
-        Item item = itemRepository.findItemById(request.getItemId());
+        Item item = itemRepository.findItemByItemId(request.getItemId());
         Cart cart = cartRepository.findByUser(user).orElse(new Cart(user));
 
         CartItem cartItem = new CartItem(item, request.getCount());
