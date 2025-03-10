@@ -14,17 +14,18 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 public class Environment {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "Enviorment_id")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "environment_id")
     private Long id;
 
-    @JoinColumn(name = "device_id")
     @OneToOne
+    @JoinColumn(name = "device_id")
     private Device device;
-    private int temperature;
-    private int humidity;
-    private int soloidMoisture;
-    private int lightIntensity;
-    private LocalDateTime recorededAt;
+
+    private int temperature;            //온도
+    private int humidity;               //습도
+    private int soloidMoisture;         //토양 습도
+    private int lightIntensity;         //광량
+    private LocalDateTime recorededAt;  //기록된 시간
 
 }

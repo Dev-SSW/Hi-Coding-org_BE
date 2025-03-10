@@ -15,11 +15,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Device {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "device_id")
-    private Long deviceId;
-
-    private final LocalDateTime registerDate = LocalDateTime.now();
+    private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "enviorment_id",nullable = false)
@@ -28,5 +26,7 @@ public class Device {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id" , nullable = false)
     private User user;
+
+    private final LocalDateTime registerDate = LocalDateTime.now(); //등록일
 
 }
