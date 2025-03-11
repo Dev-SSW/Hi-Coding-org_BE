@@ -13,5 +13,6 @@ import java.util.List;
 public class OrderHistoryResponse {
     private Long orderId;
     private LocalDateTime orderDate;
+    private int orderAmount;
     private List<OrderItemResponse> orderItemList;
 }

@@ -65,9 +65,10 @@ public class OrderService {
                 }
             }
         }
-
-        // Order 객체를 생성 (totalAmount는 createOrder에서 자동으로 계산됨)
-        Order order = Order.createOrder(user, orderRequest, orderItems, totalAmount);
+        int delivery_Fee = 3000;
+        int total = totalAmount + delivery_Fee; //배송비 추가
+        
+        Order order = Order.createOrder(user, orderRequest, orderItems, total);
 
         // Order의 OrderItem을 연결
         for (OrderItem orderItem : orderItems) {
@@ -176,6 +177,7 @@ public class OrderService {
                 .map(order -> OrderHistoryResponse.builder()
                         .orderId(order.getId())
                         .orderDate(order.getOrderDate())
+                        .orderAmount(order.getTotalAmount())
                         .orderItemList(order.getOrderItems().stream()
                                 .map(orderItem -> OrderItemResponse.builder()
                                         .itemId(orderItem.getItem().getId())
