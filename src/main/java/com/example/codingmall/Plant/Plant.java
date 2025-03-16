@@ -3,6 +3,7 @@ package com.example.codingmall.Plant;
 import com.example.codingmall.User.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 @Entity
+@Builder
 public class Plant {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "plant_id")
