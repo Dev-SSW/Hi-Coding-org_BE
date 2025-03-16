@@ -22,7 +22,7 @@ public class PlantDto {
 
     public static PlantDto from (Plant plant){
         return PlantDto.builder()
-                .id(plant.getId())
+                .id(plant.getPlant_id())
                 .userId(plant.getUser().getId())
                 .name(plant.getName())
                 .idealTemperature(plant.getIdealTemperature())
@@ -36,7 +36,7 @@ public class PlantDto {
 
     public Plant toEntity(User user){
         return Plant.builder()
-                .id(this.getId())
+                .plant_id(this.getId())
                 .user(user)
                 .name(this.name)
                 .idealTemperature(this.getIdealTemperature())

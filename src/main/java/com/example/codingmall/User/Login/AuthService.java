@@ -48,6 +48,11 @@ public class AuthService {
                         .statusCode(200)
                         .build();
             }
+        } catch (UsernameAlreadyExistsException e) {
+            return JwtResponse.builder()
+                    .statusCode(400)
+                    .error(e.getMessage())
+                    .build();
         } catch (Exception e) {
             return JwtResponse.builder()
                     .statusCode(500)
