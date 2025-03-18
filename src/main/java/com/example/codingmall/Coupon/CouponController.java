@@ -4,6 +4,7 @@ import com.example.codingmall.CouponPublish.CouponPublish;
 import com.example.codingmall.CouponPublish.CouponPublishService;
 import com.example.codingmall.User.User;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Tag(name = "Coupon" , description = "사용자의 쿠폰 현황을 조회, 특정 유저에게 쿠폰을 발급합니다.")
 @RestController
 @RequiredArgsConstructor
 public class CouponController {
