@@ -27,6 +27,8 @@ public class OrderItem {
 
     private int itemCount;          // 주문 상품 갯수
     private int orderPrice;         // 주문 상품 가격
+    @Column(unique = true, nullable = false)
+    private String serialNumber;    // 일련 번호
 
     /* 생성 메서드 (정적 팩토리)*/
     public static OrderItem createOrderItem(Item item, int itemCount) {
@@ -35,7 +37,13 @@ public class OrderItem {
                 .item(item)
                 .itemCount(itemCount)
                 .orderPrice(Price)
+                .serialNumber(genereteSerialNumber())
                 .build();
+    }
+    
+    //일련 번호 자동 생성 메서드 추가
+    private static String genereteSerialNumber() {
+        return "SN-" + System.currentTimeMillis() + "-" + (int) (Math.random() * 10000);
     }
 
     /* 연관 관계 편의 메서드 */

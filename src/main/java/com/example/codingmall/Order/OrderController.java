@@ -20,21 +20,23 @@ public class OrderController {
 
     @PostMapping("/user/order/create")
     @Operation(summary = "주문 생성")
-    public ResponseEntity<Long> create(@AuthenticationPrincipal User user, @RequestBody OrderRequest orderRequest, @RequestParam(value = "couponPublishId", required = false) Long couponPublishId){
-        return ResponseEntity.ok(orderService.createOrder(user, orderRequest, couponPublishId));
+    public ResponseEntity<String> create(@AuthenticationPrincipal User user, @RequestBody OrderRequest orderRequest, @RequestParam(value = "couponPublishId", required = false) Long couponPublishId){
+        orderService.createOrder(user, orderRequest, couponPublishId);
+        return ResponseEntity.ok("주문이 생성되었습니다.");
     }
 
     @PostMapping("/user/order/create/fromCart")
     @Operation(summary = "장바구니로부터 주문 생성")
-    public ResponseEntity<Long> createFromCart(@AuthenticationPrincipal User user, @RequestBody OrderCartRequest orderCartRequest, @RequestParam(value = "couponId", required = false) Long couponPublishId) {
-        return ResponseEntity.ok(orderService.createOrderFromCart(user, orderCartRequest, couponPublishId));
+    public ResponseEntity<String> createFromCart(@AuthenticationPrincipal User user, @RequestBody OrderCartRequest orderCartRequest, @RequestParam(value = "couponId", required = false) Long couponPublishId) {
+        orderService.createOrderFromCart(user, orderCartRequest, couponPublishId);
+        return ResponseEntity.ok("장바구니를 통한 주문이 생성되었습니다.");
     }
 
     @PostMapping("/user/order/cancel")
     @Operation(summary = "주문 취소")
-    public ResponseEntity<Void> cancelOrder(@RequestParam("orderId") Long orderId) {
+    public ResponseEntity<String> cancelOrder(@RequestParam("orderId") Long orderId) {
         orderService.cancelOrder(orderId);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("주문이 취소되었습니다.");
     }
 
     @PostMapping("/user/order")

@@ -73,7 +73,8 @@ public class SecurityConfig {
                                 "/v3/api-docs.yaml"
                         ).permitAll()
                         .requestMatchers("/admin/**").hasAnyRole("ADMIN") // ADMIN 역할을 가진 사용자만 접근 허용
-                        .requestMatchers("/user/**").hasAnyRole("ADMIN", "USER", "SOCIAL") // USER 역할을 가진 사용자만 접근 허용
+                        .requestMatchers("/user/**").hasAnyRole("ADMIN", "USER", "SOCIAL", "PLANT") // USER 역할을 가진 사용자만 접근 허용
+                        .requestMatchers("/plant/**").hasAnyRole("ADMIN", "PLANT") // PLANT 역할을 가진 사용자만 접근 허용
                         .anyRequest().authenticated())
                 .oauth2Login(oauth -> oauth
                         .successHandler(customSuccessHandler)

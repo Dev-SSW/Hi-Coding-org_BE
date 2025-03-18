@@ -11,13 +11,5 @@ public class OrderItemResponse {
     private String itemName;//아이템 이름
     private int itemCount;  //아이템 개수
     private int totalPrice; //상품의 총 가격
-
-    public static OrderItemResponse from(OrderItem orderItem) {
-        return OrderItemResponse.builder()
-                .itemId(orderItem.getItem().getId())
-                .itemName(orderItem.getItem().getProductName())
-                .itemCount(orderItem.getItemCount())
-                .totalPrice(orderItem.getTotalPrice())
-                .build();
-    }
+    private String SN;      //시리얼 넘버
 }
