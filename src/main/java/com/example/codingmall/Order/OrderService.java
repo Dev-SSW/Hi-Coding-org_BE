@@ -184,6 +184,7 @@ public class OrderService {
                                         .itemName(orderItem.getItem().getProductName())
                                         .itemCount(orderItem.getItemCount())
                                         .totalPrice(orderItem.getTotalPrice())
+                                        .SN(orderItem.getSerialNumber())
                                         .build())
                                 .collect(Collectors.toList()))
                         .build())
