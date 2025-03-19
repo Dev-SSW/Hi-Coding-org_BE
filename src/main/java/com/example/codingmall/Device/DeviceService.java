@@ -23,7 +23,6 @@ public class DeviceService {
     private final DeviceRepository deviceRepository;
     private final OrderItemRepository orderItemRepository;
     private final UserRepository userRepository;
-    private final OrderRepository orderRepository;
 
     @Transactional
     public Long registerDevice(String serialNumber, User user) {
