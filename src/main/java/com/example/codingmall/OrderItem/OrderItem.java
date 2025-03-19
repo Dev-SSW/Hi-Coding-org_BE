@@ -27,7 +27,8 @@ public class OrderItem {
 
     private int itemCount;          // 주문 상품 갯수
     private int orderPrice;         // 주문 상품 가격
-    @Column(unique = true, nullable = false)
+
+    @Column(unique = true)
     private String serialNumber;    // 일련 번호
 
     /* 생성 메서드 (정적 팩토리)*/

@@ -1,6 +1,6 @@
 package com.example.codingmall.Device;
 
-import com.example.codingmall.Enviorment.Environment;
+import com.example.codingmall.Environment.Environment;
 import com.example.codingmall.User.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -17,12 +17,8 @@ public class Device {
     @Column(name = "device_id")
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "enviorment_id")
-    private Environment environment;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id" , nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
     private LocalDateTime registerDate; //등록일

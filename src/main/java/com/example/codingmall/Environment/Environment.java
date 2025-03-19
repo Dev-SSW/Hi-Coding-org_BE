@@ -1,4 +1,4 @@
-package com.example.codingmall.Enviorment;
+package com.example.codingmall.Environment;
 
 import com.example.codingmall.Device.Device;
 import jakarta.persistence.*;
@@ -18,7 +18,7 @@ public class Environment {
     @Column(name = "environment_id")
     private Long id;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "device_id")
     private Device device;
 
