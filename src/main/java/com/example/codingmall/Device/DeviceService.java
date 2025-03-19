@@ -39,6 +39,7 @@ public class DeviceService {
         // 4. 유저에게 ROLE_PLANT 역할 부여하기 (변경 감지로 수정하기에 save 작업 미필요)
         if (user1.getRole() != Role.ROLE_ADMIN && user1.getRole() != Role.ROLE_SOCIAL) {
             user1.setRole(Role.ROLE_PLANT);
+            userRepository.save(user1);
         }
         return device.getId();
     }
