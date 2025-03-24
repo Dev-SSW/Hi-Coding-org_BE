@@ -16,6 +16,7 @@ public class UserDto {
     private String username;   // 아이디
     private String password;   // 비밀번호
     private LocalDate birth;         // 주민등록번호
+    private Role userRole; // 사용자 역할
     private String name;       // 사용자 이름
     private String phoneNumber;// 휴대폰 번호
     private String email;      // 이메일
@@ -31,8 +32,7 @@ public class UserDto {
                 .name(this.name)
                 .phoneNumber(this.phoneNumber)
                 .status(UserStatus.ACTIVATE)
-                .role(Role.ROLE_USER)
-                .email(this.email)
+                .role(this.userRole)
                 .build();
     }
 }

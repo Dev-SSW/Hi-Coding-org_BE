@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,6 +29,17 @@ public class PlantService {
                 .orElseThrow(() -> new UserNotFoundException("Plant에서 User을 찾을 수 없음."));
         Plant plant = plantDto.toEntity(user);
         return plantRepository.save(plant);
+    }
+    @Transactional
+    public Plant updatePlant(PlantDto plantDto, User user) {
+        Plant plant = plantRepository.findPlantByPlantId(plantDto.getId());
+        if (!plant.getUser().getId().equals(user.getId())){
+            throw new UserNotFoundException("User Id and from plant userId are not equal");
+        }
+
+        plant.updatePlant(plantDto);
+
+        return plant;
     }
 }
 

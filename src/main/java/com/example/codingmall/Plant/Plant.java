@@ -26,4 +26,14 @@ public class Plant {
     private int idealSolidMoisture; //이상적인 토양습도
     private int idealLightIntensity;//이상적인 광량
     private int growthTarget;       //목표 성장 길이
+
+    public void updatePlant(PlantDto plantDto){
+        this.name = plantDto.getName();
+        this.idealTemperature = plantDto.getIdealTemperature();
+        this.idealHumidity = plantDto.getIdealHumidity();
+        this.idealSolidMoisture = plantDto.getIdealSolidMoisture();
+        this.idealLightIntensity = plantDto.getIdealSolidMoisture();
+        this.growthTarget = plantDto.getGrowthTarget();
+
+    }
 }
