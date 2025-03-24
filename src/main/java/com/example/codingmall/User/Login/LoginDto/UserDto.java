@@ -20,6 +20,7 @@ public class UserDto {
     private String name;       // 사용자 이름
     private String phoneNumber;// 휴대폰 번호
     private String email;      // 이메일
+    private Role role;         // 역할
 
 
     // UserDto -> User 변환 메서드
@@ -30,6 +31,7 @@ public class UserDto {
                 .password(this.password)
                 .birth(this.birth)
                 .name(this.name)
+                .role(this.role)
                 .phoneNumber(this.phoneNumber)
                 .status(UserStatus.ACTIVATE)
                 .role(this.userRole)
