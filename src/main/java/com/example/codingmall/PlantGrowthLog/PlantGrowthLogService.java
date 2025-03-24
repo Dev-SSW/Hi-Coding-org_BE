@@ -23,7 +23,7 @@ public class PlantGrowthLogService {
     @Transactional
     public Long recordGrowth(Long plantId, PlantGrowthLogRequest plantGrowthLogRequest) {
         Plant plant = plantRepository.findById(plantId).orElseThrow(() -> new PlantNotFoundException("해당 식물을 찾을 수 없습니다."));
-        int totalGrowth = plantGrowthLogRequest.getGrowth() + plant.getTotalGgrowth();   //전체 성장 길이 Plant에 저장
+        int totalGrowth = plantGrowthLogRequest.getGrowth() + plant.getTotalGrowth();   //전체 성장 길이 Plant에 저장
         plant.setTotalGrowth(totalGrowth);
         plantRepository.save(plant);
 
