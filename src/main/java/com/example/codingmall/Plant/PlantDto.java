@@ -32,8 +32,6 @@ public class PlantDto {
                 .growthTarget(plant.getGrowthTarget())
                 .build();
     }
-
-
     public Plant toEntity(User user){
         return Plant.builder()
                 .plant_id(this.getId())

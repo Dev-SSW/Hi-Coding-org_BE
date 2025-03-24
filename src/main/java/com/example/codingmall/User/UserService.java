@@ -103,7 +103,9 @@ public class UserService implements UserDetailsService {
                     .username(user.getUsername())
                     .birth(user.getBirth())
                     .name(user.getName())
+                    .phoneNumber(user.getPhoneNumber())
                     .email(user.getEmail())
+                    .userRole(user.getRole())
                     .build();
 
             return UserInfo.builder()
