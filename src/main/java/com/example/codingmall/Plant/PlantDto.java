@@ -19,10 +19,11 @@ public class PlantDto {
     private int idealSolidMoisture; //이상적인 토양습도
     private int idealLightIntensity;//이상적인 광량
     private int growthTarget;       //목표 성장 길이
+    private int totalGrowth;        //전체 성장 길이
 
     public static PlantDto from (Plant plant){
         return PlantDto.builder()
-                .id(plant.getPlant_id())
+                .id(plant.getId())
                 .userId(plant.getUser().getId())
                 .name(plant.getName())
                 .idealTemperature(plant.getIdealTemperature())
@@ -30,11 +31,12 @@ public class PlantDto {
                 .idealSolidMoisture(plant.getIdealSolidMoisture())
                 .idealLightIntensity(plant.getIdealLightIntensity())
                 .growthTarget(plant.getGrowthTarget())
+                .totalGrowth(plant.getTotalGrowth())
                 .build();
     }
     public Plant toEntity(User user){
         return Plant.builder()
-                .plant_id(this.getId())
+                .id(this.getId())
                 .user(user)
                 .name(this.name)
                 .idealTemperature(this.getIdealTemperature())
@@ -42,6 +44,7 @@ public class PlantDto {
                 .idealSolidMoisture(this.idealSolidMoisture)
                 .idealLightIntensity(this.idealLightIntensity)
                 .growthTarget(this.getGrowthTarget())
+                .totalGrowth(0)
                 .build();
     }
 }
