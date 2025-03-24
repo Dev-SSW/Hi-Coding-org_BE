@@ -16,14 +16,14 @@ import java.util.List;
 public class PlantController {
 
     private final PlantService plantService;
-    @GetMapping("plants/getList")
+    @GetMapping("plant/getList")
     @Operation(summary = "나의 식물 목록 조회" , description = "현재 내가 등록한 식물을 리스트 형태로 조회합니다.")
     public ResponseEntity<List<PlantDto>> getAllPlants(@AuthenticationPrincipal User user){
         List<PlantDto> allPlants = plantService.findAllPlants(user);
         return ResponseEntity.ok(allPlants);
     }
-
-    @PostMapping("Plant/create")
+    
+    @PostMapping("plant/create")
     @Operation(summary = "식물 등록하기" , description = "내가 새로운 식물을 등록합니다.")
     public ResponseEntity<Plant> createPlant(@AuthenticationPrincipal User user, @RequestBody PlantDto plantDto){
         Plant plant = plantService.createPlant(plantDto, user);

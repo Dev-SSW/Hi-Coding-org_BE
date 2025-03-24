@@ -14,7 +14,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Plant {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long plant_id;
+    @Column(name = "plant_id")
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -26,6 +27,7 @@ public class Plant {
     private int idealSolidMoisture; //이상적인 토양습도
     private int idealLightIntensity;//이상적인 광량
     private int growthTarget;       //목표 성장 길이
+    private int totalGrowth;        //전체 성장 길이
 
     public void updatePlant(PlantDto plantDto){
         this.name = plantDto.getName();
@@ -34,6 +36,9 @@ public class Plant {
         this.idealSolidMoisture = plantDto.getIdealSolidMoisture();
         this.idealLightIntensity = plantDto.getIdealSolidMoisture();
         this.growthTarget = plantDto.getGrowthTarget();
+    }
 
+    public void setTotalGrowth(int growth) {
+        totalGrowth = growth;
     }
 }
