@@ -15,11 +15,10 @@ public class UserDto {
     private Long id;           // 회원고유번호
     private String username;   // 아이디
     private String password;   // 비밀번호
-    private LocalDate birth;         // 주민등록번호
-    private Role userRole; // 사용자 역할
+    private LocalDate birth;   // 주민등록번호
     private String name;       // 사용자 이름
-    private String phoneNumber;// 휴대폰 번호
     private String email;      // 이메일
+    private String phoneNumber;// 휴대폰 번호
     private Role role;         // 역할
 
 
@@ -31,10 +30,10 @@ public class UserDto {
                 .password(this.password)
                 .birth(this.birth)
                 .name(this.name)
-                .role(this.role)
+                .email(this.email)
                 .phoneNumber(this.phoneNumber)
+                .role(this.role)
                 .status(UserStatus.ACTIVATE)
-                .role(this.userRole)
                 .build();
     }
 }
