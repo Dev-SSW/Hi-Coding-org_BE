@@ -23,8 +23,8 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     //http://localhost:8081/oauth2/authorization/google
     //http://localhost:8081/oauth2/authorization/naver
     //AWS
-    //https://leon.p-e.kr/oauth2/authorization/google
-    //https://leon.p-e.kr/oauth2/authorization/naver
+    //https://leoan.p-e.kr/oauth2/authorization/google
+    //https://leoan.p-e.kr/oauth2/authorization/naver
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -53,6 +53,6 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         response.getWriter().write("로그인 성공"); //브라우저는 한 번에 하나의 응답만 처리할 수 있기 때문
 */
         // 로그인 성공 후 리디렉션할 URL
-        response.sendRedirect("https://leon.p-e.kr/successSocialLogin"); // 원하는 페이지로 이동
+        response.sendRedirect("https://leoan.p-e.kr/successSocialLogin"); // 원하는 페이지로 이동
     }
 }
