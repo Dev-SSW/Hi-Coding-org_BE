@@ -15,4 +15,8 @@ public interface OAuth2Response {
 
     // 프로필 이미지
     String getProfileImage();
+
+    //People API
+    String getBirth();
+    String getPhoneNumber();
 }

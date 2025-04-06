@@ -25,8 +25,8 @@ public class User implements UserDetails, OAuth2User {
 
     private String username; // 아이디
     private String password; // 비밀번호
-    @Column(nullable = false,name = "birth",columnDefinition = "DATE")
-    private LocalDate birth;       //  생년월일
+    @Column(name = "birth", nullable = true)
+    private LocalDate birth; //  생년월일
     @Column(nullable = false)
     private String name;     // 사용자 이름
     private String email;    // 이메일
