@@ -1,0 +1,435 @@
+[33mcommit 5011b284539ad21e0a26f66af5af9a041168d841[m[33m ([m[1;36mHEAD -> [m[1;32mdevelop[m[33m)[m
+Author: seongun Kim <seongun44@naver.com>
+Date:   Mon Dec 2 15:10:15 2024 +0900
+
+    :fix CORS 에러 해결 완료 버전 (ngrok 해결 완료 Ver.#2)
+    
+    :fix CategoryController 설정 해결 완료
+
+[33mcommit b43993d8b1969d42d040f1f3288ea993e03f213b[m
+Author: seongun Kim <seongun44@naver.com>
+Date:   Mon Dec 2 22:03:12 2024 +0900
+
+    :fix CORS 에러 해결 완료 버전 (ngrok 해결 완료 Ver.#2)
+    
+    :fix CategoryController 설정 해결 완료
+
+[33mcommit bafcfc0d6265c3503272db87d6f4e25b7de00d3b[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m
+Author: seongun Kim <seongun44@naver.com>
+Date:   Mon Dec 2 15:10:15 2024 +0900
+
+    :bug: addItemToCart 에서 @RequestParm int count 매개변수 삭제
+
+[33mcommit 46b2db5bedac2ea008165e7c9584cd8426d21783[m[33m ([m[1;31mupstream/develop[m[33m)[m
+Merge: f7a8c2c 2e75e9e
+Author: 송승우 <114336975+Dev-SSW@users.noreply.github.com>
+Date:   Fri Nov 29 13:57:22 2024 +0900
+
+    Merge pull request #23 from Dev-SSW/develop
+    
+    🐛 Fix : SignUpRequest 수정과 관리자 계정 자동 생성
+
+[33mcommit 2e75e9e83f17358d9053c79f6657305bcc91d22b[m
+Merge: 5e3e419 f7a8c2c
+Author: Dev-SSW <sgg919@naver.com>
+Date:   Thu Nov 28 02:03:52 2024 +0900
+
+    Merge branch 'develop' of https://github.com/Hi-Coding-org/Hi-Coding-org_BE into develop
+
+[33mcommit 5e3e419f242d869fed188af7f058c2f29176b45c[m
+Author: Dev-SSW <sgg919@naver.com>
+Date:   Thu Nov 28 01:59:29 2024 +0900
+
+    ✨ Feat : 관리자 계정 자동 생성 기능을 추가하였습니다.
+    
+    1. 앞으로 프로젝트 실행 시 관리자 용 계정이 하나 생성되어 있습니다.
+
+[33mcommit 1f767c8b0b5817c3ad9ab8a31c14516501ac7f34[m
+Author: Dev-SSW <sgg919@naver.com>
+Date:   Tue Nov 26 17:18:40 2024 +0900
+
+    ♻️ Refactor : SignupRequest에 필요한 입력 값만을 받을 수 있도록 수정했습니다.
+    
+    1. username,password,birth,name,phoneNumber을 제외한 모든 입력 삭제
+    2. 입력을 삭제하고 가입 시 자동으로 ROLE_USER, ACTIVATE를 부여받도록 수정
+    3. USER의 jumin을 birth로 수정
+    4. ROLE에 SOCIAL 역할 추가 (USER, SOCIAL, ADMIN)
+    5. SOCIAL 역할 사용자도 가입한 사용자 용 url을 들어갈 수 있도록 hasAnyRole로 수정
+    6. 소셜 로그인 한 회원의 생년월일과 휴대전화 번호를 가져오는 로직은 수정중
+    7. 추후 어드민 계정을 수동으로 추가하는 기능을 만들 예정
+
+[33mcommit f7a8c2cf6f2ca2ef305060887e20463535db0b89[m
+Merge: 8d43bae 8c05bad
+Author: 김성운 <115334493+seongun1@users.noreply.github.com>
+Date:   Tue Nov 26 16:32:10 2024 +0900
+
+    Merge pull request #22 from Dev-SSW/develop
+    
+    🚚 Rename : Exception과 Config 패키지를 만들어 관련 파일들을 삽입했습니다.
+
+[33mcommit 8c05bad483113df32d525248ae5b1b3935d33f31[m
+Author: Dev-SSW <sgg919@naver.com>
+Date:   Mon Nov 25 20:55:47 2024 +0900
+
+    🐛 Fix : 회원가입시 중복 체크를 하는 기능이 오류를 발생하여 수정하였습니다.
+
+[33mcommit a0022184b83b5cfad870319d7e318ca9dcc6ab40[m
+Author: Dev-SSW <sgg919@naver.com>
+Date:   Mon Nov 25 17:28:01 2024 +0900
+
+    🚚 Rename : Exception과 Config 패키지를 만들어 관련 파일들을 삽입했습니다.
+
+[33mcommit 8d43baed57111c80825c267166572774e7d8fd02[m[33m ([m[1;31morigin/develop[m[33m)[m
+Merge: bc4b69c 5ff9be9
+Author: 김성운 <115334493+seongun1@users.noreply.github.com>
+Date:   Mon Nov 25 16:08:23 2024 +0900
+
+    Merge pull request #21 from Dev-SSW/develop
+    
+    ♻️ Refactor : 코드를 수정했습니다.
+
+[33mcommit 5ff9be9d96b789c66424cc34ea248f3aef98525b[m
+Author: Dev-SSW <sgg919@naver.com>
+Date:   Mon Nov 25 16:06:17 2024 +0900
+
+    ♻️ Refactor : ddl-auto를 update로 바꾸었습니다.
+
+[33mcommit 03e7cf944efa7e1dba890243ace3463dcb37c8ad[m
+Author: Dev-SSW <sgg919@naver.com>
+Date:   Mon Nov 25 14:47:32 2024 +0900
+
+    ♻️ Refactor : Service에 정의되어 있는 오류 메세지 정의를 Repository로 옮기는 작업
+
+[33mcommit bc4b69c6cfb39542df5bd8f58997192bb91b3788[m
+Merge: 85c016b a251aa6
+Author: 송승우 <114336975+Dev-SSW@users.noreply.github.com>
+Date:   Mon Nov 25 11:25:45 2024 +0900
+
+    Merge pull request #20 from seongun1/main
+    
+    Feat : 딜리버리 api 개발
+
+[33mcommit a251aa6383aef57092dd954ef975434be5f321a9[m
+Merge: 680b8a3 85c016b
+Author: seongun Kim <seongun44@naver.com>
+Date:   Mon Nov 25 09:52:23 2024 +0900
+
+    Merge branch 'develop' of https://github.com/Hi-Coding-org/Hi-Coding-org_BE
+
+[33mcommit 85c016bfa2676307642f4b358cf74a9c4f2df4ee[m
+Merge: 9d925aa 5e5e00a
+Author: 김성운 <115334493+seongun1@users.noreply.github.com>
+Date:   Mon Nov 25 09:50:45 2024 +0900
+
+    Merge pull request #19 from Dev-SSW/develop
+    
+    ✨ Feat: User 엔티티 수정과 Ngrok에 관련한 설정 추가
+
+[33mcommit 680b8a3a75b7977cde78372c92c858c7e2924e6e[m
+Author: seongun Kim <seongun44@naver.com>
+Date:   Mon Nov 25 09:35:13 2024 +0900
+
+    :sparkles: Feat: 딜리버리 컨트롤러 개발.
+    
+    fix : 아이템 레포지토리 단에 에러를 넣기 위한 레포지토리 변경
+
+[33mcommit 5e5e00a4fa99988c25fa43186a6afc8436adb61d[m
+Author: Dev-SSW <sgg919@naver.com>
+Date:   Sun Nov 24 16:43:51 2024 +0900
+
+    ✨ Feat: Ngrok 설정을 위한 추가 및 수정
+    
+    1. SecurityConfig의 CORS 설정을 추가했습니다. -> 리액트와의 연결을 위한 3000번지
+      -> Ngrok과의 연결을 위한 URL 주소
+    2. Ngrok 재접속 시 도메인 주소가 바뀌기에 주소를 가져오기 위한 함수를 추가했습니다
+    3. 스웨거에 접속하기 위해 URL 주소를 명시적으로 추가했습니다.
+    4. WebConfig는 SecurityConfig와 CORS 설정이 겹쳐 삭제했습니다.
+
+[33mcommit a98f8a695dd5ca4531887df77e16a3487503f402[m
+Author: Dev-SSW <sgg919@naver.com>
+Date:   Sun Nov 24 15:13:47 2024 +0900
+
+    🎨 Fix: User 엔티티의 carts에 Casacde 설정
+
+[33mcommit 9d925aa0bd9f18236bfc66d8e8a96e75829c4abd[m
+Merge: 0ca5749 2adb96a
+Author: 송승우 <114336975+Dev-SSW@users.noreply.github.com>
+Date:   Fri Nov 22 19:50:04 2024 +0900
+
+    Merge pull request #18 from seongun1/develop
+    
+    feat : 프론트 회의 후 변경사항 저장, 서비스 / 레포지토리 코드 개선
+
+[33mcommit 2adb96ad6bfad86d86081de72ea6e9ab9c41cf8f[m
+Merge: 286f0e3 8d6b1a0
+Author: 김성운 <115334493+seongun1@users.noreply.github.com>
+Date:   Fri Nov 22 01:37:22 2024 +0900
+
+    Merge pull request #1 from seongun1/main
+    
+    동기화
+
+[33mcommit 8d6b1a09eb7a41996bca79773ba834514f264c35[m
+Author: seongun Kim <seongun44@naver.com>
+Date:   Fri Nov 22 01:26:49 2024 +0900
+
+    :art: Feat: 서비스 / 레포지토리 코트 개선
+    
+    1. 서비스 / 레포지토리의 에러 내용 레포지토리 안으로 에러 코드 넣기.
+    (카테고리 , 아이템, 오더, 결제, 카트아이템)
+
+[33mcommit 65923adc40181e77bd446b3adb4cd166664fd8cf[m
+Author: seongun Kim <seongun44@naver.com>
+Date:   Thu Nov 21 23:53:24 2024 +0900
+
+    :zap: 프론트와의 회의 후 변경사항 저장 #1
+    
+    1. feat : User 엔티티에 orders cascade.ALL 속성 추가
+    
+    2. fix : Item 엔티티에 String 형태의 content 속성을 이미지 파일 형태인 byte[] 형태로 변경.
+
+[33mcommit 0ca5749cbcf5dc63782cf0b33cf5f72096c76e7a[m
+Merge: 0b88d15 286f0e3
+Author: 송승우 <114336975+Dev-SSW@users.noreply.github.com>
+Date:   Tue Nov 19 17:29:40 2024 +0900
+
+    Merge pull request #17 from seongun1/main
+    
+    feat: 딜리버리 엔티티 이름 수정 및 @Schema 어노테이션 추가, 외부 환경에서 사용하기 위한 ngrok 사용 설정
+
+[33mcommit 286f0e3f8f36d122095c196fef765a4e6c174145[m
+Author: seongun Kim <seongun44@naver.com>
+Date:   Tue Nov 19 15:26:28 2024 +0900
+
+    :art: swagger-api SignupRequest 설명을 위한 @Schema 어노테이션 추가
+    : enum 타입에 대한 설명이 필요하다고 하셔서 이것들을 설명하기 위한 어노테이션을 추가하였습니다.
+    
+    fix: 외부 환경에서 로컬호스트를 사용하기 위한
+    ngrok 사용 설정.(해결 중..)
+
+[33mcommit 0b88d15008981c811367771854567963381b7020[m
+Merge: 2794fdc 596acb2
+Author: 김성운 <115334493+seongun1@users.noreply.github.com>
+Date:   Mon Nov 18 18:51:41 2024 +0900
+
+    Merge pull request #16 from Dev-SSW/develop
+    
+    🐛 Fix: PR이 보내지지 않은 Commit 메세지 재등록, 로그인 관련 수정
+
+[33mcommit 596acb23b2dad3f55770c71138916c5e9b472278[m
+Merge: c3ea401 3836fa5
+Author: Dev-SSW <sgg919@naver.com>
+Date:   Mon Nov 18 17:10:20 2024 +0900
+
+    Merge branch 'feature/order' of https://github.com/Dev-SSW/Hi-Coding-org_BE into develop
+
+[33mcommit c3ea401ca42bc09a56078cd8d2d4d5ebe1e8ae06[m
+Author: Dev-SSW <sgg919@naver.com>
+Date:   Mon Nov 18 16:56:50 2024 +0900
+
+    :bug: Fix: CORS 설정, 응답 데이터 생성
+    
+    1. CORS를 재설정 했습니다. (3000번)
+    2. Handler에서 소셜 로그인 시 응답 데이터를 추가 했습니다.
+
+[33mcommit 2794fdcfff71ac0972c1abdb4346ecec4b30d4f3[m
+Merge: 4d35d99 d791242
+Author: 송승우 <114336975+Dev-SSW@users.noreply.github.com>
+Date:   Sun Nov 17 23:00:57 2024 +0900
+
+    Merge pull request #15 from seongun1/main
+    
+    Feat : Payment 개발. Fix : Item api 오류 수정.
+
+[33mcommit 2c0f57de014f0be3fe8ec193a0a938104698bd2c[m
+Author: seongun Kim <seongun44@naver.com>
+Date:   Sat Nov 16 17:50:09 2024 +0900
+
+    :bug: FIx: 딜러버리 엔티티 이름 수정
+
+[33mcommit d791242b3464e99e8fd11bd0b7d92cd4d3bb9e1b[m
+Author: seongun Kim <seongun44@naver.com>
+Date:   Fri Nov 15 18:38:14 2024 +0900
+
+    :sparkles: 카테고리 일원화 변경
+    1.cart api 유저 아이디를 받지 않고,
+    인증 후 사용하도록 변경
+    
+    2. 아이템 api 설명 추가
+    3. 카테고리 api 설명 추가
+    4. 아이템 직렬화시 Lazy 로딩으로 인한 객체 불러오지 못함 문제 해결(Hibernate 영속화를 통해 해결)
+    5. 딜리버리 - 페이먼트 엔티티 이름 잘못됨에 따른 이름 변경
+    6. 페이먼트 api 까지 개발.
+
+[33mcommit 3836fa5d5fcbeb8b1609eac9745cdee4a1cbf717[m
+Author: Dev-SSW <sgg919@naver.com>
+Date:   Tue Nov 12 17:14:04 2024 +0900
+
+    :bug: Fix: Order와 User Entity 관계 수정
+    1. User와 Order가 연결되어 있지 않아 주문 기능을 테스트하여도 user_id가 등록되지 않는 문제를 해결
+
+[33mcommit 1e9c34b384a33c795849466e486abf21ac432d72[m
+Author: Dev-SSW <sgg919@naver.com>
+Date:   Tue Nov 12 17:13:06 2024 +0900
+
+    :sparkles: Feat: 장바구니 주문 기능을 위하여 OrderRequest에 생성자 추가
+    1. OrderRequest에 장바구니 주문 기능에 필요한 입력 값만으로 만든 생성자 추가
+    2. Controller, Service의 코드 리팩토링
+
+[33mcommit d486c6a3c4389ad5d0c6b04677ab43d73d73adae[m
+Author: Dev-SSW <sgg919@naver.com>
+Date:   Tue Nov 12 17:10:02 2024 +0900
+
+    :sparkles: Feat: 장바구니 주문 기능을 위한 Request 파일 추가
+
+[33mcommit 47878b4fac9b2329eac24290248d8f71ce4a67d0[m
+Author: seongun Kim <seongun44@naver.com>
+Date:   Tue Nov 12 14:15:10 2024 +0900
+
+    :bug: 1. UsernameAlreadyExistsException
+    설정 컴파일 오류로 인한 -> new IllegalstateException으로 변경.
+
+[33mcommit 9af2178772ab36a079da8fa86b244b22c8a12a6c[m
+Merge: 86ad7b1 4d35d99
+Author: seongun Kim <seongun44@naver.com>
+Date:   Tue Nov 12 14:06:23 2024 +0900
+
+    Merge branch 'develop' of https://github.com/Hi-Coding-org/Hi-Coding-org_BE
+
+[33mcommit 86ad7b1349efd79183772b8df2a8667b8b6c33be[m
+Author: seongun Kim <seongun44@naver.com>
+Date:   Tue Nov 12 14:06:08 2024 +0900
+
+    :bug: UsernameAlreadyExistsException 오류 해결 ver.1
+
+[33mcommit 4d35d995f8b6183c8ddb331ea0c7980f423efe5c[m
+Merge: a6c5e06 93ddd5b
+Author: 김성운 <115334493+seongun1@users.noreply.github.com>
+Date:   Tue Nov 12 13:34:40 2024 +0900
+
+    Merge pull request #14 from Dev-SSW/develop
+    
+    🐛 Fix: Order에 관련된 생성 메서드 수정, Cart에 관련된 오류 수정
+
+[33mcommit 93ddd5b9f12acdb4ad820faeb081ebc7dcb84c80[m
+Author: Dev-SSW <sgg919@naver.com>
+Date:   Tue Nov 12 11:44:04 2024 +0900
+
+    :sparkles: Feat: 주문 취소 Service, Controller 추가
+
+[33mcommit c0ed4b5c92cf68c8599c5df01f96e09cdb413e34[m
+Author: Dev-SSW <sgg919@naver.com>
+Date:   Tue Nov 12 11:31:54 2024 +0900
+
+    :sparkles: Feat: 장바구니 주문 기능을 위한 Controller 추가
+
+[33mcommit e98057bd7db997f18c3ff77dba2642af2c08d439[m
+Author: Dev-SSW <sgg919@naver.com>
+Date:   Tue Nov 12 10:07:34 2024 +0900
+
+    :sparkles: Feat: 장바구니 상품 주문 기능 추가
+    
+    1. 장바구니의 상품들을 바로 주문할 수 있는 기능을 추가하였습니다.
+
+[33mcommit 6a689a6f133c18045289982fcbe637ac89e47154[m
+Author: Dev-SSW <sgg919@naver.com>
+Date:   Mon Nov 11 17:18:57 2024 +0900
+
+    :bug: Fix: Cart, CartItem의 컨트롤러와 서비스 수정
+    
+    수정 내용 :
+    1. CartService에서 기존의 Cart가 있는 경우 Save가 두 번되므로, Save가 한번만 될 수 있도록 수정하였습니다.
+    2. Cart Entity에 추가해야할 부분에 대한 주석을 처리했습니다.
+    3. CartItem의 updateCount 함수에서 수량만 변경되고 가격이 변경되지 않는 문제를 해결했습니다.
+    4. Swagger 테스트 시 ID의 입력에 오류가 있어 Controller를 수정하였습니다.
+    @PathVariable Long cartItemId, @RequestParam int count
+    ->
+    @PathVariable(name = "cartItemId") Long cartItemId, @RequestParam(name = "count") int count
+
+[33mcommit 66665a2989309ef39b1c40858029e58f4de7eb9e[m
+Author: Dev-SSW <sgg919@naver.com>
+Date:   Mon Nov 11 16:05:39 2024 +0900
+
+    :bug: Fix: DTO FileName 수정, 생성 메서드 수정
+    1. 생성 메서드를 정적 팩토리로 엔티티 객체 내에서 생성하도록 수정
+    2. DTO의 toEntity() 함수가 불필요하므로 삭제 후 FileName을 Request로 수정
+    3. 주문 생성 후 OrderDTO 대신 Long 타입으로 return을 받도록 수정
+
+[33mcommit cca2636dfc422f1fcf2d800f3f99bc78e3b8e017[m
+Merge: a6c5e06 2d7a05e
+Author: seongun Kim <seongun44@naver.com>
+Date:   Mon Nov 11 16:05:16 2024 +0900
+
+    Merge branch 'develop'
+
+[33mcommit 2d7a05e110ef5de368f7440ebc048e7d56a61eaf[m
+Author: seongun Kim <seongun44@naver.com>
+Date:   Mon Nov 11 16:04:13 2024 +0900
+
+    :sparkles: 딜리버리 api 생성
+
+[33mcommit a6c5e06f2c4bddb1963f9820d833c9f111bc1e65[m
+Merge: 0eb8eb4 806dfca
+Author: 김성운 <115334493+seongun1@users.noreply.github.com>
+Date:   Mon Nov 11 15:07:05 2024 +0900
+
+    Merge pull request #13 from Dev-SSW/develop
+    
+    ✨  Feat: 주문 기능 추가 및 엔티티 수정
+
+[33mcommit 806dfca4f30fde72661e26566e633c02285c9e04[m
+Author: Dev-SSW <sgg919@naver.com>
+Date:   Sun Nov 10 23:52:39 2024 +0900
+
+    :sparkles: Feat: 주문 생성 기능 추가
+    1. 주문 생성 기능 추가
+    2. 주문 생성 완료 시의 응답 클래스를 따로 생성
+
+[33mcommit 9a9fb806d805f8d9cc96c4268ed3a22a8c2113ee[m
+Author: Dev-SSW <sgg919@naver.com>
+Date:   Sun Nov 10 23:51:22 2024 +0900
+
+    :bug: Fix: Delivery와 Order 수정, Order 로직 추가
+    1. Delivery의 PK를 Order Entity로 전환
+    2. Order Entity에 조회, 관계, 비즈니스 로직 추가
+
+[33mcommit c05f09f51e639d9fb217779ea4a536b1d784ae2d[m
+Author: Dev-SSW <sgg919@naver.com>
+Date:   Sun Nov 10 23:48:02 2024 +0900
+
+    :bug: Fix: 주문 상태에는 주문, 취소만 존재하도록 수정
+
+[33mcommit a4baa6c56217c77330122a90932f8f5666da766e[m
+Author: Dev-SSW <sgg919@naver.com>
+Date:   Sun Nov 10 23:44:36 2024 +0900
+
+    :recycle: Refactor: 기존의 Login 패키지를 User 패키지 안으로 리팩토링 (일관성)
+
+[33mcommit 0eb8eb46f3c805f5dabd41d2d7fc7ae5d7fb274e[m
+Merge: f2e8ac2 0d0bf0e
+Author: 송승우 <114336975+Dev-SSW@users.noreply.github.com>
+Date:   Mon Nov 4 14:15:07 2024 +0900
+
+    Merge pull request #12 from seongun1/main
+    
+    ✨ Feat : Item, CartItem 개발.
+
+[33mcommit 86b651971cd42985eacb5d5dcc4bee1a0afbda9f[m
+Merge: b953674 0d0bf0e
+Author: seongun Kim <seongun44@naver.com>
+Date:   Tue Oct 22 19:46:03 2024 +0900
+
+    :sparkles: Feat : Item, CartItem 개발.
+    
+    1. Feat: Cart Repository 추가
+    2. Feat: CartItem 엔티티 추가
+    : 상품과 장바구니는 n:m 관계이므로, 이를 해소할 장바구니상품(CartItem)이 필요함.
+    3. Feat: CartController, CartItemController 추가.
+    
+    4. Fix: Item 속성 Count int로 변경.
+    : 기본 타입으로 변환하여 계산하는 로직이
+    필요해서 (Long -> item으로 변경.)
+    
+    5. 사소한 버그 수정
+    
+    6. Category 수정 본 merge 후 push

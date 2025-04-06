@@ -7,7 +7,7 @@ build/
 .env*
 application.yml
 .env
-.pem*
+*.pem
 
 ### STS ###
 .apt_generated
