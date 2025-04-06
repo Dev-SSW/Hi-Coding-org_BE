@@ -81,11 +81,10 @@ public class PlantRecommandService {
                 "제라늄 - 화사한 에너지를 뿜는 ESFP에게 어울리는 컬러풀한 식물입니다."
         ));
     }
-    public String getMBTIResult(MBTIResponseDto mbtiResponseDto) {
+    public String getPlantResult(MBTIResponseDto mbtiResponseDto) {
         String mbti = calculateMBTI(mbtiResponseDto);
         List<String> plant = mbtiToPlantMap.getOrDefault(mbti,
                 List.of("스칸답서스 - 어떤 성격 유형과도 잘 어울리는 식물입니다."));
-
         String selectedPlant = plant.get(random.nextInt(plant.size()));
         PlantRecommand result = new PlantRecommand(
                 null,

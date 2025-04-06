@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("public/")
+@RestController
 @RequiredArgsConstructor
-@Tag(name =  "PlantRecommand API" , description = "나의 성향에 맞는 식물 추천 API")
+@Tag(name =  "PlantRecommand" , description = "나의 성향에 맞는 식물 추천 API")
 public class PlantRecommandController {
     private final PlantRecommandService plantRecommandService;
-    @PostMapping("getPlantRecommandResult")
+    @PostMapping("/public/getPlantRecommandResult")
     @Operation(summary = "MBTI 검사 결과 값을 가져와 추천 식물을 반환합니다.",
     responses = {
             @ApiResponse(responseCode = "200", description = "성공적으로 추천 식물을 반환하였습니다"),
@@ -25,7 +25,7 @@ public class PlantRecommandController {
     })
     public ResponseEntity<String> getPlantResult(@RequestBody MBTIResponseDto mbtiResponseDto) {
         try {
-            String plant = plantRecommandService.getMBTIResult(mbtiResponseDto);
+            String plant = plantRecommandService.getPlantResult(mbtiResponseDto);
             return ResponseEntity.ok(plant);
         } catch (Exception e) {
             return ResponseEntity.status(500).body("추천 식물 계산 중 오류가 발생하였습니다.");

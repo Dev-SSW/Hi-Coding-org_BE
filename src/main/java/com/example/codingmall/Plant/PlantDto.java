@@ -20,6 +20,7 @@ public class PlantDto {
     private int idealLightIntensity;//이상적인 광량
     private int growthTarget;       //목표 성장 길이
     private int totalGrowth;        //전체 성장 길이
+    private String imageUrl;        //식물 이미지 URL
 
     public static PlantDto from (Plant plant){
         return PlantDto.builder()
@@ -32,6 +33,7 @@ public class PlantDto {
                 .idealLightIntensity(plant.getIdealLightIntensity())
                 .growthTarget(plant.getGrowthTarget())
                 .totalGrowth(plant.getTotalGrowth())
+                .imageUrl(plant.getImageUrl())
                 .build();
     }
     public Plant toEntity(User user){
@@ -45,6 +47,7 @@ public class PlantDto {
                 .idealLightIntensity(this.idealLightIntensity)
                 .growthTarget(this.getGrowthTarget())
                 .totalGrowth(0)
+                .imageUrl(this.imageUrl)
                 .build();
     }
 }
