@@ -8,6 +8,7 @@ import com.example.codingmall.User.Role;
 import com.example.codingmall.User.User;
 import com.example.codingmall.User.UserRepository;
 import com.example.codingmall.User.UserStatus;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -17,6 +18,11 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -40,6 +46,57 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         //제공자 별 분기
         if("google".equals(provider)) {
             oAuth2Response = new GoogleResponse(oAuth2User.getAttributes());
+            /*try {
+                // Google API 호출용 AccessToken
+                String accessToken = userRequest.getAccessToken().getTokenValue();
+                String peopleApiUrl = "https://people.googleapis.com/v1/people/me?personFields=birthdays,phoneNumbers";
+                URL url = new URL(peopleApiUrl);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestProperty("Authorization", "Bearer " + accessToken);
+                connection.setRequestMethod("GET");
+
+                int responseCode = connection.getResponseCode();
+                if (responseCode == 200) {
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    Map<String, Object> responseBody = objectMapper.readValue(connection.getInputStream(), Map.class);
+
+                    // 생년월일 파싱
+                    if (responseBody.containsKey("birthdays")) {
+                        List<Map<String, Object>> birthdays = (List<Map<String, Object>>) responseBody.get("birthdays");
+                        if (!birthdays.isEmpty()) {
+                            Map<String, Object> date = (Map<String, Object>) birthdays.get(0).get("date");
+                            if (date != null) {
+                                Integer year = (Integer) date.get("year");
+                                Integer month = (Integer) date.get("month");
+                                Integer day = (Integer) date.get("day");
+                                if (year != null && month != null && day != null) {
+                                    ((GoogleResponse) oAuth2Response).setBirth(LocalDate.of(year, month, day));
+                                }}}
+                    }
+
+                    // 응답에서 필요한 데이터 추출
+                    System.out.println("Google People API 응답 전체: " + responseBody);
+                    // 전화번호 파싱
+                    if (responseBody.containsKey("phoneNumbers")) {
+                        List<Map<String, Object>> phones = (List<Map<String, Object>>) responseBody.get("phoneNumbers");
+                        System.out.println("phoneNumbers 응답: " + phones);
+                        if (!phones.isEmpty()) {
+                            String phoneNumber = (String) phones.get(0).get("value");
+                            System.out.println("파싱된 전화번호: " + phoneNumber);
+                            ((GoogleResponse) oAuth2Response).setPhoneNumber(phoneNumber);
+                        } else {
+                            System.out.println("phoneNumbers 항목은 있으나 값이 없습니다.");
+                        }
+                    } else {
+                        System.out.println("phoneNumbers 항목이 응답에 없습니다.");
+                    }
+                } else {
+                    System.err.println("Google People API 응답 실패. 코드: " + responseCode);
+                }
+            } catch (Exception e) {
+                e.printStackTrace(); // 나중엔 logger로 교체하는 게 좋음
+                System.err.println("Google People API 호출 중 예외 발생: " + e.getMessage());
+            }*/
         } else if("naver".equals(provider)) {
             // 네이버의 경우 response 내부 값을 추출하여 처리
             oAuth2Response = new NaverResponse(oAuth2User.getAttributes());
@@ -60,12 +117,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             userDto = UserDto.builder()
                     .username(username)
                     .name(oAuth2Response.getName())
-                    .email(oAuth2Response.getEmail())
-                    //.birth()
-                    //.phoneNumber()
+                    .birth(parseToLocalDate(oAuth2Response.getBirth()))
+                    .phoneNumber(oAuth2Response.getPhoneNumber())
+                    .role(Role.ROLE_SOCIAL)
                     .build();
             User userEntity = userDto.toEntity();
-            userEntity.setRole(Role.ROLE_SOCIAL);
             userRepository.save(userEntity);
             System.out.println("새로운 유저가 가입했습니다. 유저 이름은 : " + userEntity.getUsername());
             return userEntity;
@@ -75,5 +131,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             System.out.println("기존 유저를 찾았습니다. 유저 이름은 : " + users.getUsername());
             return users;
         }
+    }
+
+    private LocalDate parseToLocalDate(String birthStr) {
+        if (birthStr == null || birthStr.isEmpty()) return null;
+        return LocalDate.parse(birthStr); // "1990-01-01" 형식이어야 함
     }
 }
