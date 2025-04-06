@@ -19,10 +19,12 @@ import java.util.HashMap;
 @RequiredArgsConstructor
 public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     private final JWTUtils jwtUtils;
-    //http://localhost:8080/oauth2/authorization/google
-    //http://localhost:8080/oauth2/authorization/naver
-    /*@Value("${spring.frontend.url}")
-    private String frontendUrl;*/
+    //LOCAL
+    //http://localhost:8081/oauth2/authorization/google
+    //http://localhost:8081/oauth2/authorization/naver
+    //AWS
+    //https://leon.p-e.kr/oauth2/authorization/google
+    //https://leon.p-e.kr/oauth2/authorization/naver
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -45,9 +47,12 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         refreshTokenCookie.setMaxAge(7 * 24 * 60 * 60);  // 7일 동안 유효
         response.addCookie(refreshTokenCookie);
 
+/*
         // 사용자에게 응답
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().write("로그인 성공"); //브라우저는 한 번에 하나의 응답만 처리할 수 있기 때문
-        //response.sendRedirect(frontendUrl);
+*/
+        // 로그인 성공 후 리디렉션할 URL
+        response.sendRedirect("https://leon.p-e.kr/successSocialLogin"); // 원하는 페이지로 이동
     }
 }
