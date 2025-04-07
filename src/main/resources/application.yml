@@ -23,9 +23,9 @@ spring:
     secret: ${JWT_SECRET}
   #DB 설정
   datasource:
-    url:  ${SPRING_DATASOURCE_URL}
-    username : ${SPRING_DATASOURCE_USERNAME}
-    password : ${SPRING_DATASOURCE_PASSWORD}
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
   #소셜 로그인을 위한 Google, Naver 키 설정
   security:
