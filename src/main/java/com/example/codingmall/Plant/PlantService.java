@@ -32,21 +32,33 @@ public class PlantService {
     public Plant createPlant(PlantDto plantDto , User user, MultipartFile file) throws IOException {
         userRepository.findById(user.getId())
                 .orElseThrow(() -> new UserNotFoundException("Plant에서 User을 찾을 수 없음."));
-        String imageUrl = s3Service.uploadFile(file);
         Plant plant = plantDto.toEntity(user);
-        plant.setImageUrl(imageUrl);
+        if (file != null && !file.isEmpty()) {
+            String imageUrl = s3Service.uploadFile(file);
+            plant.setImageUrl(imageUrl);
+        }
         return plantRepository.save(plant);
     }
 
     @Transactional
-    public Plant updatePlant(PlantDto plantDto, User user) {
+    public Plant updatePlant(PlantDto plantDto, User user, MultipartFile file) throws IOException{
         Plant plant = plantRepository.findPlantByPlantId(plantDto.getId());
         if (!plant.getUser().getId().equals(user.getId())){
             throw new UserNotFoundException("User Id and from plant userId are not equal");
         }
 
         plant.updatePlant(plantDto);
+        if (file != null && !file.isEmpty()) {
+            // 기존 이미지 삭제
+            String oldImageUrl = plant.getImageUrl();
+            if (oldImageUrl != null) {
+                s3Service.deleteFile(oldImageUrl);
+            }
 
+            // 새 이미지 업로드
+            String imageUrl = s3Service.uploadFile(file);
+            plant.setImageUrl(imageUrl);
+        }
         return plant;
     }
 }
