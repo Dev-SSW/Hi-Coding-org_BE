@@ -29,10 +29,24 @@ public class PlantController {
         return ResponseEntity.ok(allPlants);
     }
 
-    @PutMapping("Plant/update/{PlantId}")
-    @Operation(summary = "식물등록 수정하기", description = "등록한 식물을 수정합니다")
-    public ResponseEntity<PlantDto> updatePlang(@AuthenticationPrincipal User user , @RequestBody PlantDto plantDto){
-        PlantDto updatePlant = PlantDto.from(plantService.updatePlant(plantDto,user));
+    @PutMapping(value = "Plant/update/{PlantId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @Operation(summary = "식물 등록 수정하기 (이미지 포함)", description = "등록한 식물을 수정합니다")
+    public ResponseEntity<PlantDto> updatePlant(
+            @AuthenticationPrincipal User user ,
+            @PathVariable(value = "plantId") Long plantId,
+            @ModelAttribute(value = "request") PlantRequest request,
+            @RequestPart(value = "image", required = false) MultipartFile image
+    ) throws  IOException {
+        PlantDto dto = PlantDto.builder()
+                .id(plantId)
+                .name(request.getName())
+                .idealTemperature(request.getIdealTemperature())
+                .idealHumidity(request.getIdealHumidity())
+                .idealSolidMoisture(request.getIdealSolidMoisture())
+                .idealLightIntensity(request.getIdealLightIntensity())
+                .growthTarget(request.getGrowthTarget())
+                .build();
+        PlantDto updatePlant = PlantDto.from(plantService.updatePlant(dto, user, image));
         return ResponseEntity.ok(updatePlant);
     }
 
@@ -40,8 +54,8 @@ public class PlantController {
     @Operation(summary = "식물 등록하기 (이미지 포함)", description = "식물 정보를 이미지와 함께 등록합니다.")
     public ResponseEntity<PlantDto> createPlant(
             @AuthenticationPrincipal User user,
-            @ModelAttribute PlantRequest request,
-            @RequestPart("image") MultipartFile image
+            @ModelAttribute(value = "request") PlantRequest request,
+            @RequestPart(value = "image", required = false) MultipartFile image
     ) throws IOException {
         PlantDto dto = PlantDto.builder()
                 .name(request.getName())
