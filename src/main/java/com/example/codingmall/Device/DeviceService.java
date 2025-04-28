@@ -1,5 +1,6 @@
 package com.example.codingmall.Device;
 
+import com.example.codingmall.Exception.AlreadyHasPlantRoleException;
 import com.example.codingmall.Exception.SerialNumberNotFoundException;
 import com.example.codingmall.Exception.UserNotFoundException;
 import com.example.codingmall.Order.Order;
@@ -27,19 +28,21 @@ public class DeviceService {
     @Transactional
     public Long registerDevice(String serialNumber, User user) {
         // 1. SN이 있는 OrderItem 찾기
-        OrderItem orderItem = orderItemRepository.findBySerialNumber(serialNumber).orElseThrow(() -> new SerialNumberNotFoundException("일련번호를 찾을 수 없습니다.") );
-
+        OrderItem orderItem = orderItemRepository.findBySerialNumber(serialNumber)
+                .orElseThrow(() -> new SerialNumberNotFoundException("일련번호를 찾을 수 없습니다.") );
+        User foundUser = userRepository.findById(user.getId())
+                .orElseThrow(() -> new UserNotFoundException("유저를 찾을 수 없습니다."));
+        if (foundUser.getRole() == Role.ROLE_PLANT) {
+            throw new AlreadyHasPlantRoleException("이미 식물 관리 권한이 부여된 사용자입니다.");
+        }
         // 2. 일련번호가 있다면 Device 테이블에 등록
         Device device = Device.createDevice(user);
         deviceRepository.save(device);
 
-        // 3. 유저가 비영속 상태로 조회될 수 있으므로 다시 한 번 find
-        User user1 = userRepository.findById(user.getId()).orElseThrow(() -> new UserNotFoundException("유저를 찾을 수 없습니다."));
-
-        // 4. 유저에게 ROLE_PLANT 역할 부여하기 (변경 감지로 수정하기에 save 작업 미필요)
-        if (user1.getRole() != Role.ROLE_ADMIN && user1.getRole() != Role.ROLE_SOCIAL) {
-            user1.setRole(Role.ROLE_PLANT);
-            userRepository.save(user1);
+        if (foundUser.getRole() == Role.ROLE_ADMIN) {
+            throw new AlreadyHasPlantRoleException("ADMIN은 이미 식물 관리 권한이 부여되어 있습니다.");
+        } else {
+            foundUser.setRole(Role.ROLE_PLANT);
         }
         return device.getId();
     }
