@@ -70,6 +70,7 @@ public class PlantController {
     }
 
     @DeleteMapping("/plant/delete/{plantId}")
+    @Operation(summary = "식물 삭제하기", description = "식물을 이미지와 함께 삭제합니다")
     public ResponseEntity<Void> deleteItem(@PathVariable(name = "plantId") Long plantId){
         plantService.deletePlantById(plantId);
         return ResponseEntity.noContent().build(); // 삭제 후 응답없음.
