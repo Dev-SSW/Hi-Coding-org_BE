@@ -61,5 +61,10 @@ public class PlantService {
         }
         return plant;
     }
+
+    @Transactional
+    public void deletePlantById(Long plantId) {
+        plantRepository.deleteById(plantId);
+    }
 }
 
