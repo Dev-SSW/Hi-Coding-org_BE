@@ -68,4 +68,10 @@ public class PlantController {
         Plant plant = plantService.createPlant(dto, user, image);
         return ResponseEntity.ok(PlantDto.from(plant));
     }
+
+    @DeleteMapping("/plant/delete/{plantId}")
+    public ResponseEntity<Void> deleteItem(@PathVariable(name = "plantId") Long plantId){
+        plantService.deletePlantById(plantId);
+        return ResponseEntity.noContent().build(); // 삭제 후 응답없음.
+    }
 }
