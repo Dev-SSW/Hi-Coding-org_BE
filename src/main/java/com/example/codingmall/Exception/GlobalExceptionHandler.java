@@ -24,4 +24,10 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage(), "ALREADY_PLANT_ROLE"));
     }
+
+    @ExceptionHandler(UserHasNotAnyOrderException.class)
+    public ResponseEntity<ErrorResponse> handleAlreadyHasRole(UserHasNotAnyOrderException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage(), "USER_HAS_NOT_ANY_ORDER"));
+    }
 }

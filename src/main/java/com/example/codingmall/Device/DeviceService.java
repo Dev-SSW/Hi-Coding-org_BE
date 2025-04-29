@@ -3,6 +3,7 @@ package com.example.codingmall.Device;
 import com.example.codingmall.Exception.AlreadyHasPlantRoleException;
 import com.example.codingmall.Exception.SerialNumberNotFoundException;
 import com.example.codingmall.Exception.UserNotFoundException;
+import com.example.codingmall.Exception.UserHasNotAnyOrderException;
 import com.example.codingmall.Order.Order;
 import com.example.codingmall.Order.OrderRepository;
 import com.example.codingmall.OrderItem.OrderItem;
@@ -10,7 +11,6 @@ import com.example.codingmall.OrderItem.OrderItemRepository;
 import com.example.codingmall.User.Role;
 import com.example.codingmall.User.User;
 import com.example.codingmall.User.UserRepository;
-import com.example.codingmall.User.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,14 +24,22 @@ public class DeviceService {
     private final DeviceRepository deviceRepository;
     private final OrderItemRepository orderItemRepository;
     private final UserRepository userRepository;
+    private final OrderRepository orderRepository;
 
     @Transactional
     public Long registerDevice(String serialNumber, User user) {
         // 1. SN이 있는 OrderItem 찾기
         OrderItem orderItem = orderItemRepository.findBySerialNumber(serialNumber)
                 .orElseThrow(() -> new SerialNumberNotFoundException("일련번호를 찾을 수 없습니다.") );
+
+        boolean hasOrder = orderRepository.existsByUser(user);
+        if(!hasOrder) {
+            throw new UserHasNotAnyOrderException("해당 유저는 구매한 키트가 없습니다.");
+        }
+
         User foundUser = userRepository.findById(user.getId())
                 .orElseThrow(() -> new UserNotFoundException("유저를 찾을 수 없습니다."));
+
         if (foundUser.getRole() == Role.ROLE_PLANT) {
             throw new AlreadyHasPlantRoleException("이미 식물 관리 권한이 부여된 사용자입니다.");
         }
