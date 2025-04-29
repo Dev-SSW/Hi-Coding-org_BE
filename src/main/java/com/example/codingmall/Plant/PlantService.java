@@ -64,6 +64,9 @@ public class PlantService {
 
     @Transactional
     public void deletePlantById(Long plantId) {
+        Plant findPlant = plantRepository.findPlantByPlantId(plantId);
+        //기존 이미지 삭제
+        s3Service.deleteFile(findPlant.getImageUrl());
         plantRepository.deleteById(plantId);
     }
 }

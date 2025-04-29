@@ -11,4 +11,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
         return findById(orderId).orElseThrow(() -> new OrderIdNotFoundException("존재하지 않는 주문 ID 입니다 : " + orderId));
     }
     List<Order> findByUser(User user);
+
+    boolean existsByUser(User user);
 }
