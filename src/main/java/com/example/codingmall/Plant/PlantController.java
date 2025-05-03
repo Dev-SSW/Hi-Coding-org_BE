@@ -29,6 +29,12 @@ public class PlantController {
         return ResponseEntity.ok(allPlants);
     }
 
+    @GetMapping("/plant/getPlant/{plantId}")
+    @Operation(summary = "개별 식물 조회", description = "plantId를 통하여 식물의 정보를 가져옵니다.")
+    public ResponseEntity<Plant> getPlantInfo(@PathVariable(name = "plantId") Long plantId) {
+        return ResponseEntity.ok(plantService.findPlantInfo(plantId));
+    }
+
     @PutMapping(value = "/plant/update/{plantId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "식물 등록 수정하기 (이미지 포함)", description = "등록한 식물을 수정합니다")
     public ResponseEntity<PlantDto> updatePlant(

@@ -12,8 +12,6 @@ public interface PlantRepository extends JpaRepository<Plant,Long> {
     List<Plant> findAllByUser(User user);
     Optional<Plant> findPlantByUser (User user);
 
-    Optional<Plant> findById(Long PlantId);
-
     default Plant findPlantByPlantId(Long plantId){
         return findById(plantId).orElseThrow(() -> new IllegalStateException("plantId를 찾을 수 없습니다." + plantId ));
     }

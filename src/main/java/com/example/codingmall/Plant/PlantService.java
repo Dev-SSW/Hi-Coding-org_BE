@@ -1,4 +1,5 @@
 package com.example.codingmall.Plant;
+import com.example.codingmall.Exception.PlantNotFoundException;
 import com.example.codingmall.Exception.UserNotFoundException;
 import com.example.codingmall.S3.S3Service;
 import com.example.codingmall.User.User;
@@ -26,6 +27,11 @@ public class PlantService {
         return plants.stream()
                 .map(PlantDto::from)
                 .collect(Collectors.toList());
+    }
+
+    public Plant findPlantInfo(Long plantId) {
+        return plantRepository.findById(plantId)
+                .orElseThrow(() -> new PlantNotFoundException("해당 식물을 찾을 수 없습니다."));
     }
 
     @Transactional
