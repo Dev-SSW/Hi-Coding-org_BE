@@ -23,21 +23,24 @@ public class PlantGrowthLog {
     @JsonIgnore //순환 참조 방지
     private Plant plant;
 
-    private int growth;             //현재 길이
-    private int sumGrowth;          //전체 성장 길이
-    private int percentage;         //목표 대비 성장률
+    private int growth;             //성장 길이
     private String content;         //기록할 내용
-    private LocalDate record;   //기록된 시간
+    private LocalDate record;       //기록된 시간
 
     /* 생성 메서드 */
-    public static PlantGrowthLog createLog(Plant plant, PlantGrowthLogRequest plantGrowthLogRequest, int percentage, int sumGrowth) {
+    public static PlantGrowthLog createLog(Plant plant, PlantGrowthLogRequest plantGrowthLogRequest) {
         return PlantGrowthLog.builder()
                 .plant(plant)
                 .growth(plantGrowthLogRequest.getGrowth())
-                .sumGrowth(sumGrowth)
-                .percentage(percentage)
                 .content(plantGrowthLogRequest.getContent())
-                .record(LocalDate.now())
+                .record(plantGrowthLogRequest.getRecord())
                 .build();
+    }
+
+    /* 수정 메서드 */
+    public void updateLog(int updateGrowth, String updateContent , LocalDate updateRecord) {
+        this.growth = updateGrowth;
+        this.content = updateContent;
+        this.record = updateRecord;
     }
 }

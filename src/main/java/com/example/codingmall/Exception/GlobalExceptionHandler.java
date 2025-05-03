@@ -30,4 +30,16 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage(), "USER_HAS_NOT_ANY_ORDER"));
     }
+
+    @ExceptionHandler(PlantNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleAlreadyHasRole(PlantNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage(), "PLANT_NOT_FOUND"));
+    }
+
+    @ExceptionHandler(PlantLogsNotFoundByDate.class)
+    public ResponseEntity<ErrorResponse> handleAlreadyHasRole(PlantLogsNotFoundByDate ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage(), "PLANTLOG_NOT_FOUND"));
+    }
 }
