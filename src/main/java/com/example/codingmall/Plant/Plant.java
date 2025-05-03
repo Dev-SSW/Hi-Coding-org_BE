@@ -28,6 +28,7 @@ public class Plant {
     private int idealLightIntensity;//이상적인 광량
     private int growthTarget;       //목표 성장 길이
     private int totalGrowth;        //전체 성장 길이
+    private int percentage;         //목표 대비 성장률
     private String imageUrl;        //식물 이미지 URL
 
     public void updatePlant(PlantDto plantDto){
@@ -42,7 +43,10 @@ public class Plant {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
-    public void setTotalGrowth(int growth) {
-        totalGrowth = growth;
+
+    /* 수정 메서드 */
+    public void updateGrowth(int newTotalGrowth) {
+        this.totalGrowth = newTotalGrowth;
+        this.percentage = (int) ((double) newTotalGrowth / this.growthTarget * 100);
     }
 }
