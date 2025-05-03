@@ -1,6 +1,7 @@
 package com.example.codingmall.Plant;
 
 import com.example.codingmall.User.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,6 +20,7 @@ public class Plant {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     private String name;            //식물 이름
