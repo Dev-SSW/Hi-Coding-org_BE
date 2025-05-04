@@ -25,7 +25,7 @@ public class PlantGrowthLogController {
 
     @GetMapping("/plant/PlantGrowthLog/get/{plantId}")
     @Operation(summary = "식물 성장 지표 날짜별로 조회")
-    public ResponseEntity<PlantGrowthLog> getGrowthLogsByDate(@PathVariable(name = "plantId") Long plantId,
+    public ResponseEntity<PlantGrowthLogResponse> getGrowthLogsByDate(@PathVariable(name = "plantId") Long plantId,
                                                               @RequestParam(name = "date") String date) {
         LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
         return ResponseEntity.ok(plantGrowthLogService.getGrowthLogByDate(plantId, localDate));
