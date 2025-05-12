@@ -72,7 +72,10 @@ public class PlantService {
     public void deletePlantById(Long plantId) {
         Plant findPlant = plantRepository.findPlantByPlantId(plantId);
         //기존 이미지 삭제
-        s3Service.deleteFile(findPlant.getImageUrl());
+        String url = findPlant.getImageUrl();
+        if (url != null && url.trim().isEmpty()) {
+            s3Service.deleteFile(url);
+        }
         plantRepository.deleteById(plantId);
     }
 }

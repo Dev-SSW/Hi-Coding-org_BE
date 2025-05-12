@@ -33,8 +33,8 @@ public class PlantGrowthLogService {
                 .orElse(null);
         // 3. 일기가 없다면 새로 생성
         if (existLog == null) {
-            int totalGrowth = plantGrowthLogRequest.getGrowth() + plant.getTotalGrowth();   //입력된 성장 길이 + 기존 식물의 성장 길이
-            plant.updateGrowth(totalGrowth);                                                //식물의 성장 길이를 수정 (변경 감지로 수정)
+            int totalGrowth = plantGrowthLogRequest.getGrowth();   //입력된 성장 길이
+            plant.updateGrowth(totalGrowth);                       //식물의 성장 길이를 수정 (변경 감지로 수정)
             PlantGrowthLog growthLog = PlantGrowthLog.createLog(plant, plantGrowthLogRequest);
             plantGrowthLogRepository.save(growthLog);
             return growthLog.getId();
