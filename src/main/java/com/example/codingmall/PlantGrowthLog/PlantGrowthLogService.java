@@ -26,37 +26,46 @@ public class PlantGrowthLogService {
         // 1. 해당 식물 찾기
         Plant plant = plantRepository.findById(plantId)
                 .orElseThrow(() -> new PlantNotFoundException("해당 식물을 찾을 수 없습니다."));
+
         // 2. 해당 날짜에 일기가 있는지 확인
         LocalDate recordDate = plantGrowthLogRequest.getRecord();
-        PlantGrowthLog existLog = plantGrowthLogRepository
-                .findFirstByPlantIdAndRecord(plantId, recordDate)
-                .orElse(null);
+        Optional<PlantGrowthLog> optionalLog = plantGrowthLogRepository
+                .findFirstByPlantIdAndRecord(plantId, recordDate);
+        int newGrowth = plantGrowthLogRequest.getGrowth();         //입력된 성장 길이
+
         // 3. 일기가 없다면 새로 생성
-        if (existLog == null) {
-            int totalGrowth = plantGrowthLogRequest.getGrowth();   //입력된 성장 길이
-            plant.updateGrowth(totalGrowth);                       //식물의 성장 길이를 수정 (변경 감지로 수정)
+        if (optionalLog.isEmpty()) {
             PlantGrowthLog growthLog = PlantGrowthLog.createLog(plant, plantGrowthLogRequest);
             plantGrowthLogRepository.save(growthLog);
+            if (newGrowth > plant.getTotalGrowth()) {      //현재 식물 전체 길이보다 큰 값을 입력 받았다면 식물 전체 길이를 업데이트
+                plant.updateGrowth(newGrowth);
+            }
             return growthLog.getId();
         }
-        // 4. 기록이 있다면 덮어쓰기
-        int originTotalGrowth = plant.getTotalGrowth();     //기존 저장 기록 시의 식물 전체 길이
-        int originGrowth = existLog.getGrowth();            //기존 저장 기록의 성장 길이
 
-        int finalGrowth;
-        if (plantGrowthLogRequest.getGrowth() == 0) {       // 성장 길이 입력 값이 0이라면
-            finalGrowth = originGrowth;                     // 기존 저장 기록의 성장 길이를 저장
-        } else {                                            // 성장 길이 입력 값이 0이 아니라면
-            finalGrowth = plantGrowthLogRequest.getGrowth();// 성장 길이 입력 값을 저장
+        // 4. 과거에 기록이 있다면 덮어쓰기
+        PlantGrowthLog existLog = optionalLog.get();
+        int oldGrowth = existLog.getGrowth();               //기존 길이 가져오기
+        existLog.updateLog(newGrowth, plantGrowthLogRequest.getContent(), recordDate);  //일단 입력된 길이와 내용으로 수정
+        int currentMax = getMaxGrowth(plantId);             //현재 기록 중 가장 큰 길이를 가져옴
+
+        if (newGrowth > plant.getTotalGrowth()) {           //현재 식물 전체 길이보다 큰 값을 입력 받았다면 식물 전체 길이를 업데이트
+            plant.updateGrowth(newGrowth);
         }
-        int finalTotalGrowth = originTotalGrowth - originGrowth + finalGrowth;               // 전체 성장 길이 다시 구하기
-        plant.updateGrowth(finalTotalGrowth);
-
-        String finalContent = plantGrowthLogRequest.getContent();
-        existLog.updateLog(finalGrowth, finalContent, existLog.getRecord());
+        else if (plant.getTotalGrowth() == oldGrowth && newGrowth < oldGrowth) {
+            //현재 식물 전체 길이와 이전 기록의 길이가 같거나, 새로운 길이 입력이 이전 기록의 길이보다 작다면
+            plant.updateGrowth(currentMax); //전체를 다시 검색해서 가장 큰 값을 현재 식물 전체 길이로 저장시킨다.
+        }
         return existLog.getId();
     }
 
+    /* 내부 메서드: 현재 식물의 모든 기록 중 최대 성장 길이 반환 */
+    private int getMaxGrowth(Long plantId) {
+        return plantGrowthLogRepository.findByPlantId(plantId).stream()
+                .mapToInt(PlantGrowthLog::getGrowth)
+                .max()
+                .orElse(0);
+    }
 
     /* 특정 날짜의 성장 기록 단일 조회 */
     public PlantGrowthLogResponse getGrowthLogByDate(Long plantId, LocalDate date) {
